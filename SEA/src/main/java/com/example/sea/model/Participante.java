@@ -4,6 +4,7 @@ import java.util.List;
 import java.io.Serializable;
 
 public class Participante implements Serializable{
+    private static final long serialVersionUID = 7L;
     private String nome;
     private String email;
     private String instituicao;

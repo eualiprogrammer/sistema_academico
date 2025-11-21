@@ -2,6 +2,7 @@ package com.example.sea.model;
 import java.io.Serializable;
 
 public class Sala implements Serializable{
+    private static final long serialVersionUID = 8L;
     private String nome;
     private int capacidade;
     private int numeroProjetores;

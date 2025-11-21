@@ -3,12 +3,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Inscricao implements Serializable{
-
-    
+    private static final long serialVersionUID = 4L;
     private Participante participante;
     private Palestra palestra;
-
-    
     private LocalDateTime dataHoraInscricao;
     private boolean presenca; 
     private String statusConfirmacao;

@@ -4,6 +4,7 @@ import java.util.UUID;
 import java.io.Serializable;
 
 public class Certificado implements Serializable{
+    private static final long serialVersionUID = 2L;
     private Inscricao inscricao;
     private String codigoValidacao; 
     private LocalDate dataEmissao; 

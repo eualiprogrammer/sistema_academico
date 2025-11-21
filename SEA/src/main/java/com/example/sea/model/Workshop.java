@@ -2,8 +2,8 @@ package com.example.sea.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workshop extends Atividade{ 
-
+public class Workshop extends Atividade{
+    private static final long serialVersionUID = 9L;
     private List<Palestra> palestrasDoWorkshop;
 
     public Workshop(String titulo, String descricao, Evento evento) {

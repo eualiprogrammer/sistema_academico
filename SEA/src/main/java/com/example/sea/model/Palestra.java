@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Palestra extends Atividade{ 
+public class Palestra extends Atividade{
+    private static final long serialVersionUID = 5L;
     private LocalDateTime dataHoraInicio;
     private float duracaoHoras;
     private Sala sala; 

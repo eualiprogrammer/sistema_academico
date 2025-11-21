@@ -2,7 +2,7 @@ package com.example.sea.model;
 import java.io.Serializable;
 
 public abstract class Atividade implements Serializable{
-
+    private static final long serialVersionUID = 1L;
     private String titulo;
     private String descricao;
 
