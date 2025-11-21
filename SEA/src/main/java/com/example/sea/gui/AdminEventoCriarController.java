@@ -12,7 +12,6 @@ public class AdminEventoCriarController {
     @FXML
     private TextField eventoDataInicioField;
 
-    private
 
     public void novaFuncao (){
         String textoDigitado = eventoNomeField.getText();
