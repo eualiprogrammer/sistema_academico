@@ -1,0 +1,100 @@
+
+/* ==================== BASE GERAL ==================== */
+
+/* Fundo geral da aplicação */
+.app-background {
+    -fx-background-color: #191522;
+    -fx-font-family: "Montserrat", "Segoe UI", "Arial";
+}
+
+/* Qualquer label sem classe específica segue esse padrão */
+.label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Montserrat", "Segoe UI", "Arial";
+}
+
+/* Área de conteúdo central (telas incluídas) */
+.content-area {
+    -fx-background-color: transparent;
+}
+
+/* ==================== TIPOGRAFIA ==================== */
+
+.title-text {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 48px;
+    -fx-font-weight: 900;
+}
+
+/* Títulos dentro de cards brancos */
+.card-title {
+    -fx-text-fill: #000000;
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+}
+
+/* Texto dentro de cards brancos */
+.card-text {
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+}
+
+/* Títulos/textos brancos dentro de cards teal/azul */
+.card-title-white {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 20px;
+    -fx-font-weight: 700;
+}
+
+.card-text-white {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
+}
+
+/* ==================== SIDEBAR (CLIENTE + ADMIN) ==================== */
+
+
+
+/* Sidebar roxa (cliente) */
+.sidebar {
+    -fx-background-color: #6A4FA3;
+}
+
+/* Sidebar azul escuro (admin) */
+.sidebar-admin {
+    -fx-background-color: #143750;
+}
+
+/* Estilo base para itens de menu inativos */
+.sidebar-item {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-cursor: hand;
+    -fx-font-family: "Montserrat", "Segoe UI", "Arial";
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Itens ativos: mesma fonte, apenas muda a cor */
+.sidebar-item-active {
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-cursor: hand;
+    -fx-font-family: "Montserrat", "Segoe UI", "Arial";
+    -fx-text-fill: #F7D822;
+}
+
+/* Hover: qualquer item fica amarelo */
+.sidebar-item:hover,
+.sidebar-item-active:hover {
+    -fx-text-fill: #F7D822;
+}
+
+
+/* ==================== CARDS CLIENTE (BRANCOS) ==================== */
+
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 26;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.25, 0, 4);
+}

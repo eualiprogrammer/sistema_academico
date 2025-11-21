@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="adminEventosListRoot"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            styleClass="content-area">
+
+    <children>
+        <VBox spacing="24.0"
+              AnchorPane.topAnchor="80.0"
+              AnchorPane.leftAnchor="80.0">
+
+            <Button fx:id="btnEvento1"
+                    text="Nome Evento 1"
+                    styleClass="pill-button-teal"/>
+
+            <Button fx:id="btnEvento2"
+                    text="Nome Evento 2"
+                    styleClass="pill-button-teal"/>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="homeRoot" prefHeight="720.0" prefWidth="1280.0" styleClass="app-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.seuprojeto.controller.HomeController">
+
+    <center>
+        <HBox spacing="80.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="80" left="80" right="80" top="80" />
+            </padding>
+
+            <VBox spacing="8.0">
+                <Label styleClass="title-text" text="EVENTOS" />
+                <Label styleClass="title-text" text="ACADÊMICOS" />
+
+                <HBox spacing="16.0">
+                    <padding>
+                        <Insets top="40" />
+                    </padding>
+                    <Button fx:id="loginButton" styleClass="btn-yellow" text="Login" />
+                    <Button fx:id="cadastroButton" styleClass="btn-yellow" text="Cadastro" />
+                </HBox>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <ImageView fx:id="hatImage" fitHeight="530.0" fitWidth="516.0" preserveRatio="true">
+                <image>
+                    <Image url="@../../logo%20eventos%20academicos.png" />
+                </image>
+            </ImageView>
+        </HBox>
+    </center>
+</BorderPane>

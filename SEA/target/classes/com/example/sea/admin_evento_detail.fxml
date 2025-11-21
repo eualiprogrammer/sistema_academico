@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="adminEventoDetailRoot"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            styleClass="content-area">
+
+    <children>
+        <HBox spacing="40.0"
+              AnchorPane.topAnchor="80.0"
+              AnchorPane.leftAnchor="80.0"
+              AnchorPane.rightAnchor="80.0">
+
+            <VBox fx:id="cardEventoDados"
+                  styleClass="card-teal-large">
+                <Label fx:id="lblEventoNome"
+                       text="Nome Evento 1"
+                       styleClass="card-title-white"/>
+                <Label text="Data Inicio:" styleClass="card-text-white"/>
+                <Label text="Data Fim:" styleClass="card-text-white"/>
+                <Label text="Descrição:" styleClass="card-text-white"/>
+            </VBox>
+
+            <VBox fx:id="cardEventoPalestras"
+                  spacing="16.0"
+                  styleClass="card-teal-large">
+                <Label text="Nome Evento 1" styleClass="card-title-white"/>
+                <Label text="Palestra 1" styleClass="card-text-white"/>
+                <Label text="palestra 2" styleClass="card-text-white"/>
+                <Label text="." styleClass="card-text-white"/>
+                <Label text="." styleClass="card-text-white"/>
+                <Region VBox.vgrow="ALWAYS"/>
+                <Button fx:id="btnAdicionarPalestra"
+                        text="Adicionar"
+                        styleClass="btn-dark-blue"/>
+            </VBox>
+        </HBox>
+    </children>
+</AnchorPane>

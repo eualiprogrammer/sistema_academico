@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="adminPalestranteDetailRoot"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            styleClass="content-area">
+
+    <children>
+        <HBox spacing="40.0"
+              AnchorPane.topAnchor="80.0"
+              AnchorPane.leftAnchor="80.0"
+              AnchorPane.rightAnchor="80.0">
+
+            <VBox fx:id="cardPalestranteDados"
+                  styleClass="card-teal-large">
+                <Label text="Nome do palestrante:" styleClass="card-text-white"/>
+                <Label text="Área de especialização:" styleClass="card-text-white"/>
+                <Label text="Telefone:" styleClass="card-text-white"/>
+                <Label text="Email:" styleClass="card-text-white"/>
+            </VBox>
+
+            <VBox fx:id="cardPalestrantePalestras"
+                  styleClass="card-teal-large">
+                <Label text="Palestras:" styleClass="card-text-white"/>
+                <Label text="palestra 1" styleClass="card-text-white"/>
+                <Label text="palestra 2" styleClass="card-text-white"/>
+                <Label text="palestra 3" styleClass="card-text-white"/>
+                <Label text="." styleClass="card-text-white"/>
+                <Label text="." styleClass="card-text-white"/>
+            </VBox>
+        </HBox>
+    </children>
+</AnchorPane>
