@@ -35,7 +35,7 @@
 
             <ImageView fx:id="hatImage" fitHeight="530.0" fitWidth="516.0" preserveRatio="true">
                 <image>
-                    <Image url="@../../logo%20eventos%20academicos.png" />
+                    <Image url="@images/logo_eventos_academicos_brilhoso.png" />
                 </image>
             </ImageView>
         </HBox>

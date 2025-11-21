@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaPrincipalController">
+
+    <padding>
+        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+    </padding>
+
+    <Label styleClass="titulo" text="Sistema de Gestão Acadêmica (SGA)">
+        <font>
+            <Font name="System Bold" size="24.0" />
+        </font>
+    </Label>
+
+    <Label text="Menu Principal" textFill="#666666">
+        <font>
+            <Font size="14.0" />
+        </font>
+    </Label>
+
+    <Button onAction="#irParaPalestrantes" prefHeight="40" prefWidth="250" styleClass="button" text="Gerenciar Palestrantes" />
+    <Button onAction="#irParaSalas" prefHeight="40" prefWidth="250" styleClass="button" text="Gerenciar Salas" />
+    <Button onAction="#irParaEventos" prefHeight="40" prefWidth="250" styleClass="button" text="Gerenciar Eventos" />
+
+    <Button onAction="#sair" prefHeight="40" prefWidth="250" styleClass="button-perigo" text="Sair" />
+</VBox>
