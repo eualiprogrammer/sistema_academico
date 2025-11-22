@@ -1,5 +1,6 @@
 package com.example.sea.gui;
 
+import com.example.sea.business.SessaoUsuario;
 import com.example.sea.business.SistemaSGA;
 import com.example.sea.model.Participante;
 import javafx.fxml.FXML;
@@ -18,32 +19,36 @@ public class TelaLoginController {
         String email = txtEmail.getText();
         String senha = txtSenha.getText();
 
-        // 1. Validação Básica
-        if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
-            mostrarAlerta(AlertType.WARNING, "Campos Vazios", "Por favor, preencha email e senha.");
-            return;
-        }
-
-        // 2. LÓGICA DE LOGIN DE ADMINISTRADOR (Acesso ao Dashboard)
-        // Como não temos banco de usuários com senha, usamos um login fixo para o Admin.
-        if (email.equals("admin") && senha.equals("123")) {
+        if (email.equals("admin") && senha.equals("admin")) {
             System.out.println("Login de Admin realizado!");
-
-            // Carrega o Dashboard do Administrador
-            // (Certifica-te que o nome do ficheiro é exatamente este na pasta view)
-            ScreenManager.getInstance().carregarTela("TelaPrincipal.fxml", "Menu Principal");
+            SessaoUsuario.getInstance().logout(); // Garante que não há participante logado
+            ScreenManager.getInstance().carregarTela("TelaPrincipal.fxml", "Menu Administrativo");
             return;
         }
-
-        // 3. LÓGICA DE LOGIN DE PARTICIPANTE (Opcional)
-        // Aqui podíamos verificar se o email existe no repositório de participantes
         try {
-            // Tentamos buscar um participante pelo CPF (se o login fosse CPF) ou teríamos de criar buscaPorEmail
-            // Por enquanto, se não for admin, dá erro.
-            mostrarAlerta(AlertType.ERROR, "Login Falhou", "Usuário ou senha incorretos.");
+
+            Participante encontrado = null;
+            for (Participante p : SistemaSGA.getInstance().getControladorParticipante().listarTodos()) {
+                if (p.getEmail().equals(email) && p.getSenha().equals(senha)) {
+                    encontrado = p;
+                    break;
+                }
+            }
+
+            if (encontrado != null) {
+                // Sucesso! Salva na sessão
+                SessaoUsuario.getInstance().login(encontrado);
+                System.out.println("Bem-vindo, " + encontrado.getNome());
+
+                // Redireciona para a área do aluno (ex: lista de eventos disponíveis)
+                ScreenManager.getInstance().carregarTela("view_eventos.fxml", "Área do Aluno");
+            } else {
+                mostrarAlerta(Alert.AlertType.ERROR, "Erro", "E-mail ou senha incorretos.");
+            }
 
         } catch (Exception e) {
-            mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao validar login.");
+            e.printStackTrace();
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Falha no login: " + e.getMessage());
         }
     }
 
