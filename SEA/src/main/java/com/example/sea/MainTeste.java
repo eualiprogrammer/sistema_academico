@@ -59,7 +59,7 @@ public class MainTeste {
 
             // --- 5. CADASTRAR PARTICIPANTE ---
             System.out.println("\n>> 5. Cadastrando Participante...");
-            Participante aluno = new Participante("João Aluno", "joao@email.com", "UFPE", "123.456.789-00");
+            Participante aluno = new Participante("João Aluno", "joao@email.com", "UFPE", "123.456.789-00", "leu69");
             sistema.getControladorParticipante().cadastrar(aluno);
             System.out.println("Participante cadastrado: " + aluno.getNome());
 

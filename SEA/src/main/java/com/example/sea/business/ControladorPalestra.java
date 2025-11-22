@@ -9,20 +9,22 @@ import java.util.List;
 
 
 public class ControladorPalestra implements IControladorPalestra {
-    private IRepositorioPalestra repositorioPalestra;         
-    private IRepositorioInscricao repositorioInscricao; 
+    private IRepositorioPalestra repositorioPalestra;
+    private IRepositorioInscricao repositorioInscricao;
+
     /**
      * Construtor: Quando o Controlador é criado, ele instancia
      * TODOS os repositórios de que precisa.
      */
     public ControladorPalestra() {
         this.repositorioPalestra = new RepositorioPalestra();
-        this.repositorioInscricao = new RepositorioInscricao(); 
+        this.repositorioInscricao = new RepositorioInscricao();
     }
 
     /**
      * Valida se uma nova palestra (data/hora/duração) entra em conflito
      * com palestras existentes para a mesma Sala ou mesmo Palestrante.
+     *
      * @param novaPalestra A palestra a ser validada.
      * @throws ConflitoHorarioException Se houver conflito.
      */
@@ -39,12 +41,12 @@ public class ControladorPalestra implements IControladorPalestra {
 
                 // Lógica de sobreposição de tempo
                 if (inicioNova.isBefore(fimExistente) && fimNova.isAfter(inicioExistente)) {
-                    throw new ConflitoHorarioException("A Sala '" + novaPalestra.getSala().getNome() + 
+                    throw new ConflitoHorarioException("A Sala '" + novaPalestra.getSala().getNome() +
                             "' já está em uso neste horário pela palestra: " + palestraExistente.getTitulo());
                 }
             }
         }
-        
+
         // 2. Verifica todas as palestras DADAS PELO MESMO PALESTRANTE (REQ24)
         for (Palestra palestraExistente : this.repositorioPalestra.listarTodas()) {
             if (palestraExistente.getPalestrante().getEmail().equals(novaPalestra.getPalestrante().getEmail())) {
@@ -54,7 +56,7 @@ public class ControladorPalestra implements IControladorPalestra {
 
                 // Lógica de sobreposição de tempo
                 if (inicioNova.isBefore(fimExistente) && fimNova.isAfter(inicioExistente)) {
-                    throw new ConflitoHorarioException("O palestrante '" + novaPalestra.getPalestrante().getNome() + 
+                    throw new ConflitoHorarioException("O palestrante '" + novaPalestra.getPalestrante().getNome() +
                             "' já está ocupado neste horário com a palestra: " + palestraExistente.getTitulo());
                 }
             }
@@ -62,11 +64,11 @@ public class ControladorPalestra implements IControladorPalestra {
     }
 
     @Override
-    public void cadastrar(String titulo, String descricao, Evento evento, 
-                           LocalDateTime dataHoraInicio, float duracaoHoras, 
-                           Sala sala, Palestrante palestrante) 
-                           throws PalestraJaExisteException, CampoVazioException, DataInvalidaException, ConflitoHorarioException {
-        
+    public void cadastrar(String titulo, String descricao, Evento evento,
+                          LocalDateTime dataHoraInicio, float duracaoHoras,
+                          Sala sala, Palestrante palestrante)
+            throws PalestraJaExisteException, CampoVazioException, DataInvalidaException, ConflitoHorarioException {
+
         // --- REGRA 1: Validação de Campos Vazios ---
         if (titulo == null || titulo.trim().isEmpty()) throw new CampoVazioException("Título");
         if (evento == null) throw new IllegalArgumentException("Evento não pode ser nulo");
@@ -99,7 +101,7 @@ public class ControladorPalestra implements IControladorPalestra {
     public List<Palestra> listar() {
         return this.repositorioPalestra.listarTodas();
     }
-    
+
     @Override
     public List<Palestra> listarPorEvento(Evento evento) {
         if (evento == null) return new ArrayList<>(); // Retorna lista vazia se o evento for nulo
@@ -107,46 +109,51 @@ public class ControladorPalestra implements IControladorPalestra {
     }
 
     @Override
-    public void atualizar(Palestra palestra) 
-        throws PalestraNaoEncontradaException, CampoVazioException, DataInvalidaException, ConflitoHorarioException {
-        
+    public void atualizar(Palestra palestra)
+            throws PalestraNaoEncontradaException, CampoVazioException, DataInvalidaException, ConflitoHorarioException {
+
         // Validações
         if (palestra == null) throw new IllegalArgumentException("Palestra não pode ser nula.");
-        if (palestra.getTitulo() == null || palestra.getTitulo().trim().isEmpty()) throw new CampoVazioException("Título");
-        if (palestra.getDuracaoHoras() <= 0) throw new DataInvalidaException("Duração", "A duração deve ser maior que zero.");
+        if (palestra.getTitulo() == null || palestra.getTitulo().trim().isEmpty())
+            throw new CampoVazioException("Título");
+        if (palestra.getDuracaoHoras() <= 0)
+            throw new DataInvalidaException("Duração", "A duração deve ser maior que zero.");
 
         // (Nota: A validação de conflito para 'atualizar' é mais complexa,
         // pois temos que ignorar a própria palestra que está a ser atualizada.
         // Vamos manter a validação simples por agora.)
-        
+
         // this.validarConflitos(palestra); // (Precisaria de lógica extra para ignorar a si mesma)
 
         // Chama a camada 'data'
         this.repositorioPalestra.atualizar(palestra);
     }
 
+    // ... código anterior ...
+
     @Override
-public void remover(String titulo) throws PalestraNaoEncontradaException, CampoVazioException, PalestraComInscritosException {
-    if (titulo == null || titulo.trim().isEmpty()) {
-        throw new CampoVazioException("Título");
+    public List<Palestra> remover(String titulo) throws PalestraNaoEncontradaException, CampoVazioException, PalestraComInscritosException {
+        if (titulo == null || titulo.trim().isEmpty()) {
+            throw new CampoVazioException("Título");
+        }
+
+        Palestra palestraParaRemover = this.repositorioPalestra.buscarPorTitulo(titulo);
+        List<Inscricao> inscritos = this.repositorioInscricao.listarPorPalestra(palestraParaRemover);
+
+        if (!inscritos.isEmpty()) {
+            throw new PalestraComInscritosException(titulo, inscritos.size());
+        }
+
+        this.repositorioPalestra.deletar(titulo);
+        System.out.println("Palestra removida: " + titulo);
+
+        // Retorna a lista atualizada
+        return this.repositorioPalestra.listarTodas();
+    } // <--- FECHA O MÉTODO REMOVER AQUI
+
+    // O método listarTodos deve ficar FORA, como um método da classe
+    @Override
+    public List<Palestra> listarTodos() {
+        return repositorioPalestra.listarTodas();
     }
-    // --- INÍCIO DA REGRA DE NEGÓCIO: Verifica se há inscritos na palestra ---
-    // 1. Busca a palestra a ser removida
-    Palestra palestraParaRemover = this.repositorioPalestra.buscarPorTitulo(titulo);
-
-    // 2. Pede ao repositório de inscrições a lista de inscritos NESSA palestra
-    List<Inscricao> inscritos = this.repositorioInscricao.listarPorPalestra(palestraParaRemover);
-
-    // 3. Verifica se a lista não está vazia
-    if (!inscritos.isEmpty()) {
-        // Se a lista NÃO está vazia, bloqueia a remoção e lança a exceção
-        throw new PalestraComInscritosException(titulo, inscritos.size());
-    }
-
-    // --- FIM DA REGRA DE NEGÓCIO ---
-
-    // Se a lista de inscritos ESTIVER vazia, permite a remoção.
-    this.repositorioPalestra.deletar(titulo);
-    System.out.println("Palestra removida (não tinha inscritos): " + titulo);
-}
-}
+} // <--- FECHA A CLASSE AQUI

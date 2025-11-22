@@ -67,4 +67,10 @@ public interface IControladorInscricao {
      */
     Certificado gerarCertificado(Inscricao inscricao) 
         throws InscricaoNaoEncontradaException, CertificadoSemPresencaException;
+
+    List<Inscricao> listarTodos();
+
+    void atualizar(Inscricao inscricao) throws Exception;
+
+    void cadastrar(Inscricao inscricao) throws Exception;
 }

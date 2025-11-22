@@ -149,4 +149,25 @@ public class ControladorInscricao implements IControladorInscricao {
         System.out.println("Certificado gerado: " + novoCertificado.getCodigoValidacao());
         return novoCertificado;
     }
+
+    @Override
+    public List<Inscricao> listarTodos() {
+        return this.repositorioInscricao.listarTodas();
+    }
+
+    @Override
+    public void atualizar(Inscricao inscricao) throws Exception {
+        if (inscricao == null) {
+            throw new IllegalArgumentException("Inscrição inválida");
+        }
+        // CORREÇÃO DO ERRO:
+        // Usamos 'this.repoInscricao' para garantir que é a instância do objeto
+        this.repositorioInscricao.atualizar(inscricao);
+    }
+
+    @Override
+    public void cadastrar(Inscricao inscricao) throws Exception {
+        // Apenas redireciona para o salvar do repositório
+        this.repositorioInscricao.salvar(inscricao);
+    }
 }

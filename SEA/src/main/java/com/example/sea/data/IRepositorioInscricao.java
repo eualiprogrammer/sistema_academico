@@ -64,4 +64,5 @@ public interface IRepositorioInscricao {
      * @throws InscricaoNaoEncontradaException Se a inscrição a ser removida não for encontrada.
      */
     void deletar(Inscricao inscricao) throws InscricaoNaoEncontradaException;
+
 }

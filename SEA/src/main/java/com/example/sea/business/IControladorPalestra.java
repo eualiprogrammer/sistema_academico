@@ -63,9 +63,13 @@ public interface IControladorPalestra {
 
     /**
      * Regras de negócio para remover uma palestra.
+     *
      * @param titulo O título da palestra a ser removida.
+     * @return
      * @throws PalestraNaoEncontradaException Se a palestra não for encontrada.
-     * @throws CampoVazioException Se 'titulo' estiver vazio.
+     * @throws CampoVazioException            Se 'titulo' estiver vazio.
      */
-    void remover(String titulo) throws PalestraNaoEncontradaException, CampoVazioException, PalestraComInscritosException;
+    List<Palestra> remover(String titulo) throws PalestraNaoEncontradaException, CampoVazioException, PalestraComInscritosException;
+
+    List<Palestra> listarTodos();
 }

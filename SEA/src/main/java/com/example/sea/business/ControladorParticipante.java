@@ -73,4 +73,9 @@ public class ControladorParticipante implements IControladorParticipante {
         }
         this.repositorioParticipante.deletar(cpf);
     }
+
+    @Override
+    public List<Participante> listarTodos() {
+        return this.repositorioParticipante.listarTodos();
+    }
 }

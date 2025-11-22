@@ -49,4 +49,6 @@ public interface IControladorParticipante {
      * @throws CampoVazioException Se 'cpf' estiver vazio.
      */
     void remover(String cpf) throws ParticipanteNaoEncontradoException, CampoVazioException;
+
+    List<Participante> listarTodos();
 }

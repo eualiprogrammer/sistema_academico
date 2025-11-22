@@ -1,10 +1,12 @@
 package com.example.sea.model;
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Palestra extends Atividade{
+    @Serial
     private static final long serialVersionUID = 5L;
     private LocalDateTime dataHoraInicio;
     private float duracaoHoras;

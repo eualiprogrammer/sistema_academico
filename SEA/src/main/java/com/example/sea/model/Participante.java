@@ -1,22 +1,33 @@
 package com.example.sea.model;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
 
-public class Participante implements Serializable{
-    private static final long serialVersionUID = 7L;
+public class Participante implements Serializable {
+    private static final long serialVersionUID = 8L;
     private String nome;
     private String email;
     private String instituicao;
-    private String cpf; 
+    private String cpf;
+    private String senha;
     private List<Inscricao> inscricoes;
 
-    public Participante(String nome, String email, String instituicao, String cpf) {
+    public Participante(String nome, String email, String instituicao, String cpf, String senha) {
         this.nome = nome;
         this.email = email;
         this.instituicao = instituicao;
         this.cpf = cpf;
+        this.senha = senha;
         this.inscricoes = new ArrayList<>();
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getNome() {

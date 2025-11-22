@@ -1,8 +1,10 @@
 package com.example.sea.model;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Inscricao implements Serializable{
+    @Serial
     private static final long serialVersionUID = 4L;
     private Participante participante;
     private Palestra palestra;
