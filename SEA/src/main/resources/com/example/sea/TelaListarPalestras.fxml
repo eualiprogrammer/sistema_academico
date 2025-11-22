@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaListarPalestrasController">
+<VBox spacing="20.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaListarPalestrasController">
 
     <HBox alignment="CENTER_LEFT">
         <Label styleClass="titulo" text="Gestão de Palestras" />
@@ -30,12 +30,12 @@
         </TableView>
 
         <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10 0 0 0;">
-         <Button onAction="#voltar" styleClass="btn-perigo" text="VOLTAR">
+         <Button onAction="#voltar" styleClass="btn-card-yellow" text="VOLTAR">
             <HBox.margin>
                <Insets bottom="10.0" />
             </HBox.margin>
          </Button>
-            <Button onAction="#editar" style="-fx-background-color: #7b63b3;" styleClass="btn-acao" text="EDITAR SELECIONADO">
+            <Button onAction="#editar" styleClass="btn-acao" text="EDITAR SELECIONADO">
             <HBox.margin>
                <Insets bottom="10.0" />
             </HBox.margin></Button>

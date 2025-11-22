@@ -29,46 +29,64 @@ public class ViewPalestrasController {
     private void carregarPalestras() {
         containerPalestras.getChildren().clear();
 
+        // Busca todas as palestras do sistema
         List<Palestra> palestras = SistemaSGA.getInstance().getControladorPalestra().listarTodos();
-        Participante participanteLogado = SessaoUsuario.getInstance().getParticipanteLogado();
 
         if (palestras.isEmpty()) {
-            containerPalestras.getChildren().add(new Label("Nenhuma palestra cadastrada no momento."));
+            containerPalestras.getChildren().add(new Label("Nenhuma palestra disponível."));
             return;
         }
 
         for (Palestra palestra : palestras) {
-            VBox card = criarCardPalestra(palestra, participanteLogado);
-            containerPalestras.getChildren().add(card);
+            // CORREÇÃO: Chamamos passando apenas a palestra
+            containerPalestras.getChildren().add(criarCardPalestra(palestra));
         }
     }
 
-    private VBox criarCardPalestra(Palestra palestra, Participante participante) {
+    private VBox criarCardPalestra(Palestra palestra) {
+        // --- 1. Configuração Visual do Card ---
         VBox card = new VBox(10);
-        card.setStyle("-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);");
+        card.getStyleClass().add("card");
+        card.setStyle("-fx-background-color: #1E2130; -fx-padding: 15; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0); -fx-border-color: rgba(255,255,255,0.1); -fx-border-width: 1; -fx-border-radius: 10;");
 
+        // --- 2. Título da Palestra ---
         Label lblTitulo = new Label(palestra.getTitulo());
-        lblTitulo.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+        lblTitulo.setStyle("-fx-text-fill: #8B5CF6; -fx-font-size: 20px; -fx-font-weight: bold;"); // Roxo Neon
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        String dataStr = palestra.getDataHoraInicio() != null ? palestra.getDataHoraInicio().format(fmt) : "Data a definir";
+        // --- 3. Montagem das Informações Detalhadas ---
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
+        String dataStr = palestra.getDataHoraInicio() != null ? palestra.getDataHoraInicio().format(fmt) : "A definir";
 
-        Label lblInfo = new Label("Palestrante: " + palestra.getPalestrante().getNome() +
-                " | Sala: " + palestra.getSala().getNome() +
-                " | Data: " + dataStr);
+        String nomeEvento = palestra.getEvento() != null ? palestra.getEvento().getNome() : "Evento não informado";
+        String nomeSala = palestra.getSala() != null ? palestra.getSala().getNome() : "Sala não definida";
+        int capacidade = palestra.getSala() != null ? palestra.getSala().getCapacidade() : 0;
+        String nomePalestrante = palestra.getPalestrante() != null ? palestra.getPalestrante().getNome() : "A definir";
+        String emailPalestrante = palestra.getPalestrante() != null ? palestra.getPalestrante().getEmail() : "";
+
+        StringBuilder info = new StringBuilder();
+        info.append("📅 Evento: ").append(nomeEvento).append("\n");
+        info.append("🎤 Palestrante: ").append(nomePalestrante).append(" (").append(emailPalestrante).append(")\n");
+        info.append("📍 Local: ").append(nomeSala).append(" (Capacidade: ").append(capacidade).append(" pessoas)\n");
+        info.append("⏰ Data: ").append(dataStr).append("  |  ⏳ Duração: ").append(palestra.getDuracaoHoras()).append("h\n");
+        info.append("\n📝 Sobre a atividade:\n").append(palestra.getDescricao());
+
+        Label lblInfo = new Label(info.toString());
+        lblInfo.setStyle("-fx-text-fill: #cbd5e1; -fx-font-size: 13px;");
         lblInfo.setWrapText(true);
 
-        Button btnAcao = new Button("Inscrever-se");
-        btnAcao.getStyleClass().add("btn-acao");
-        btnAcao.setOnAction(e -> realizarInscricao(palestra, btnAcao));
+        // --- 4. Botão de Ação ---
+        Button btnInscrever = new Button("Inscrever-se");
+        btnInscrever.getStyleClass().add("btn-acao");
+        btnInscrever.setOnAction(e -> realizarInscricao(palestra, btnInscrever));
 
-        HBox linhaTopo = new HBox(10, lblTitulo);
-        HBox.setHgrow(linhaTopo, Priority.ALWAYS);
+        // --- 5. Layout (Organização) ---
+        VBox conteudoTexto = new VBox(5, lblTitulo, lblInfo);
+        HBox.setHgrow(conteudoTexto, Priority.ALWAYS);
 
-        HBox linhaBotoes = new HBox(btnAcao);
-        linhaBotoes.setAlignment(Pos.CENTER_RIGHT);
+        HBox linhaInferior = new HBox(btnInscrever);
+        linhaInferior.setAlignment(Pos.BOTTOM_RIGHT);
 
-        card.getChildren().addAll(linhaTopo, lblInfo, linhaBotoes);
+        card.getChildren().addAll(conteudoTexto, linhaInferior);
 
         return card;
     }
@@ -77,7 +95,7 @@ public class ViewPalestrasController {
         Participante participante = SessaoUsuario.getInstance().getParticipanteLogado();
 
         if (participante == null) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro de Sessão", "Você precisa estar logado.");
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Sessão expirada. Faça login novamente.");
             ScreenManager.getInstance().carregarTela("TelaLogin.fxml", "Login");
             return;
         }
@@ -85,13 +103,13 @@ public class ViewPalestrasController {
         try {
             SistemaSGA.getInstance().getControladorInscricao().inscrever(participante, palestra);
 
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Inscrição realizada com sucesso!");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso!", "Você está inscrito em: " + palestra.getTitulo());
             btn.setText("Inscrito ✓");
             btn.setDisable(true);
-            btn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white;");
+            btn.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
 
         } catch (Exception e) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Não foi possível inscrever", e.getMessage());
+            mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Não foi possível inscrever: " + e.getMessage());
         }
     }
 

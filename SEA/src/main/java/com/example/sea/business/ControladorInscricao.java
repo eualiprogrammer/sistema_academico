@@ -1,9 +1,9 @@
 package com.example.sea.business;
 
-import com.example.sea.data.*; 
-import com.example.sea.model.*; 
-import com.example.sea.exceptions.*; 
-import java.util.ArrayList; 
+import com.example.sea.data.*;
+import com.example.sea.model.*;
+import com.example.sea.exceptions.*;
+import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,8 +11,14 @@ public class ControladorInscricao implements IControladorInscricao {
 
     private IRepositorioInscricao repositorioInscricao;
 
+    // --- CORREÇÃO 1: Declarar a variável aqui ---
+    private IRepositorioCertificado repositorioCertificado;
+
     public ControladorInscricao() {
         this.repositorioInscricao = new RepositorioInscricao();
+
+        // --- CORREÇÃO 2: Inicializar a variável aqui ---
+        this.repositorioCertificado = new RepositorioCertificado();
     }
 
     private void validarConflitoHorario(Participante participante, Palestra novaPalestra) throws ConflitoHorarioException {
@@ -23,30 +29,26 @@ public class ControladorInscricao implements IControladorInscricao {
 
         for (Inscricao inscricaoExistente : inscricoesExistentes) {
             Palestra palestraExistente = inscricaoExistente.getPalestra();
-            
             LocalDateTime inicioExistente = palestraExistente.getDataHoraInicio();
             LocalDateTime fimExistente = inicioExistente.plusHours((long) palestraExistente.getDuracaoHoras());
 
             if (inicioNova.isBefore(fimExistente) && fimNova.isAfter(inicioExistente)) {
-                throw new ConflitoHorarioException(
-                    palestraExistente.getTitulo(), 
-                    novaPalestra.getTitulo()
-                );
+                throw new ConflitoHorarioException(palestraExistente.getTitulo(), novaPalestra.getTitulo());
             }
         }
     }
 
     @Override
-    public void inscrever(Participante participante, Palestra palestra) 
-        throws InscricaoJaExisteException, LotacaoExcedidaException, ConflitoHorarioException, 
-               PalestraNaoEncontradaException, ParticipanteNaoEncontradoException {
-        
+    public void inscrever(Participante participante, Palestra palestra)
+            throws InscricaoJaExisteException, LotacaoExcedidaException, ConflitoHorarioException,
+            PalestraNaoEncontradaException, ParticipanteNaoEncontradoException {
+
         if (participante == null) throw new ParticipanteNaoEncontradoException("null");
         if (palestra == null) throw new PalestraNaoEncontradaException("null");
 
         int numeroInscritos = this.repositorioInscricao.listarPorPalestra(palestra).size();
         int capacidadeSala = palestra.getSala().getCapacidade();
-        
+
         if (numeroInscritos >= capacidadeSala) {
             throw new LotacaoExcedidaException(palestra.getTitulo());
         }
@@ -54,7 +56,6 @@ public class ControladorInscricao implements IControladorInscricao {
         this.validarConflitoHorario(participante, palestra);
 
         Inscricao novaInscricao = new Inscricao(participante, palestra);
-        
         this.repositorioInscricao.salvar(novaInscricao);
     }
 
@@ -67,10 +68,25 @@ public class ControladorInscricao implements IControladorInscricao {
     @Override
     public void marcarPresenca(Inscricao inscricao) throws InscricaoNaoEncontradaException {
         if (inscricao == null) throw new InscricaoNaoEncontradaException();
-        
+
+        // 1. Marca presença no objeto
         inscricao.confirmarPresenca();
-        
+
+        // 2. Atualiza a inscrição no banco de dados
         this.repositorioInscricao.atualizar(inscricao);
+
+        // 3. GERA O CERTIFICADO AUTOMATICAMENTE E SALVA
+        try {
+            Certificado novoCertificado = new Certificado(inscricao);
+
+            // --- AQUI ESTAVA O ERRO ANTES (Agora vai funcionar) ---
+            this.repositorioCertificado.salvar(novoCertificado);
+
+            System.out.println("Presença confirmada e Certificado gerado: " + novoCertificado.getCodigoValidacao());
+
+        } catch (Exception e) {
+            System.err.println("Erro ao gerar certificado automático: " + e.getMessage());
+        }
     }
 
     @Override
@@ -86,23 +102,26 @@ public class ControladorInscricao implements IControladorInscricao {
     }
 
     @Override
-    public Certificado gerarCertificado(Inscricao inscricao) 
-        throws InscricaoNaoEncontradaException, CertificadoSemPresencaException {
-        
+    public Certificado gerarCertificado(Inscricao inscricao)
+            throws InscricaoNaoEncontradaException, CertificadoSemPresencaException {
+
         if (inscricao == null) throw new InscricaoNaoEncontradaException();
 
         if (!inscricao.isPresenca()) {
             throw new CertificadoSemPresencaException(
-                inscricao.getParticipante().getNome(), 
+                inscricao.getParticipante().getNome(),
                 inscricao.getPalestra().getTitulo()
             );
         }
 
         Certificado novoCertificado = new Certificado(inscricao);
 
-        this.repositorioInscricao.atualizar(inscricao);
-        
-        System.out.println("Certificado gerado: " + novoCertificado.getCodigoValidacao());
+        try {
+            this.repositorioCertificado.salvar(novoCertificado);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return novoCertificado;
     }
 
@@ -113,9 +132,7 @@ public class ControladorInscricao implements IControladorInscricao {
 
     @Override
     public void atualizar(Inscricao inscricao) throws Exception {
-        if (inscricao == null) {
-            throw new IllegalArgumentException("Inscrição inválida");
-        }
+        if (inscricao == null) throw new IllegalArgumentException("Inscrição inválida");
         this.repositorioInscricao.atualizar(inscricao);
     }
 

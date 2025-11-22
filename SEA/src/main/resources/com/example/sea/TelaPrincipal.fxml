@@ -14,7 +14,7 @@
     <left>
         <VBox prefWidth="260.0" spacing="10.0" styleClass="sidebar">
             <padding><Insets bottom="30" left="20" right="20" top="30" /></padding>
-         <ImageView fitHeight="253.0" fitWidth="273.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fitHeight="224.0" fitWidth="291.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@images/logo_eventos_academicos_brilhoso.png" />
             </image>
@@ -25,6 +25,8 @@
             <Button maxWidth="Infinity" onAction="#irParaEventos" styleClass="btn-acao" text="EVENTOS" />
             <Button maxWidth="Infinity" onAction="#irParaPalestras" styleClass="btn-acao" text="PALESTRAS" />
             <Button maxWidth="Infinity" onAction="#irParaInscricoes" styleClass="btn-acao" text="INSCRIÇÕES" />
+
+            <Button maxWidth="Infinity" onAction="#irParaPresencas" styleClass="btn-acao" text="PRESENÇAS" />
 
             <VBox VBox.vgrow="ALWAYS" />
 

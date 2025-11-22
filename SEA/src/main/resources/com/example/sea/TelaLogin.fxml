@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="483.0" prefWidth="422.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaLoginController">
+<StackPane prefHeight="483.0" prefWidth="422.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaLoginController">
 
     <VBox alignment="CENTER" maxHeight="483.0" maxWidth="350" prefHeight="483.0" prefWidth="350.0" spacing="20" styleClass="card">
         <padding><Insets bottom="40" left="40" right="40" top="40" /></padding>
    
-        <Label prefHeight="25.0" prefWidth="302.0" styleClass="titulo" text="SISTEMA DE EVENTOS ACADÊMICOS">
+        <Label alignment="TOP_CENTER" prefHeight="25.0" prefWidth="302.0" styleClass="titulo" text="SGA">
          <font>
             <Font size="16.0" />
          </font>
@@ -23,6 +23,9 @@
         <VBox alignment="CENTER_LEFT" spacing="5">
             <Label text="Email" />
             <TextField fx:id="txtEmail" prefHeight="40" promptText="seu@email.com" />
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
         </VBox>
 
         <VBox alignment="CENTER_LEFT" spacing="5">

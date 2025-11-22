@@ -1,52 +1,42 @@
 package com.example.sea.gui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class TelaPrincipalController {
 
     @FXML
     private void irParaPalestrantes() {
-        ScreenManager.getInstance().carregarTela("TelaListarPalestrantes.fxml", "Gestão de Palestrantes");
+        ScreenManager.getInstance().carregarTela("TelaListarPalestrantes.fxml", "Gerenciar Palestrantes");
     }
 
     @FXML
     private void irParaSalas() {
-        ScreenManager.getInstance().carregarTela("TelaListarSalas.fxml", "Gestão de Salas");
+        ScreenManager.getInstance().carregarTela("TelaListarSalas.fxml", "Gerenciar Salas");
     }
 
     @FXML
     private void irParaEventos() {
-        ScreenManager.getInstance().carregarTela("TelaListarEventos.fxml", "Gestão de Eventos");
+        ScreenManager.getInstance().carregarTela("TelaListarEventos.fxml", "Gerenciar Eventos");
     }
 
     @FXML
     private void irParaPalestras() {
-        System.out.println("Navegando para Palestras...");
         ScreenManager.getInstance().carregarTela("TelaListarPalestras.fxml", "Gerenciar Palestras");
     }
 
     @FXML
     private void irParaInscricoes() {
-        ScreenManager.getInstance().carregarTela("TelaListarInscricoes.fxml", "Gestão de Inscrições");
+        ScreenManager.getInstance().carregarTela("TelaListarInscricoes.fxml", "Gerenciar Inscrições");
     }
 
+    // --- ESSE É O MÉTODO QUE O ERRO RECLAMAVA ---
     @FXML
-    private void irParaRelatorios() {
-        mostrarAviso("Funcionalidade de Relatórios em breve!");
+    private void irParaPresencas() {
+        ScreenManager.getInstance().carregarTela("admin_presencas_list.fxml", "Gerenciar Presenças");
     }
 
     @FXML
     private void sair() {
-        ScreenManager.getInstance().carregarTela("TelaLogin.fxml", "Login");
-    }
-
-    private void mostrarAviso(String mensagem) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Aviso");
-        alert.setHeaderText(null);
-        alert.setContentText(mensagem);
-        alert.showAndWait();
+        System.exit(0);
     }
 }

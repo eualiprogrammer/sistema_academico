@@ -125,18 +125,31 @@ public class RepositorioInscricao implements IRepositorioInscricao {
     }
 
     @Override
-    public void atualizar(Inscricao inscricao) throws InscricaoNaoEncontradaException {
-        if (inscricao == null) {
+    public void atualizar(Inscricao inscricaoAtualizada) throws InscricaoNaoEncontradaException {
+        boolean encontrou = false;
+
+        // Procura a inscrição na lista e substitui
+        for (int i = 0; i < inscricoes.size(); i++) {
+            // Compara se é a mesma inscrição (pode usar ID ou a combinação Participante+Palestra)
+            Inscricao inscricaoExistente = inscricoes.get(i);
+
+            // Se a sua classe Inscrição não tem ID, compare pelos objetos
+            if (inscricaoExistente.equals(inscricaoAtualizada) ||
+                    (inscricaoExistente.getParticipante().getCpf().equals(inscricaoAtualizada.getParticipante().getCpf()) &&
+                            inscricaoExistente.getPalestra().getTitulo().equals(inscricaoAtualizada.getPalestra().getTitulo()))) {
+
+                inscricoes.set(i, inscricaoAtualizada); // Substitui a velha pela nova (com presença)
+                encontrou = true;
+                break;
+            }
+        }
+
+        if (!encontrou) {
             throw new InscricaoNaoEncontradaException();
         }
-        
-        Inscricao existente = this.buscar(inscricao.getParticipante(), inscricao.getPalestra()); 
-        
-        existente.setPresenca(inscricao.isPresenca());
-        existente.setStatusConfirmacao(inscricao.getStatusConfirmacao());
-        
-        this.salvarDados();
-        System.out.println("Inscrição atualizada.");
+
+        // Fundamental: Salvar no arquivo!
+        salvarDados();
     }
 
     @Override
