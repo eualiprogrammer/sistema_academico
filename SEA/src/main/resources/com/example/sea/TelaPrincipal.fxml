@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<BorderPane fx:id="mainLayout" prefHeight="720.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.sea.gui.TelaPrincipalController">
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaPrincipalController">
+    <left>
+        <VBox prefWidth="260.0" spacing="10.0" styleClass="sidebar">
+            <padding><Insets top="30" right="20" bottom="30" left="20"/></padding>
 
-    <padding>
-        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
-    </padding>
+            <Label text="SGA ADMIN" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 0 0 30 0;"/>
 
-    <Label styleClass="titulo" text="Sistema de Gestão Acadêmica (SGA)">
-        <font>
-            <Font name="System Bold" size="24.0" />
-        </font>
-    </Label>
+            <Button text="PALESTRANTES" onAction="#irParaPalestrantes" maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="SALAS" onAction="#irParaSalas" maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="EVENTOS" onAction="#irParaEventos" maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="PALESTRAS" onAction="#irParaPalestras" maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="INSCRIÇÕES" onAction="#irParaInscricoes" maxWidth="Infinity" styleClass="sidebar-button"/>
 
-    <Label text="Menu Principal" textFill="#666666">
-        <font>
-            <Font size="14.0" />
-        </font>
-    </Label>
+            <VBox VBox.vgrow="ALWAYS" />
 
-    <Button onAction="#irParaPalestrantes" prefHeight="40" prefWidth="250" styleClass="button" text="Gerenciar Palestrantes" />
-    <Button onAction="#irParaSalas" prefHeight="40" prefWidth="250" styleClass="button" text="Gerenciar Salas" />
-    <Button onAction="#irParaEventos" prefHeight="40" prefWidth="250" styleClass="button" text="Gerenciar Eventos" />
+            <Button text="SAIR" onAction="#sair" maxWidth="Infinity" styleClass="btn-perigo"/>
+        </VBox>
+    </left>
 
-    <Button onAction="#sair" prefHeight="40" prefWidth="250" styleClass="button-perigo" text="Sair" />
-</VBox>
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-padding: 30;">
+            <Label text="Bem-vindo ao Painel Administrativo" styleClass="titulo"/>
+        </StackPane>
+    </center>
+</BorderPane>
