@@ -56,14 +56,14 @@ public class ControladorWorkshop implements IControladorWorkshop {
     public void adicionarPalestraAoWorkshop(String tituloWorkshop, Palestra palestra) 
             throws WorkshopNaoEncontradoException, CampoVazioException {
 
-        // 1. Busca o workshop
+        
         Workshop workshop = this.buscar(tituloWorkshop);
 
-        // 2. Adiciona a palestra na lista dele
+        
         if (palestra != null) {
             workshop.adicionarPalestra(palestra);
 
-            // 3. Salva a atualização no ficheiro .dat
+            
             this.repositorioWorkshop.atualizar(workshop);
         }
     }

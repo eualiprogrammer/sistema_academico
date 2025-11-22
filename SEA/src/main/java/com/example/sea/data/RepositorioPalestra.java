@@ -16,24 +16,16 @@ import com.example.sea.exceptions.PalestraNaoEncontradaException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * IMPLEMENTAÇÃO com Serialização (ficheiros .dat) da interface IRepositorioPalestra.
- * Esta classe salva os dados de Palestras num ficheiro.
- */
 public class RepositorioPalestra implements IRepositorioPalestra {
 
-    // A lista em memória
     private List<Palestra> palestras;
     
-    // O nome do ficheiro .dat
     private static final String NOME_ARQUIVO = "RepoPalestras.dat";
 
-    //Construtor: Carrega os dados do ficheiro .dat para a memória.
     public RepositorioPalestra() {
         this.palestras = new ArrayList<>();
-        this.carregarDados(); // Carrega o "banco"
+        this.carregarDados();
     }
-
 
     @SuppressWarnings("unchecked")
     private void carregarDados() {
@@ -49,7 +41,6 @@ public class RepositorioPalestra implements IRepositorioPalestra {
             this.palestras = (ArrayList<Palestra>) ois.readObject();
 
         } catch (EOFException e) {
-            // Fim do ficheiro, normal.
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar dados das palestras: " + e.getMessage());
             this.palestras = new ArrayList<>();
@@ -72,15 +63,12 @@ public class RepositorioPalestra implements IRepositorioPalestra {
         if (palestra == null) return;
         
         try {
-            // Tenta buscar pelo título para ver se já existe
             buscarPorTitulo(palestra.getTitulo());
-            // Se encontrou, lança a exceção
             throw new PalestraJaExisteException(palestra.getTitulo());
             
         } catch (PalestraNaoEncontradaException e) {
-            // Se NÃO encontrou ele cai aqui.
-            this.palestras.add(palestra); // Adiciona na lista em memória
-            this.salvarDados(); // Salva a lista no ficheiro .dat
+            this.palestras.add(palestra);
+            this.salvarDados();
             System.out.println("Palestra salva com sucesso: " + palestra.getTitulo());
         }
     }
@@ -92,16 +80,15 @@ public class RepositorioPalestra implements IRepositorioPalestra {
         }
         for (Palestra p : this.palestras) {
             if (p.getTitulo().equalsIgnoreCase(titulo)) {
-                return p; // Encontrou
+                return p;
             }
         }
-        // Se o loop 'for' terminar e não encontrar, lança a exceção
         throw new PalestraNaoEncontradaException(titulo);
     }
 
     @Override
     public List<Palestra> listarTodas() {
-        return new ArrayList<>(this.palestras); // Retorna uma cópia
+        return new ArrayList<>(this.palestras);
     }
 
     @Override
@@ -110,7 +97,6 @@ public class RepositorioPalestra implements IRepositorioPalestra {
         if (evento == null) return listaFiltrada;
 
         for (Palestra p : this.palestras) {
-            // Compara pelo nome do evento (idealmente seria por ID)
             if (p.getEvento().getNome().equals(evento.getNome())) {
                 listaFiltrada.add(p);
             }
@@ -124,29 +110,24 @@ public class RepositorioPalestra implements IRepositorioPalestra {
             throw new PalestraNaoEncontradaException("Palestra nula");
         }
         
-        // O buscarPorTitulo já lança a exceção se não encontrar
         Palestra existente = this.buscarPorTitulo(palestra.getTitulo()); 
         
-        // Se encontrou, atualiza (em memória)
-        // (Nota: O Título não é atualizável, pois é o nosso ID)
         existente.setDescricao(palestra.getDescricao());
         existente.setDataHoraInicio(palestra.getDataHoraInicio());
         existente.setDuracaoHoras(palestra.getDuracaoHoras());
         existente.setSala(palestra.getSala());
         existente.setPalestrante(palestra.getPalestrante());
-        // A lista de inscrições NÃO é gerida aqui.
         
-        this.salvarDados(); // Salva no ficheiro
+        this.salvarDados();
         System.out.println("Palestra atualizada: " + palestra.getTitulo());
     }
 
     @Override
     public void deletar(String titulo) throws PalestraNaoEncontradaException {
-        // O buscarPorTitulo já lança a exceção se não encontrar
         Palestra paraRemover = this.buscarPorTitulo(titulo); 
         
-        this.palestras.remove(paraRemover); // Remove da lista
-        this.salvarDados(); // Salva no ficheiro
+        this.palestras.remove(paraRemover);
+        this.salvarDados();
         System.out.println("Palestra removida: " + titulo);
     }
 }

@@ -19,7 +19,6 @@ public class TelaCadastroInscricaoController {
     @FXML
     private ChoiceBox<Palestra> choicePalestra;
 
-    // Variável para controlar se estamos editando
     private Inscricao inscricaoEmEdicao;
 
     @FXML
@@ -28,7 +27,6 @@ public class TelaCadastroInscricaoController {
     }
 
     private void carregarDadosChoiceBox() {
-        // Carrega as listas de participantes e palestras nos selects
         choiceParticipante.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorParticipante().listarTodos()
         ));
@@ -38,12 +36,10 @@ public class TelaCadastroInscricaoController {
         ));
     }
 
-    // Método chamado pelo ScreenManager para passar os dados na edição
     public void setInscricao(Inscricao inscricao) {
         this.inscricaoEmEdicao = inscricao;
 
         if (inscricao != null) {
-            // Seleciona os itens correspondentes nos ChoiceBoxes
             choiceParticipante.setValue(inscricao.getParticipante());
             choicePalestra.setValue(inscricao.getPalestra());
         }
@@ -61,21 +57,17 @@ public class TelaCadastroInscricaoController {
             }
 
             if (inscricaoEmEdicao != null) {
-                // --- MODO EDIÇÃO ---
                 inscricaoEmEdicao.setParticipante(participante);
                 inscricaoEmEdicao.setPalestra(palestra);
-                // Chama o método atualizar (que vamos criar no Passo 2 e 3)
                 SistemaSGA.getInstance().getControladorInscricao().atualizar(inscricaoEmEdicao);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Inscrição atualizada com sucesso!");
             } else {
-                // --- MODO CRIAÇÃO ---
-                // O seu construtor já define a data/hora internamente
                 Inscricao novaInscricao = new Inscricao(participante, palestra);
                 SistemaSGA.getInstance().getControladorInscricao().cadastrar(novaInscricao);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Inscrição realizada com sucesso!");
             }
 
-            voltar(); // Volta para a lista
+            voltar();
 
         } catch (Exception e) {
             e.printStackTrace();

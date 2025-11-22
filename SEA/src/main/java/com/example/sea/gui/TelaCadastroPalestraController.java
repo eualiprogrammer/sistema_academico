@@ -14,7 +14,6 @@ import java.time.LocalTime;
 
 public class TelaCadastroPalestraController {
 
-
     @FXML private TextField txtNome;
     @FXML private ChoiceBox<Evento> cbEvento;
     @FXML private ChoiceBox<Sala> cbSala;
@@ -22,7 +21,6 @@ public class TelaCadastroPalestraController {
     @FXML private DatePicker dpDataInicio;
     @FXML private TextField txtDuracaoHoras;
     @FXML private TextArea txtDescricao;
-
 
     @FXML private TextField txtHora;
 
@@ -32,11 +30,9 @@ public class TelaCadastroPalestraController {
     }
 
     private void carregarChoiceBoxes() {
-        // 1. Carregar Eventos
         cbEvento.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorEvento().listar()
         ));
-        // Converter para mostrar apenas o NOME do evento
         cbEvento.setConverter(new StringConverter<>() {
             @Override
             public String toString(Evento e) {
@@ -49,7 +45,6 @@ public class TelaCadastroPalestraController {
             }
         });
 
-        // 2. Carregar Salas
         cbSala.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorSala().listar()
         ));
@@ -65,7 +60,6 @@ public class TelaCadastroPalestraController {
             }
         });
 
-        // 3. Carregar Palestrantes
         cbPalestrante.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorPalestrante().listar()
         ));
@@ -83,30 +77,25 @@ public class TelaCadastroPalestraController {
     }
 
     @FXML
-    private void salvar() { // Associe este método ao botão "Salvar" (On Action: #salvar)
+    private void salvar() {
         try {
-            // 1. Pegar os dados simples
             String titulo = txtNome.getText();
             String descricao = txtDescricao.getText();
             String duracaoTexto = txtDuracaoHoras.getText();
 
-            // 2. Pegar Data e Hora
             LocalDate data = dpDataInicio.getValue();
-            String horaTexto = txtHora.getText(); // Ex: "14:00"
+            String horaTexto = txtHora.getText();
 
-            // Validação básica de UI
             if (data == null || horaTexto == null || horaTexto.isEmpty()) {
                 mostrarAlerta(AlertType.WARNING, "Atenção", "Preencha a data e a hora da palestra.");
                 return;
             }
 
-            // Montar o LocalDateTime
             LocalTime hora = LocalTime.parse(horaTexto);
             LocalDateTime dataHoraInicio = LocalDateTime.of(data, hora);
 
             float duracao = Float.parseFloat(duracaoTexto);
 
-            // 3. Pegar os objetos selecionados nos ChoiceBoxes
             Evento eventoSelecionado = cbEvento.getValue();
             Sala salaSelecionada = cbSala.getValue();
             Palestrante palestranteSelecionado = cbPalestrante.getValue();
@@ -115,7 +104,6 @@ public class TelaCadastroPalestraController {
             if (salaSelecionada == null) throw new Exception("Selecione uma Sala.");
             if (palestranteSelecionado == null) throw new Exception("Selecione um Palestrante.");
 
-            // 4. Chamar o Backend
             SistemaSGA.getInstance().getControladorPalestra().cadastrar(
                     titulo, descricao, eventoSelecionado,
                     dataHoraInicio, duracao,
@@ -131,7 +119,7 @@ public class TelaCadastroPalestraController {
     }
 
     @FXML
-    private void cancelar() { // Associe ao botão "Cancelar"
+    private void cancelar() {
         ScreenManager.getInstance().carregarTela("TelaPrincipal.fxml", "Menu Principal");
     }
 

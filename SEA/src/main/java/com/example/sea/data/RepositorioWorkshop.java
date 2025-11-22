@@ -71,9 +71,9 @@ public class RepositorioWorkshop implements IRepositorioWorkshop {
         if (workshop == null) throw new WorkshopNaoEncontradoException("null");
         Workshop existente = buscarPorTitulo(workshop.getTitulo());
 
-        // Atualiza dados básicos
+        
         existente.setDescricao(workshop.getDescricao());
-        // A lista de palestras internas é atualizada por referência
+        
 
         this.salvarDados();
         System.out.println("Workshop atualizado: " + workshop.getTitulo());

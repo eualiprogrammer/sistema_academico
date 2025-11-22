@@ -6,12 +6,8 @@ import javafx.scene.control.Alert.AlertType;
 
 public class TelaPrincipalController {
 
-    // --- MÉTODOS DE NAVEGAÇÃO (Botões do Menu) ---
-
     @FXML
     private void irParaPalestrantes() {
-        // Carrega a tela de listagem de palestrantes
-        // Certifica-te que o nome do ficheiro FXML está correto na tua pasta view
         ScreenManager.getInstance().carregarTela("TelaListarPalestrantes.fxml", "Gestão de Palestrantes");
     }
 
@@ -38,19 +34,13 @@ public class TelaPrincipalController {
 
     @FXML
     private void irParaRelatorios() {
-        // Futura tela de relatórios
         mostrarAviso("Funcionalidade de Relatórios em breve!");
     }
 
-    // --- LOGOUT ---
-
     @FXML
     private void sair() {
-        // Volta para a tela de Login
         ScreenManager.getInstance().carregarTela("TelaLogin.fxml", "Login");
     }
-
-    // --- Utilitário ---
 
     private void mostrarAviso(String mensagem) {
         Alert alert = new Alert(AlertType.INFORMATION);

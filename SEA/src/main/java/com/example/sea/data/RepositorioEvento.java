@@ -15,10 +15,8 @@ import com.example.sea.exceptions.EventoNaoEncontradoException;
 import java.util.ArrayList;
 import java.util.List;
 
-// Implementação da Interface IRepositorioEvento usando persistência em ficheiro .dat
 public class RepositorioEvento implements IRepositorioEvento {
 
-    // A lista em memória
     private List<Evento> eventos;
     
     private static final String NOME_ARQUIVO = "RepoEventos.dat";
@@ -28,13 +26,12 @@ public class RepositorioEvento implements IRepositorioEvento {
         this.carregarDados();
     }
 
-
     @SuppressWarnings("unchecked")
     private void carregarDados() {
         File arquivo = new File(NOME_ARQUIVO);
         if (!arquivo.exists()) {
             System.out.println("Ficheiro 'RepoEventos.dat' não encontrado. A começar com lista vazia.");
-            return; 
+            return;
         }
 
         try (FileInputStream fis = new FileInputStream(NOME_ARQUIVO);
@@ -60,7 +57,6 @@ public class RepositorioEvento implements IRepositorioEvento {
         }
     }
     
-
     @Override
     public void salvar(Evento evento) throws EventoJaExisteException {
         if (evento == null) return;
@@ -70,8 +66,8 @@ public class RepositorioEvento implements IRepositorioEvento {
             throw new EventoJaExisteException(evento.getNome());
             
         } catch (EventoNaoEncontradoException e) {
-            this.eventos.add(evento); 
-            this.salvarDados(); 
+            this.eventos.add(evento);
+            this.salvarDados();
             System.out.println("Evento salvo com sucesso: " + evento.getNome());
         }
     }
@@ -83,7 +79,7 @@ public class RepositorioEvento implements IRepositorioEvento {
         }
         for (Evento e : this.eventos) {
             if (e.getNome().equalsIgnoreCase(nome)) {
-                return e; 
+                return e;
             }
         }
         throw new EventoNaoEncontradoException(nome);
@@ -91,7 +87,7 @@ public class RepositorioEvento implements IRepositorioEvento {
 
     @Override
     public List<Evento> listarTodos() {
-        return new ArrayList<>(this.eventos); 
+        return new ArrayList<>(this.eventos);
     }
 
     @Override
@@ -100,25 +96,20 @@ public class RepositorioEvento implements IRepositorioEvento {
             throw new EventoNaoEncontradoException("Evento nulo");
         }
         
-        // O buscarPorNome já lança a exceção se não encontrar
         Evento existente = this.buscarPorNome(evento.getNome());
 
-        // Se encontrou, atualiza (em memória)
-        // (Nota: O nome não é atualizável, pois é o nosso ID)
         existente.setDescricao(evento.getDescricao());
         existente.setDataInicio(evento.getDataInicio());
         existente.setDataFim(evento.getDataFim());
-        // Nota: A lista de atividades NÃO é gerida aqui.
-        this.salvarDados(); 
+        this.salvarDados();
         System.out.println("Evento atualizado: " + evento.getNome());
     }
 
     @Override
     public void deletar(String nome) throws EventoNaoEncontradoException {
-        // O buscarPorNome já lança a exceção se não encontrar
-        Evento paraRemover = this.buscarPorNome(nome); 
-        this.eventos.remove(paraRemover); 
-        this.salvarDados(); 
+        Evento paraRemover = this.buscarPorNome(nome);
+        this.eventos.remove(paraRemover);
+        this.salvarDados();
         System.out.println("Evento removido: " + nome);
     }
 }

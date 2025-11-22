@@ -12,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TelaListarSalasController {
 
-    // --- Tabela e Colunas ---
     @FXML private TableView<Sala> tabelaSalas;
 
     @FXML private TableColumn<Sala, String> colNome;
@@ -28,19 +27,14 @@ public class TelaListarSalasController {
     }
 
     private void configurarColunas() {
-        // Liga as colunas aos atributos da classe Sala (os nomes devem ser exatos!)
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colCapacidade.setCellValueFactory(new PropertyValueFactory<>("capacidade"));
-
-        // No modelo Sala, os atributos são 'numeroProjetores' e 'numeroCaixasSom'
         colProjetores.setCellValueFactory(new PropertyValueFactory<>("numeroProjetores"));
         colCaixasDeSom.setCellValueFactory(new PropertyValueFactory<>("numeroCaixasSom"));
-
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
     }
 
     private void atualizarTabela() {
-        // Busca a lista atualizada do Sistema e preenche a tabela
         tabelaSalas.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorSala().listar()
         ));
@@ -48,7 +42,6 @@ public class TelaListarSalasController {
 
     @FXML
     private void novaSala() {
-        // Navega para a tela de cadastro de sala
         ScreenManager.getInstance().carregarTela("TelaCadastroSala.fxml", "Nova Sala");
     }
 
@@ -62,11 +55,10 @@ public class TelaListarSalasController {
         }
 
         try {
-            // O identificador único da sala é o Nome
             SistemaSGA.getInstance().getControladorSala().remover(selecionada.getNome());
 
             mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Sala removida com sucesso!");
-            atualizarTabela(); // Atualiza a lista visualmente
+            atualizarTabela();
 
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Erro", "Não foi possível excluir: " + e.getMessage());
@@ -88,7 +80,6 @@ public class TelaListarSalasController {
 
     @FXML
     private void editar() {
-        // Pega o item selecionado na tabela (verifique se o nome da sua tabela é 'tabelaSalas' ou similar)
         Sala salaSelecionada = tabelaSalas.getSelectionModel().getSelectedItem();
 
         if (salaSelecionada == null) {
@@ -100,7 +91,6 @@ public class TelaListarSalasController {
             return;
         }
 
-        // Abre a tela de cadastro passando a sala
         ScreenManager.getInstance().carregarTelaEdicao(
                 "TelaCadastroSala.fxml",
                 "Editar Sala",

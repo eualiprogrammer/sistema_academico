@@ -15,14 +15,11 @@ import java.time.LocalDate;
 
 public class TelaListarEventosController {
 
-    // --- Tabela e Colunas ---
     @FXML private TableView<Evento> tabelaEventos;
     @FXML private TableColumn<Evento, String> colNome;
     @FXML private TableColumn<Evento, String> colDescricao;
     @FXML private TableColumn<Evento, LocalDate> colDataInicio;
     @FXML private TableColumn<Evento, LocalDate> colDataFim;
-
-    // Esta coluna é especial, pois 'atividades' é uma lista, não uma String
     @FXML private TableColumn<Evento, String> colAtividades;
 
     @FXML
@@ -32,14 +29,11 @@ public class TelaListarEventosController {
     }
 
     private void configurarColunas() {
-        // Liga as colunas simples aos atributos da classe Evento
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
         colDataInicio.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
         colDataFim.setCellValueFactory(new PropertyValueFactory<>("dataFim"));
 
-        // Configuração Especial para a coluna ATIVIDADES
-        // Em vez de mostrar a lista bruta, mostra o tamanho dela (ex: "5 atividades")
         colAtividades.setCellValueFactory(cellData -> {
             int qtd = cellData.getValue().getAtividades().size();
             return new SimpleStringProperty(qtd + " atividades");
@@ -47,7 +41,6 @@ public class TelaListarEventosController {
     }
 
     private void atualizarTabela() {
-        // Busca a lista atualizada do Sistema e coloca na tabela
         tabelaEventos.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorEvento().listar()
         ));
@@ -55,7 +48,6 @@ public class TelaListarEventosController {
 
     @FXML
     private void novoEvento() {
-        // Navega para a tela de cadastro que criamos antes
         ScreenManager.getInstance().carregarTela("TelaCadastroEvento.fxml", "Novo Evento");
     }
 
@@ -69,24 +61,19 @@ public class TelaListarEventosController {
         }
 
         try {
-            // Chama o backend para remover
             SistemaSGA.getInstance().getControladorEvento().remover(eventoSelecionado.getNome());
-
             mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Evento removido com sucesso!");
-            atualizarTabela(); // Atualiza a lista visualmente
+            atualizarTabela();
 
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Erro", "Não foi possível excluir: " + e.getMessage());
         }
     }
 
-    // (Opcional) Se você tiver um botão "Ver Detalhes" ou "Adicionar Palestras"
     @FXML
     private void verDetalhes() {
         Evento eventoSelecionado = tabelaEventos.getSelectionModel().getSelectedItem();
         if (eventoSelecionado != null) {
-            // Lógica futura para abrir a tela admin_evento_detail.fxml
-            // e passar o eventoSelecionado para ela
             System.out.println("Ver detalhes de: " + eventoSelecionado.getNome());
         }
     }

@@ -26,20 +26,12 @@ public class TelaListarPalestrasController {
     }
 
     private void configurarColunas() {
-        // IMPORTANTE: Verifique se na sua classe Palestra o método é 'getTitulo' ou 'getNome'
-        // Se for 'getNome', mude abaixo para "nome"
         colNome.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-
-        // Pega o nome do Palestrante (objeto dentro de Palestra)
         colPalestrante.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getPalestrante().getNome()));
-
-        // Pega o nome da Sala (objeto dentro de Palestra)
         colSala.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getSala().getNome()));
-
         colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-
         colDuracaoHoras.setCellValueFactory(cellData ->
                 new SimpleStringProperty(String.valueOf(cellData.getValue().getDuracaoHoras())));
     }
@@ -50,7 +42,6 @@ public class TelaListarPalestrasController {
         ));
     }
 
-    // --- ESTE É O MÉTODO QUE ESTAVA FALTANDO ---
     @FXML
     private void editar() {
         Palestra palestraSelecionada = tabelaPalestras.getSelectionModel().getSelectedItem();
@@ -60,14 +51,12 @@ public class TelaListarPalestrasController {
             return;
         }
 
-        // Abre a tela de cadastro passando a palestra para edição
         ScreenManager.getInstance().carregarTelaEdicao(
                 "TelaCadastroPalestra.fxml",
                 "Editar Palestra",
                 palestraSelecionada
         );
     }
-    // ------------------------------------------
 
     @FXML
     private void novaPalestra() {
@@ -84,14 +73,9 @@ public class TelaListarPalestrasController {
         }
 
         try {
-            // Tenta remover
             SistemaSGA.getInstance().getControladorPalestra().remover(palestraSelecionada.getTitulo());
-
-            // Atualiza a tabela visualmente
             atualizarTabela();
-
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Palestra removida.");
-
         } catch (Exception e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao excluir: " + e.getMessage());
         }

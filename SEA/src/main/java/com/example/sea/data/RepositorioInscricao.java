@@ -17,19 +17,12 @@ import com.example.sea.exceptions.InscricaoNaoEncontradaException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * IMPLEMENTAÇÃO com Serialização (ficheiros .dat) da interface IRepositorioInscricao.
- * Esta classe salva os dados de Inscrições num ficheiro.
- */
 public class RepositorioInscricao implements IRepositorioInscricao {
 
-    // A lista em memória
     private List<Inscricao> inscricoes;
     
-    // O nome do ficheiro .dat
     private static final String NOME_ARQUIVO = "RepoInscricoes.dat";
 
-     // Construtor: Carrega os dados do ficheiro .dat para a memória.
     public RepositorioInscricao() {
         this.inscricoes = new ArrayList<>();
         this.carregarDados(); 
@@ -71,18 +64,15 @@ public class RepositorioInscricao implements IRepositorioInscricao {
         if (inscricao == null) return;
         
         try {
-            // Tenta buscar para ver se já existe
             buscar(inscricao.getParticipante(), inscricao.getPalestra());
-            // Se encontrou, lança a exceção
             throw new InscricaoJaExisteException(
                 inscricao.getParticipante().getNome(), 
                 inscricao.getPalestra().getTitulo()
             );
             
         } catch (InscricaoNaoEncontradaException e) {
-            // Se NÃO encontrou, ele cai aqui.
-            this.inscricoes.add(inscricao); // Adiciona na lista em memória
-            this.salvarDados(); // Salva a lista no ficheiro .dat
+            this.inscricoes.add(inscricao);
+            this.salvarDados();
             System.out.println("Inscrição salva com sucesso.");
         }
     }
@@ -93,21 +83,19 @@ public class RepositorioInscricao implements IRepositorioInscricao {
             throw new InscricaoNaoEncontradaException();
         }
         for (Inscricao i : this.inscricoes) {
-            // A identidade única de uma inscrição é o par (participante, palestra)
             boolean mesmoParticipante = i.getParticipante().getCpf().equals(participante.getCpf());
-            boolean mesmaPalestra = i.getPalestra().getTitulo().equals(palestra.getTitulo()); // (Idealmente seria por um ID)
+            boolean mesmaPalestra = i.getPalestra().getTitulo().equals(palestra.getTitulo());
             
             if (mesmoParticipante && mesmaPalestra) {
-                return i; // Encontrou
+                return i;
             }
         }
-        // Se o loop 'for' terminar e não encontrar, lança a exceção
         throw new InscricaoNaoEncontradaException();
     }
 
     @Override
     public List<Inscricao> listarTodas() {
-        return new ArrayList<>(this.inscricoes); // Retorna uma cópia
+        return new ArrayList<>(this.inscricoes);
     }
 
     @Override
@@ -116,7 +104,6 @@ public class RepositorioInscricao implements IRepositorioInscricao {
         if (palestra == null) return listaFiltrada;
 
         for (Inscricao i : this.inscricoes) {
-            // Compara pelo título (idealmente seria por ID)
             if (i.getPalestra().getTitulo().equals(palestra.getTitulo())) {
                 listaFiltrada.add(i);
             }
@@ -130,7 +117,6 @@ public class RepositorioInscricao implements IRepositorioInscricao {
         if (participante == null) return listaFiltrada;
 
         for (Inscricao i : this.inscricoes) {
-            // Compara pelo CPF
             if (i.getParticipante().getCpf().equals(participante.getCpf())) {
                 listaFiltrada.add(i);
             }
@@ -144,16 +130,12 @@ public class RepositorioInscricao implements IRepositorioInscricao {
             throw new InscricaoNaoEncontradaException();
         }
         
-        // O buscar já lança a exceção se não encontrar
         Inscricao existente = this.buscar(inscricao.getParticipante(), inscricao.getPalestra()); 
         
-        // Se encontrou, atualiza (em memória)
-        // A principal coisa a atualizar é a presença
         existente.setPresenca(inscricao.isPresenca());
         existente.setStatusConfirmacao(inscricao.getStatusConfirmacao());
-        // (Geralmente não se muda o participante ou a palestra de uma inscrição)
         
-        this.salvarDados(); // Salva no ficheiro
+        this.salvarDados();
         System.out.println("Inscrição atualizada.");
     }
 
@@ -163,11 +145,10 @@ public class RepositorioInscricao implements IRepositorioInscricao {
             throw new InscricaoNaoEncontradaException();
         }
         
-        // O buscar já lança a exceção se não encontrar
         Inscricao paraRemover = this.buscar(inscricao.getParticipante(), inscricao.getPalestra()); 
         
-        this.inscricoes.remove(paraRemover); // Remove da lista
-        this.salvarDados(); // Salva no ficheiro
+        this.inscricoes.remove(paraRemover);
+        this.salvarDados();
         System.out.println("Inscrição removida.");
     }
 }

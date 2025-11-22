@@ -19,7 +19,7 @@ public interface IControladorWorkshop {
 
     void remover(String titulo) throws WorkshopNaoEncontradoException, CampoVazioException;
 
-    // Método especial para adicionar palestras dentro do workshop
+   
     void adicionarPalestraAoWorkshop(String tituloWorkshop, Palestra palestra) 
         throws WorkshopNaoEncontradoException, CampoVazioException;
 }

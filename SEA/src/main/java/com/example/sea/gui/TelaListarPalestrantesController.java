@@ -12,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class TelaListarPalestrantesController {
 
-    // --- Tabela e Colunas ---
     @FXML private TableView<Palestrante> tabelaPalestrantes;
 
     @FXML private TableColumn<Palestrante, String> colNome;
@@ -27,18 +26,13 @@ public class TelaListarPalestrantesController {
     }
 
     private void configurarColunas() {
-        // Liga as colunas aos atributos exatos da classe Palestrante
-        // (Cuidado: O nome entre aspas deve ser igual ao nome do atributo na classe Model)
         colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-
-        // Nota: No teu model o atributo é 'areaEspecializacao', então usamos esse nome aqui
         colEspecializacao.setCellValueFactory(new PropertyValueFactory<>("areaEspecializacao"));
     }
 
     private void atualizarTabela() {
-        // Busca a lista atualizada do Sistema e coloca na tabela
         tabelaPalestrantes.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorPalestrante().listar()
         ));
@@ -46,7 +40,6 @@ public class TelaListarPalestrantesController {
 
     @FXML
     private void novoPalestrante() {
-        // Navega para a tela de cadastro que já criámos
         ScreenManager.getInstance().carregarTela("TelaCadastroPalestrante.fxml", "Novo Palestrante");
     }
 
@@ -59,8 +52,6 @@ public class TelaListarPalestrantesController {
             return;
         }
 
-        // No futuro, podes criar um método no 'TelaCadastroPalestranteController'
-        // chamado 'setPalestrante(Palestrante p)' para preencher os campos e editar.
         System.out.println("Editar palestrante: " + selecionado.getNome());
         mostrarAlerta(AlertType.INFORMATION, "Em Breve", "A funcionalidade de edição será implementada.");
     }
@@ -75,11 +66,9 @@ public class TelaListarPalestrantesController {
         }
 
         try {
-            // O identificador único do palestrante é o Email (conforme definimos no Repositorio)
             SistemaSGA.getInstance().getControladorPalestrante().remover(selecionado.getEmail());
-
             mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Palestrante removido com sucesso!");
-            atualizarTabela(); // Atualiza a lista visualmente
+            atualizarTabela();
 
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Erro", "Não foi possível excluir: " + e.getMessage());
@@ -99,4 +88,3 @@ public class TelaListarPalestrantesController {
         alert.showAndWait();
     }
 }
-

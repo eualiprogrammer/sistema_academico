@@ -10,14 +10,14 @@ import com.example.sea.exceptions.ParticipanteNaoEncontradoException;
 import java.util.List;
 
 
- // Esta classe contém as regras de negócio e validações.
+ 
 
 public class ControladorParticipante implements IControladorParticipante {
 
     private IRepositorioParticipante repositorioParticipante;
 
     public ControladorParticipante() {
-        // Instancia a implementação concreta do repositório
+        
         this.repositorioParticipante = new RepositorioParticipante();
     }
 
@@ -55,14 +55,14 @@ public class ControladorParticipante implements IControladorParticipante {
 
     @Override
     public void atualizar(Participante participante) throws ParticipanteNaoEncontradoException, CampoVazioException {
-        // Validações (semelhantes ao cadastrar)
+        
         if (participante == null) {
             throw new IllegalArgumentException("O objeto 'Participante' não pode ser nulo.");
         }
         if (participante.getCpf() == null || participante.getCpf().trim().isEmpty()) {
             throw new CampoVazioException("CPF");
         }
-        // Se passou nas validações, chama a camada 'data'
+        
         this.repositorioParticipante.atualizar(participante);
     }
 

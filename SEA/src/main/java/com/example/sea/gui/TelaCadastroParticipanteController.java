@@ -4,7 +4,7 @@ import com.example.sea.business.SistemaSGA;
 import com.example.sea.model.Participante;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField; // Importante
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class TelaCadastroParticipanteController {
@@ -13,7 +13,7 @@ public class TelaCadastroParticipanteController {
     @FXML private TextField txtEmail;
     @FXML private TextField txtInstituicao;
     @FXML private TextField txtCpf;
-    @FXML private PasswordField txtSenha; // <--- NOVO CAMPO
+    @FXML private PasswordField txtSenha;
 
     private Participante participanteEmEdicao;
 
@@ -25,7 +25,6 @@ public class TelaCadastroParticipanteController {
             txtInstituicao.setText(participante.getInstituicao());
             txtCpf.setText(participante.getCpf());
             txtCpf.setDisable(true);
-            // Não preenchemos a senha por segurança, ou deixamos em branco para manter a antiga
         }
     }
 
@@ -36,21 +35,18 @@ public class TelaCadastroParticipanteController {
             String email = txtEmail.getText();
             String instituicao = txtInstituicao.getText();
             String cpf = txtCpf.getText();
-            String senha = txtSenha.getText(); // <--- Lê a senha
+            String senha = txtSenha.getText();
 
-            // Validação
             if (nome.isEmpty() || email.isEmpty() || cpf.isEmpty() || instituicao.isEmpty()) {
                 mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Preencha todos os campos.");
                 return;
             }
 
             if (participanteEmEdicao != null) {
-                // --- EDIÇÃO ---
                 participanteEmEdicao.setNome(nome);
                 participanteEmEdicao.setEmail(email);
                 participanteEmEdicao.setInstituicao(instituicao);
 
-                // Só atualiza a senha se o usuário digitou algo novo
                 if (!senha.isEmpty()) {
                     participanteEmEdicao.setSenha(senha);
                 }
@@ -60,13 +56,11 @@ public class TelaCadastroParticipanteController {
                 cancelar();
 
             } else {
-                // --- CADASTRO NOVO ---
                 if (senha.isEmpty()) {
                     mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Crie uma senha para seu acesso.");
                     return;
                 }
 
-                // Passa a senha para o construtor atualizado
                 Participante novoParticipante = new Participante(nome, email, instituicao, cpf, senha);
 
                 SistemaSGA.getInstance().getControladorParticipante().cadastrar(novoParticipante);

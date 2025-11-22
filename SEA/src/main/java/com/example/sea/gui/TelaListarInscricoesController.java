@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
 
 public class TelaListarInscricoesController {
 
-    // --- Tabela e Colunas ---
     @FXML private TableView<Inscricao> tabelaInscricoes;
 
     @FXML private TableColumn<Inscricao, String> colParticipante;
@@ -31,20 +30,16 @@ public class TelaListarInscricoesController {
     }
 
     private void configurarColunas() {
-        // Coluna PARTICIPANTE: Pega o nome de dentro do objeto Participante
         colParticipante.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getParticipante().getNome())
         );
 
-        // Coluna PALESTRA: Pega o título de dentro do objeto Palestra
         colPalestra.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getPalestra().getTitulo())
         );
 
-        // Coluna CONFIRMAÇÃO: Liga direto ao atributo statusConfirmacao
         colConfirmacao.setCellValueFactory(new PropertyValueFactory<>("statusConfirmacao"));
 
-        // Coluna DATA/HORA: Formata o LocalDateTime para ficar bonito (dd/MM/yyyy HH:mm)
         colDataHoraInscricao.setCellValueFactory(cellData -> {
             LocalDateTime data = cellData.getValue().getDataHoraInscricao();
             if (data != null) {
@@ -56,7 +51,6 @@ public class TelaListarInscricoesController {
     }
 
     private void atualizarTabela() {
-        // Busca a lista completa do sistema
         tabelaInscricoes.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorInscricao().listarTodos()
         ));
@@ -64,7 +58,6 @@ public class TelaListarInscricoesController {
 
     @FXML
     private void novaInscricao() {
-        // Abre a tela de cadastro que já criamos
         ScreenManager.getInstance().carregarTela("TelaCadastroInscricao.fxml", "Nova Inscrição");
     }
 
@@ -78,11 +71,9 @@ public class TelaListarInscricoesController {
         }
 
         try {
-            // Chama o backend para cancelar
             SistemaSGA.getInstance().getControladorInscricao().cancelarInscricao(inscricaoSelecionada);
-
             mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Inscrição cancelada com sucesso!");
-            atualizarTabela(); // Atualiza a lista visualmente
+            atualizarTabela();
 
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Erro", "Não foi possível cancelar: " + e.getMessage());
@@ -91,17 +82,13 @@ public class TelaListarInscricoesController {
 
     @FXML
     private void editar() {
-        // 1. Pega a inscrição selecionada na tabela
         Inscricao inscricaoSelecionada = tabelaInscricoes.getSelectionModel().getSelectedItem();
 
-        // 2. Verifica se tem algo selecionado
         if (inscricaoSelecionada == null) {
             mostrarAlerta(AlertType.WARNING, "Atenção", "Selecione uma inscrição para editar.");
             return;
         }
 
-        // 3. Chama o ScreenManager passando a inscrição para a tela de cadastro
-        // Nota: Vamos criar esse método "carregarTelaEdicao" no próximo passo
         ScreenManager.getInstance().carregarTelaEdicao(
                 "TelaCadastroInscricao.fxml",
                 "Editar Inscrição",
@@ -121,6 +108,4 @@ public class TelaListarInscricoesController {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
-
-
 }

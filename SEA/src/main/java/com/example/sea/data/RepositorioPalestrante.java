@@ -14,7 +14,7 @@ public class RepositorioPalestrante implements IRepositorioPalestrante {
 
     public RepositorioPalestrante() {
         this.palestrantes = new ArrayList<>();
-        this.carregarDados(); 
+        this.carregarDados();
     }
 
     @SuppressWarnings("unchecked")
@@ -27,7 +27,6 @@ public class RepositorioPalestrante implements IRepositorioPalestrante {
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             this.palestrantes = (ArrayList<Palestrante>) ois.readObject();
         } catch (EOFException e) {
-  
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar dados dos palestrantes: " + e.getMessage());
             this.palestrantes = new ArrayList<>();
@@ -44,30 +43,26 @@ public class RepositorioPalestrante implements IRepositorioPalestrante {
     }
 
     @Override
-    public void salvar(Palestrante palestrante) throws PalestranteJaExisteException { 
+    public void salvar(Palestrante palestrante) throws PalestranteJaExisteException {
         if (palestrante == null) return;
-        
         try {
-            // Tenta buscar para ver se já existe
             buscarPorIdentificador(palestrante.getEmail());
-            // Se encontrou, lança a exceção
             throw new PalestranteJaExisteException(palestrante.getEmail());
         } catch (PalestranteNaoEncontradoException e) {
-            // Se NÃO encontrou, ele cai aqui.
             this.palestrantes.add(palestrante);
-            this.salvarDados(); 
+            this.salvarDados();
             System.out.println("Palestrante salvo: " + palestrante.getNome());
         }
     }
 
     @Override
-    public Palestrante buscarPorIdentificador(String identificador) throws PalestranteNaoEncontradoException { 
+    public Palestrante buscarPorIdentificador(String identificador) throws PalestranteNaoEncontradoException {
         if (identificador == null) {
             throw new PalestranteNaoEncontradoException("null");
         }
         for (Palestrante p : this.palestrantes) {
             if (p.getEmail().equalsIgnoreCase(identificador)) {
-                return p; 
+                return p;
             }
         }
         throw new PalestranteNaoEncontradoException(identificador);
@@ -75,32 +70,27 @@ public class RepositorioPalestrante implements IRepositorioPalestrante {
 
     @Override
     public List<Palestrante> listarTodos() {
-        return new ArrayList<>(this.palestrantes); 
+        return new ArrayList<>(this.palestrantes);
     }
 
     @Override
-    public void atualizar(Palestrante palestrante) throws PalestranteNaoEncontradoException { 
+    public void atualizar(Palestrante palestrante) throws PalestranteNaoEncontradoException {
         if (palestrante == null) {
             throw new PalestranteNaoEncontradoException("null");
         }
-        
-        Palestrante existente = this.buscarPorIdentificador(palestrante.getEmail()); 
-        
-        // Se encontrou, atualiza (em memória)
+        Palestrante existente = this.buscarPorIdentificador(palestrante.getEmail());
         existente.setNome(palestrante.getNome());
         existente.setTelefone(palestrante.getTelefone());
         existente.setAreaEspecializacao(palestrante.getAreaEspecializacao());
-        
-        this.salvarDados(); // Salva no ficheiro
+        this.salvarDados();
         System.out.println("Palestrante atualizado: " + palestrante.getNome());
     }
 
     @Override
-    public void deletar(String identificador) throws PalestranteNaoEncontradoException { 
-        Palestrante paraRemover = this.buscarPorIdentificador(identificador); 
-        
-        this.palestrantes.remove(paraRemover); // Remove da lista
-        this.salvarDados(); // Salva no ficheiro
+    public void deletar(String identificador) throws PalestranteNaoEncontradoException {
+        Palestrante paraRemover = this.buscarPorIdentificador(identificador);
+        this.palestrantes.remove(paraRemover);
+        this.salvarDados();
         System.out.println("Palestrante removido: " + identificador);
     }
 }

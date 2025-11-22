@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ViewEventosController {
 
-    @FXML private VBox containerEventos; // O VBox dentro do ScrollView no seu FXML
+    @FXML private VBox containerEventos;
 
     @FXML
     public void initialize() {
@@ -27,7 +27,6 @@ public class ViewEventosController {
         containerEventos.getChildren().clear();
 
         for (Evento evento : eventos) {
-            // Cria um "Card" simples via código para cada evento
             VBox card = new VBox(5);
             card.setStyle("-fx-border-color: #ddd; -fx-border-radius: 5; -fx-padding: 10; -fx-background-color: white;");
 
@@ -46,10 +45,7 @@ public class ViewEventosController {
     }
 
     private void abrirPalestrasDoEvento(Evento evento) {
-        // Aqui passamos o evento para a tela de palestras (view_palestras.fxml)
-        // Você precisará adaptar o ScreenManager para passar objetos genéricos ou usar um Singleton de contexto
         System.out.println("Abrindo palestras de: " + evento.getNome());
-        // Exemplo: ScreenManager.getInstance().carregarTela("view_palestras.fxml", "Palestras");
     }
 
     @FXML

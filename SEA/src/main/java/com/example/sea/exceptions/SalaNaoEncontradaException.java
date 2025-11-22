@@ -1,9 +1,6 @@
 package com.example.sea.exceptions;
 
-/**
- * Exceção lançada quando uma operação (buscar, atualizar, deletar)
- * não encontra a Sala.
- */
+
 public class SalaNaoEncontradaException extends Exception {
 
     public SalaNaoEncontradaException(String nomeDaSala) {

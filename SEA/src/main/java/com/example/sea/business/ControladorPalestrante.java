@@ -53,7 +53,7 @@ public class ControladorPalestrante implements IControladorPalestrante {
         if (palestrante.getEmail() == null || palestrante.getEmail().trim().isEmpty()) {
             throw new CampoVazioException("Email");
         }
-        // (Poderíamos adicionar outras validações de campos aqui)
+       
 
         this.repositorioPalestrante.atualizar(palestrante);
     }

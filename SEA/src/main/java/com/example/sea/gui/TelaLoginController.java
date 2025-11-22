@@ -21,7 +21,7 @@ public class TelaLoginController {
 
         if (email.equals("admin") && senha.equals("admin")) {
             System.out.println("Login de Admin realizado!");
-            SessaoUsuario.getInstance().logout(); // Garante que não há participante logado
+            SessaoUsuario.getInstance().logout();
             ScreenManager.getInstance().carregarTela("TelaPrincipal.fxml", "Menu Administrativo");
             return;
         }
@@ -36,11 +36,8 @@ public class TelaLoginController {
             }
 
             if (encontrado != null) {
-                // Sucesso! Salva na sessão
                 SessaoUsuario.getInstance().login(encontrado);
                 System.out.println("Bem-vindo, " + encontrado.getNome());
-
-                // Redireciona para a área do aluno (ex: lista de eventos disponíveis)
                 ScreenManager.getInstance().carregarTela("view_eventos.fxml", "Área do Aluno");
             } else {
                 mostrarAlerta(Alert.AlertType.ERROR, "Erro", "E-mail ou senha incorretos.");
@@ -54,7 +51,6 @@ public class TelaLoginController {
 
     @FXML
     private void irParaCadastro() {
-        // MUDANÇA AQUI: Use o nome correto do arquivo que acabamos de criar
         ScreenManager.getInstance().carregarTela("TelaCadastroParticipante.fxml", "Novo Cadastro");
     }
 

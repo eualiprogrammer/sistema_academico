@@ -27,10 +27,8 @@ public class ViewPalestrasController {
     }
 
     private void carregarPalestras() {
-        // 1. Limpa a lista visual
         containerPalestras.getChildren().clear();
 
-        // 2. Busca dados do sistema
         List<Palestra> palestras = SistemaSGA.getInstance().getControladorPalestra().listarTodos();
         Participante participanteLogado = SessaoUsuario.getInstance().getParticipanteLogado();
 
@@ -39,7 +37,6 @@ public class ViewPalestrasController {
             return;
         }
 
-        // 3. Cria um card para cada palestra
         for (Palestra palestra : palestras) {
             VBox card = criarCardPalestra(palestra, participanteLogado);
             containerPalestras.getChildren().add(card);
@@ -47,15 +44,12 @@ public class ViewPalestrasController {
     }
 
     private VBox criarCardPalestra(Palestra palestra, Participante participante) {
-        // Estilo do Card
         VBox card = new VBox(10);
         card.setStyle("-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);");
 
-        // Título
         Label lblTitulo = new Label(palestra.getTitulo());
         lblTitulo.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
 
-        // Informações
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String dataStr = palestra.getDataHoraInicio() != null ? palestra.getDataHoraInicio().format(fmt) : "Data a definir";
 
@@ -64,17 +58,10 @@ public class ViewPalestrasController {
                 " | Data: " + dataStr);
         lblInfo.setWrapText(true);
 
-        // Botão de Ação
         Button btnAcao = new Button("Inscrever-se");
-        btnAcao.getStyleClass().add("btn-acao"); // Usa seu estilo CSS
-
-        // Verifica se já está inscrito (lógica visual)
-        // Nota: Para ser perfeito, o controlador de inscrição deveria ter um método "isInscrito(participante, palestra)"
-        // Aqui vamos tentar inscrever e tratar o erro se já existir, ou verificar na lista do participante se possível.
-
+        btnAcao.getStyleClass().add("btn-acao");
         btnAcao.setOnAction(e -> realizarInscricao(palestra, btnAcao));
 
-        // Layout Horizontal para separar Texto do Botão
         HBox linhaTopo = new HBox(10, lblTitulo);
         HBox.setHgrow(linhaTopo, Priority.ALWAYS);
 
@@ -96,23 +83,20 @@ public class ViewPalestrasController {
         }
 
         try {
-            // Chama o controlador de negócio
             SistemaSGA.getInstance().getControladorInscricao().inscrever(participante, palestra);
 
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Inscrição realizada com sucesso!");
             btn.setText("Inscrito ✓");
-            btn.setDisable(true); // Evita duplo clique
-            btn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white;"); // Verde
+            btn.setDisable(true);
+            btn.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white;");
 
         } catch (Exception e) {
-            // Trata erros como "Já inscrito", "Lotação esgotada", "Conflito de horário"
             mostrarAlerta(Alert.AlertType.WARNING, "Não foi possível inscrever", e.getMessage());
         }
     }
 
     @FXML
     private void voltar() {
-        // Volta para o menu principal do aluno (ViewEventos) ou Login
         ScreenManager.getInstance().carregarTela("view_eventos.fxml", "Eventos Disponíveis");
     }
 
