@@ -20,8 +20,6 @@ public class ControladorWorkshop implements IControladorWorkshop {
         this.repositorioEvento = new RepositorioEvento();
     }
 
-    // --- MÉTODO CADASTRAR SIMPLIFICADO (3 Argumentos) ---
-    // Este método agora corresponde ao que a Interface e a Tela pedem
     @Override
     public void cadastrar(String titulo, String descricao, Evento evento)
             throws WorkshopJaExisteException, CampoVazioException {
@@ -29,11 +27,10 @@ public class ControladorWorkshop implements IControladorWorkshop {
         if (titulo == null || titulo.trim().isEmpty()) throw new CampoVazioException("Título");
         if (evento == null) throw new IllegalArgumentException("O evento não pode ser nulo.");
 
-        // Cria o Workshop usando o construtor simples
         Workshop novoWorkshop = new Workshop(titulo, descricao, evento);
         evento.adicionarAtividade(novoWorkshop);
         try {
-            this.repositorioEvento.atualizar(evento);
+            SistemaSGA.getInstance().getControladorEvento().atualizar(evento);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,7 +66,6 @@ public class ControladorWorkshop implements IControladorWorkshop {
             throws WorkshopNaoEncontradoException, CampoVazioException {
         Workshop workshop = this.buscar(tituloWorkshop);
         if (palestra != null) {
-            // Verifica se a palestra é do mesmo evento (Regra de Negócio)
             if (!palestra.getEvento().getNome().equals(workshop.getEvento().getNome())) {
                 throw new IllegalArgumentException("A palestra deve pertencer ao mesmo evento do workshop.");
             }

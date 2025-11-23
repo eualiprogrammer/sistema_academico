@@ -81,6 +81,7 @@ public class ViewEventosController {
     }
 
     private void verPalestras(Evento evento) {
+        SessaoUsuario.getInstance().setEventoSelecionado(evento);
         ScreenManager.getInstance().carregarTela("view_palestras.fxml", "Palestras - " + evento.getNome());
     }
 
@@ -102,7 +103,8 @@ public class ViewEventosController {
 
     @FXML
     private void verWorkshops() {
-        // Carrega a tela de lista de workshops
         ScreenManager.getInstance().carregarTela("view_workshops.fxml", "Workshops Disponíveis");
     }
+
+
 }

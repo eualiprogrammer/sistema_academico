@@ -2,6 +2,7 @@ package com.example.sea.gui;
 
 import com.example.sea.business.SessaoUsuario;
 import com.example.sea.business.SistemaSGA;
+import com.example.sea.model.Evento;
 import com.example.sea.model.Palestra;
 import com.example.sea.model.Participante;
 import javafx.fxml.FXML;
@@ -29,15 +30,21 @@ public class ViewPalestrasController {
     private void carregarPalestras() {
         containerPalestras.getChildren().clear();
 
-        List<Palestra> palestras = SistemaSGA.getInstance().getControladorPalestra().listarTodos();
+        Evento eventoFiltro = SessaoUsuario.getInstance().getEventoSelecionado();
 
-        if (palestras.isEmpty()) {
-            containerPalestras.getChildren().add(new Label("Nenhuma palestra disponível."));
-            return;
+        List<Palestra> todasPalestras = SistemaSGA.getInstance().getControladorPalestra().listarTodos();
+
+        boolean encontrouAlguma = false;
+
+        for (Palestra palestra : todasPalestras) {
+            if (eventoFiltro != null && palestra.getEvento().getNome().equals(eventoFiltro.getNome())) {
+                containerPalestras.getChildren().add(criarCardPalestra(palestra));
+                encontrouAlguma = true;
+            }
         }
 
-        for (Palestra palestra : palestras) {
-            containerPalestras.getChildren().add(criarCardPalestra(palestra));
+        if (!encontrouAlguma) {
+            containerPalestras.getChildren().add(new Label("Nenhuma palestra encontrada para este evento."));
         }
     }
 
@@ -123,4 +130,6 @@ public class ViewPalestrasController {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
+
+
 }

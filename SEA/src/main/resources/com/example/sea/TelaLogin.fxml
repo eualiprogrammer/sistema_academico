@@ -14,7 +14,7 @@
     <VBox alignment="CENTER" maxHeight="483.0" maxWidth="350" prefHeight="483.0" prefWidth="350.0" spacing="20" styleClass="card">
         <padding><Insets bottom="40" left="40" right="40" top="40" /></padding>
    
-        <Label alignment="TOP_CENTER" prefHeight="25.0" prefWidth="302.0" styleClass="titulo" text="SGA">
+        <Label alignment="TOP_CENTER" prefHeight="25.0" prefWidth="302.0" styleClass="titulo" text="SEA">
          <font>
             <Font size="16.0" />
          </font>

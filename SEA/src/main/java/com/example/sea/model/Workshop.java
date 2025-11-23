@@ -25,4 +25,12 @@ public class Workshop extends Atividade{
     public void removerPalestra(Palestra palestra) {
         this.palestrasDoWorkshop.remove(palestra);
     }
+
+    public float getDuracaoHoras() {
+        float totalHoras = 0;
+        for (Palestra p : this.palestrasDoWorkshop) {
+            totalHoras += p.getDuracaoHoras();
+        }
+        return totalHoras;
+    }
 }

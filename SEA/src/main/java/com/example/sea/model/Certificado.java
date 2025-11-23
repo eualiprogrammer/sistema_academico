@@ -1,14 +1,17 @@
 package com.example.sea.model;
-import java.time.LocalDate;
-import java.util.UUID; 
-import java.io.Serializable;
 
-public class Certificado implements Serializable{
-    private static final long serialVersionUID = 2L;
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.UUID;
+
+public class Certificado implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 3L;
     private Inscricao inscricao;
-    private String codigoValidacao; 
-    private LocalDate dataEmissao; 
-    private float cargaHorariaRegistrada; 
+    private String codigoValidacao;
+    private LocalDate dataEmissao;
+    private float cargaHorariaRegistrada;
 
     public Certificado(Inscricao inscricao) {
         if (inscricao == null) {
@@ -16,15 +19,25 @@ public class Certificado implements Serializable{
         }
 
         if (!inscricao.isPresenca()) {
-            throw new RuntimeException("Não é possível gerar certificado: Participante '" + 
-                inscricao.getParticipante().getNome() + "' está marcado como ausente.");
+            throw new RuntimeException("Não é possível gerar certificado: Participante '" +
+                    inscricao.getParticipante().getNome() + "' está marcado como ausente.");
         }
 
         this.inscricao = inscricao;
-        this.dataEmissao = LocalDate.now(); 
-        this.codigoValidacao = UUID.randomUUID().toString(); 
-        this.cargaHorariaRegistrada = inscricao.getPalestra().getDuracaoHoras();
-        inscricao.setCertificado(this); 
+        this.dataEmissao = LocalDate.now();
+        this.codigoValidacao = UUID.randomUUID().toString();
+
+        Atividade atividade = inscricao.getAtividade();
+
+        if (atividade instanceof Palestra) {
+            this.cargaHorariaRegistrada = ((Palestra) atividade).getDuracaoHoras();
+        } else if (atividade instanceof Workshop) {
+            this.cargaHorariaRegistrada = ((Workshop) atividade).getDuracaoHoras();
+        } else {
+            this.cargaHorariaRegistrada = 0;
+        }
+
+        inscricao.setCertificado(this);
     }
 
     public Inscricao getInscricao() {
@@ -42,13 +55,12 @@ public class Certificado implements Serializable{
     public float getCargaHorariaRegistrada() {
         return cargaHorariaRegistrada;
     }
-    
+
     public String getNomeParticipante() {
         return this.inscricao.getParticipante().getNome();
     }
-    
-    public String getTituloPalestra() {
-        return this.inscricao.getPalestra().getTitulo();
+
+    public String getTituloAtividade() {
+        return this.inscricao.getAtividade().getTitulo();
     }
-    
 }

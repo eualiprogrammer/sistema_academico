@@ -43,14 +43,14 @@ public class ViewWorkshopsController {
     }
 
     private VBox criarCardWorkshop(Workshop workshop) {
-        // Visual Cyberpunk/Dark
+        // Visual
         VBox card = new VBox(10);
         card.getStyleClass().add("card");
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5); -fx-border-color: rgba(255,255,255,0.05); -fx-border-width: 1;");
 
         // Título e Info
         Label lblTitulo = new Label(workshop.getTitulo());
-        lblTitulo.setStyle("-fx-text-fill: #06B6D4; -fx-font-size: 20px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(6, 182, 212, 0.3), 10, 0, 0, 0);");
+        lblTitulo.setStyle("-fx-text-fill: #D946EF; -fx-font-size: 20px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(217, 70, 239, 0.3), 10, 0, 0, 0);");
 
         String nomeEvento = workshop.getEvento() != null ? workshop.getEvento().getNome() : "Evento Geral";
         String descricao = workshop.getDescricao();
@@ -60,17 +60,17 @@ public class ViewWorkshopsController {
         lblInfo.setStyle("-fx-text-fill: #cbd5e1; -fx-font-size: 14px;");
         lblInfo.setWrapText(true);
 
-        // --- BOTÕES ---
 
-        // 1. Botão Ver Palestras (NOVO)
+
+        //Botão Ver Palestras
         Button btnVerPalestras = new Button("👁 Ver Palestras");
-        btnVerPalestras.setStyle("-fx-background-color: transparent; -fx-text-fill: #06B6D4; -fx-border-color: #06B6D4; -fx-border-radius: 30; -fx-cursor: hand;");
+        btnVerPalestras.setStyle("-fx-background-color: transparent; -fx-text-fill: #D946EF; -fx-border-color: #D946EF; -fx-border-radius: 30; -fx-cursor: hand;");
         btnVerPalestras.setOnAction(e -> mostrarListaPalestras(workshop));
 
-        // 2. Botão Inscrever-se
+        //Botão Inscrever-se
         Button btnInscrever = new Button("Inscrever-se em Tudo");
         btnInscrever.getStyleClass().add("btn-acao");
-        btnInscrever.setStyle("-fx-background-color: linear-gradient(to right, #06B6D4, #3B82F6); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 30;");
+        btnInscrever.setStyle("-fx-background-color: linear-gradient(to right, #8B5CF6, #D946EF); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 30;");
         btnInscrever.setOnAction(e -> inscreverNoWorkshop(workshop, btnInscrever));
 
         // Layout
@@ -80,16 +80,15 @@ public class ViewWorkshopsController {
         HBox linhaBotoes = new HBox(10, btnVerPalestras, btnInscrever);
         linhaBotoes.setAlignment(Pos.CENTER_RIGHT);
 
-        // Organização Final
+        // Organização
         HBox linhaPrincipal = new HBox(10);
         linhaPrincipal.setAlignment(Pos.CENTER_LEFT);
         linhaPrincipal.getChildren().addAll(conteudo);
 
-        card.getChildren().addAll(linhaPrincipal, linhaBotoes); // Botões em linha separada embaixo
+        card.getChildren().addAll(linhaPrincipal, linhaBotoes);
         return card;
     }
 
-    // --- MÉTODO DO POPUP DE LISTA ---
     private void mostrarListaPalestras(Workshop workshop) {
         StringBuilder lista = new StringBuilder();
         if (workshop.getPalestrasDoWorkshop().isEmpty()) {
@@ -106,7 +105,7 @@ public class ViewWorkshopsController {
         alert.setTitle("Conteúdo do Workshop");
         alert.setHeaderText("Palestras incluídas neste pacote:");
         alert.setContentText(lista.toString());
-        alert.getDialogPane().setMinWidth(400); // Alarga um pouco a janela
+        alert.getDialogPane().setMinWidth(400);
         alert.showAndWait();
     }
 
@@ -119,7 +118,6 @@ public class ViewWorkshopsController {
         }
 
         try {
-            // A mágica acontece aqui: inscreve no workshop E nas palestras filhas
             SistemaSGA.getInstance().getControladorInscricao().inscrever(participante, workshop);
 
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Inscrição realizada! Você foi inscrito automaticamente em todas as palestras deste workshop.");

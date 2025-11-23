@@ -1,5 +1,6 @@
 package com.example.sea.business;
 
+import com.example.sea.model.Evento;
 import com.example.sea.model.Participante;
 
 public class SessaoUsuario {
@@ -30,5 +31,15 @@ public class SessaoUsuario {
 
     public boolean isParticipante() {
         return participanteLogado != null;
+    }
+
+    private Evento eventoSelecionado; // <--- NOVO
+
+    public void setEventoSelecionado(Evento evento) {
+        this.eventoSelecionado = evento;
+    }
+
+    public Evento getEventoSelecionado() {
+        return eventoSelecionado;
     }
 }
