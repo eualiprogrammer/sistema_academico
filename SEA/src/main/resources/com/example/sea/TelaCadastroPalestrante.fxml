@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaCadastroPalestranteController">
+<VBox alignment="CENTER" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaCadastroPalestranteController">
 
     <VBox maxWidth="600" spacing="20" styleClass="card">
         <Label styleClass="titulo" text="Cadastrar Palestrante">

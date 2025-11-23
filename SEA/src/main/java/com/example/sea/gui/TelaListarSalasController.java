@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class TelaListarSalasController {
 
     @FXML private TableView<Sala> tabelaSalas;
-
     @FXML private TableColumn<Sala, String> colNome;
     @FXML private TableColumn<Sala, Integer> colCapacidade;
     @FXML private TableColumn<Sala, Integer> colProjetores;

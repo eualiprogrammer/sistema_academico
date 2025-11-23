@@ -19,7 +19,7 @@ public class TelaListarInscricoesController {
     @FXML private TableView<Inscricao> tabelaInscricoes;
 
     @FXML private TableColumn<Inscricao, String> colParticipante;
-    @FXML private TableColumn<Inscricao, String> colPalestra;
+    @FXML private TableColumn<Inscricao, String> colPalestra; // Nome da Atividade
     @FXML private TableColumn<Inscricao, String> colConfirmacao;
     @FXML private TableColumn<Inscricao, String> colDataHoraInscricao;
 
@@ -34,8 +34,11 @@ public class TelaListarInscricoesController {
                 new SimpleStringProperty(cellData.getValue().getParticipante().getNome())
         );
 
+        // --- CORREÇÃO AQUI ---
+        // Antes: getPalestra().getTitulo() -> Dava erro se fosse Workshop (null)
+        // Agora: getAtividade().getTitulo() -> Funciona para Palestra e Workshop
         colPalestra.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getPalestra().getTitulo())
+                new SimpleStringProperty(cellData.getValue().getAtividade().getTitulo())
         );
 
         colConfirmacao.setCellValueFactory(new PropertyValueFactory<>("statusConfirmacao"));
@@ -54,11 +57,28 @@ public class TelaListarInscricoesController {
         tabelaInscricoes.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorInscricao().listarTodos()
         ));
+        tabelaInscricoes.refresh();
     }
 
     @FXML
     private void novaInscricao() {
         ScreenManager.getInstance().carregarTela("TelaCadastroInscricao.fxml", "Nova Inscrição");
+    }
+
+    @FXML
+    private void editar() {
+        Inscricao inscricaoSelecionada = tabelaInscricoes.getSelectionModel().getSelectedItem();
+
+        if (inscricaoSelecionada == null) {
+            mostrarAlerta(AlertType.WARNING, "Atenção", "Selecione uma inscrição para editar.");
+            return;
+        }
+
+        ScreenManager.getInstance().carregarTelaEdicao(
+                "TelaCadastroInscricao.fxml",
+                "Editar Inscrição",
+                inscricaoSelecionada
+        );
     }
 
     @FXML
@@ -78,22 +98,6 @@ public class TelaListarInscricoesController {
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Erro", "Não foi possível cancelar: " + e.getMessage());
         }
-    }
-
-    @FXML
-    private void editar() {
-        Inscricao inscricaoSelecionada = tabelaInscricoes.getSelectionModel().getSelectedItem();
-
-        if (inscricaoSelecionada == null) {
-            mostrarAlerta(AlertType.WARNING, "Atenção", "Selecione uma inscrição para editar.");
-            return;
-        }
-
-        ScreenManager.getInstance().carregarTelaEdicao(
-                "TelaCadastroInscricao.fxml",
-                "Editar Inscrição",
-                inscricaoSelecionada
-        );
     }
 
     @FXML

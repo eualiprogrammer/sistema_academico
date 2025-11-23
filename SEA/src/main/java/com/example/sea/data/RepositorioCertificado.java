@@ -73,7 +73,6 @@ public class RepositorioCertificado implements IRepositorioCertificado {
         if (participante == null) return resultado;
 
         for (Certificado c : this.certificados) {
-            // Compara o CPF do participante dono do certificado
             if (c.getInscricao().getParticipante().getCpf().equals(participante.getCpf())) {
                 resultado.add(c);
             }

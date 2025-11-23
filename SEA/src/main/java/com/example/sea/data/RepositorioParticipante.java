@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioParticipante implements IRepositorioParticipante {
-
     private List<Participante> participantes;
     private static final String NOME_ARQUIVO = "RepoParticipantes.dat";
 

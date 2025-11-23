@@ -62,7 +62,6 @@ public class TelaCadastroParticipanteController {
                 }
 
                 Participante novoParticipante = new Participante(nome, email, instituicao, cpf, senha);
-
                 SistemaSGA.getInstance().getControladorParticipante().cadastrar(novoParticipante);
 
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Bem-vindo!", "Cadastro realizado! Faça login.");

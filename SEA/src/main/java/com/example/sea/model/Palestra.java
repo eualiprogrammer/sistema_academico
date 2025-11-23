@@ -75,4 +75,8 @@ public class Palestra extends Atividade{
         }
     }
 
+    @Override
+    public String toString() {
+        return this.getTitulo();
+    }
 }

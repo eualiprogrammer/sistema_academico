@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="20.0" styleClass="content-area" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaPresencasParticipantesController">
+<VBox spacing="20.0" styleClass="content-area" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaPresencasParticipantesController">
 
     <HBox alignment="CENTER_LEFT" spacing="20.0">
         <Button onAction="#voltar" styleClass="btn-card-yellow" text="← Voltar" />

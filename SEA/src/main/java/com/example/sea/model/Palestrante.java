@@ -61,4 +61,9 @@ public class Palestrante implements Serializable{
             this.palestras.add(palestra);
         }
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

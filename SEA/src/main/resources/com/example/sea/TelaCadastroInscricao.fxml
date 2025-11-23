@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="181.0" prefWidth="395.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaCadastroInscricaoController">
+<VBox alignment="CENTER" prefHeight="181.0" prefWidth="395.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaCadastroInscricaoController">
      <Label alignment="TOP_LEFT" prefHeight="43.0" prefWidth="423.0" styleClass="titulo" text="Cadastrar Inscrição" textAlignment="RIGHT">
       <VBox.margin>
          <Insets left="10.0" />

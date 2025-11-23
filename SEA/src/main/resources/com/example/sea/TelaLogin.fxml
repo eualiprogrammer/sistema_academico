@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="483.0" prefWidth="422.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaLoginController">
+<StackPane prefHeight="483.0" prefWidth="422.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaLoginController">
 
     <VBox alignment="CENTER" maxHeight="483.0" maxWidth="350" prefHeight="483.0" prefWidth="350.0" spacing="20" styleClass="card">
         <padding><Insets bottom="40" left="40" right="40" top="40" /></padding>

@@ -62,4 +62,9 @@ public class Evento implements Serializable{
             atividade.setEvento(this); 
         }
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

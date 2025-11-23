@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="377.0" prefWidth="318.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaCadastroEventoController">
+<VBox alignment="CENTER" prefHeight="377.0" prefWidth="318.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sea.gui.TelaCadastroEventoController">
 
     <VBox maxWidth="600" prefHeight="344.0" prefWidth="318.0" spacing="20" styleClass="card">
         <Label styleClass="titulo" text="Cadastrar Evento">

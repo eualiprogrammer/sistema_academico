@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioSala implements IRepositorioSala {
-
     private List<Sala> salas;
     private static final String NOME_ARQUIVO = "RepoSalas.dat";
 

@@ -10,15 +10,12 @@ import java.io.IOException;
 public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
-        // Configura o ScreenManager com o palco principal
         ScreenManager.getInstance().setPrimaryStage(stage);
 
-        // Define o tamanho inicial antes de carregar a tela
         stage.setWidth(1280);
         stage.setHeight(720);
-        stage.setResizable(false); // Opcional: trava o redimensionamento
+        stage.setResizable(false);
 
-        // Carrega a tela de Login
         ScreenManager.getInstance().carregarTela("TelaLogin.fxml", "Login");
     }
 

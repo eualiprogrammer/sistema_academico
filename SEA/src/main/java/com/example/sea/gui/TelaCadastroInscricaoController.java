@@ -9,8 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 
-import java.time.LocalDateTime;
-
 public class TelaCadastroInscricaoController {
 
     @FXML
@@ -19,11 +17,16 @@ public class TelaCadastroInscricaoController {
     @FXML
     private ChoiceBox<Palestra> choicePalestra;
 
+    // Variável para controlar se estamos editando
     private Inscricao inscricaoEmEdicao;
 
     @FXML
     public void initialize() {
         carregarDadosChoiceBox();
+
+        // Configura para mostrar os nomes corretamente (toString já deve estar resolvido no model, mas por garantia)
+        // Se já tiver o toString() na classe, isso é opcional, mas ajuda a evitar bugs visuais
+        // choiceParticipante.setConverter(...);
     }
 
     private void carregarDadosChoiceBox() {
@@ -41,7 +44,11 @@ public class TelaCadastroInscricaoController {
 
         if (inscricao != null) {
             choiceParticipante.setValue(inscricao.getParticipante());
-            choicePalestra.setValue(inscricao.getPalestra());
+
+            // Usa o método de conveniência getPalestra() que mantivemos (ou faz cast de getAtividade())
+            if (inscricao.getAtividade() instanceof Palestra) {
+                choicePalestra.setValue((Palestra) inscricao.getAtividade());
+            }
         }
     }
 
@@ -57,12 +64,21 @@ public class TelaCadastroInscricaoController {
             }
 
             if (inscricaoEmEdicao != null) {
+                // --- MODO EDIÇÃO ---
                 inscricaoEmEdicao.setParticipante(participante);
-                inscricaoEmEdicao.setPalestra(palestra);
+
+                // CORREÇÃO AQUI:
+                // Em vez de setPalestra(palestra), usamos setAtividade(palestra)
+                // Pois agora a Inscrição é genérica para qualquer Atividade.
+                inscricaoEmEdicao.setAtividade(palestra);
+
                 SistemaSGA.getInstance().getControladorInscricao().atualizar(inscricaoEmEdicao);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Inscrição atualizada com sucesso!");
             } else {
+                // --- MODO CRIAÇÃO ---
+                // O construtor agora aceita (Participante, Atividade)
                 Inscricao novaInscricao = new Inscricao(participante, palestra);
+
                 SistemaSGA.getInstance().getControladorInscricao().cadastrar(novaInscricao);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Inscrição realizada com sucesso!");
             }

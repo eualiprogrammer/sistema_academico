@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IControladorWorkshop {
 
-    void cadastrar(String titulo, String descricao, Evento evento) 
+    void cadastrar(String titulo, String descricao, Evento evento)
         throws WorkshopJaExisteException, CampoVazioException;
 
     Workshop buscar(String titulo) throws WorkshopNaoEncontradoException, CampoVazioException;
@@ -19,7 +19,9 @@ public interface IControladorWorkshop {
 
     void remover(String titulo) throws WorkshopNaoEncontradoException, CampoVazioException;
 
-   
-    void adicionarPalestraAoWorkshop(String tituloWorkshop, Palestra palestra) 
+    void adicionarPalestraAoWorkshop(String tituloWorkshop, Palestra palestra)
         throws WorkshopNaoEncontradoException, CampoVazioException;
+
+    void removerPalestraDoWorkshop(String tituloWorkshop, Palestra palestra)
+            throws WorkshopNaoEncontradoException, CampoVazioException;
 }

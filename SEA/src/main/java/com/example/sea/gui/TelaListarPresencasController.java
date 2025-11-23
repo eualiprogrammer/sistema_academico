@@ -1,7 +1,9 @@
 package com.example.sea.gui;
 
 import com.example.sea.business.SistemaSGA;
+import com.example.sea.model.Atividade; // <--- USAR ATIVIDADE (Genérico)
 import com.example.sea.model.Palestra;
+import com.example.sea.model.Workshop;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -10,54 +12,77 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TelaListarPresencasController {
 
-    @FXML private TableView<Palestra> tabelaPalestras;
-    @FXML private TableColumn<Palestra, String> colNome;
-    @FXML private TableColumn<Palestra, String> colPalestrante;
-    @FXML private TableColumn<Palestra, String> colSala;
-    @FXML private TableColumn<Palestra, String> colData;
+    @FXML private TableView<Atividade> tabelaPalestras; // Pode manter o nome da variável ou mudar para tabelaAtividades
+    @FXML private TableColumn<Atividade, String> colNome;
+    @FXML private TableColumn<Atividade, String> colPalestrante; // Ou Instrutor
+    @FXML private TableColumn<Atividade, String> colSala;
+    @FXML private TableColumn<Atividade, String> colData;
 
     @FXML
     public void initialize() {
         configurarColunas();
-        carregarPalestras();
+        carregarAtividades();
     }
 
     private void configurarColunas() {
         colNome.setCellValueFactory(new PropertyValueFactory<>("titulo"));
 
-        colPalestrante.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getPalestrante().getNome()));
+        // Coluna Tipo (Opcional, ajuda a diferenciar)
+        // colTipo.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue() instanceof Workshop ? "Workshop" : "Palestra"));
 
-        colSala.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getSala().getNome()));
+        colPalestrante.setCellValueFactory(cellData -> {
+            Atividade a = cellData.getValue();
+            if (a instanceof Palestra) return new SimpleStringProperty(((Palestra) a).getPalestrante().getNome());
+            // Workshop simplificado não tem instrutor direto no modelo, retornamos "-"
+            return new SimpleStringProperty("-");
+        });
 
-        // Formatação simples da data
-        colData.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getDataHoraInicio().toString()));
+        colSala.setCellValueFactory(cellData -> {
+            Atividade a = cellData.getValue();
+            if (a instanceof Palestra) return new SimpleStringProperty(((Palestra) a).getSala().getNome());
+            return new SimpleStringProperty("Múltiplas/Online");
+        });
+
+        colData.setCellValueFactory(cellData -> {
+            Atividade a = cellData.getValue();
+            if (a instanceof Palestra) {
+                Palestra p = (Palestra) a;
+                if (p.getDataHoraInicio() != null) {
+                    return new SimpleStringProperty(p.getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+                }
+            }
+            return new SimpleStringProperty("Ver Detalhes");
+        });
     }
 
-    private void carregarPalestras() {
-        tabelaPalestras.setItems(FXCollections.observableArrayList(
-                SistemaSGA.getInstance().getControladorPalestra().listarTodos()
-        ));
+    private void carregarAtividades() {
+        List<Atividade> todas = new ArrayList<>();
+        todas.addAll(SistemaSGA.getInstance().getControladorPalestra().listarTodos());
+        todas.addAll(SistemaSGA.getInstance().getControladorWorkshop().listar());
+
+        tabelaPalestras.setItems(FXCollections.observableArrayList(todas));
     }
 
     @FXML
     private void gerenciarParticipantes() {
-        Palestra palestraSelecionada = tabelaPalestras.getSelectionModel().getSelectedItem();
+        Atividade selecionada = tabelaPalestras.getSelectionModel().getSelectedItem();
 
-        if (palestraSelecionada == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione uma palestra para fazer a chamada.");
+        if (selecionada == null) {
+            mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione uma atividade.");
             return;
         }
 
-        // Reutiliza o método de "edição" para passar a palestra para a próxima tela
+        // Envia como ATIVIDADE para a próxima tela
         ScreenManager.getInstance().carregarTelaEdicao(
                 "admin_presencas_participantes.fxml",
-                "Lista de Presença - " + palestraSelecionada.getTitulo(),
-                palestraSelecionada
+                "Lista de Presença - " + selecionada.getTitulo(),
+                selecionada
         );
     }
 

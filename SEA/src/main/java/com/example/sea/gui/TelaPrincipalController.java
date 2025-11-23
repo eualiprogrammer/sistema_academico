@@ -1,5 +1,6 @@
 package com.example.sea.gui;
 
+import com.example.sea.business.SessaoUsuario;
 import javafx.fxml.FXML;
 
 public class TelaPrincipalController {
@@ -29,14 +30,19 @@ public class TelaPrincipalController {
         ScreenManager.getInstance().carregarTela("TelaListarInscricoes.fxml", "Gerenciar Inscrições");
     }
 
-    // --- ESSE É O MÉTODO QUE O ERRO RECLAMAVA ---
     @FXML
     private void irParaPresencas() {
         ScreenManager.getInstance().carregarTela("admin_presencas_list.fxml", "Gerenciar Presenças");
     }
 
     @FXML
+    private void irParaWorkshops() {
+        ScreenManager.getInstance().carregarTela("TelaListarWorkshops.fxml", "Gerenciar Workshops");
+    }
+
+    @FXML
     private void sair() {
-        System.exit(0);
+        SessaoUsuario.getInstance().logout();
+        ScreenManager.getInstance().carregarTela("TelaLogin.fxml", "Login");
     }
 }

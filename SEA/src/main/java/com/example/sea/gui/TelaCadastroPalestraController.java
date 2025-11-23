@@ -21,7 +21,6 @@ import java.time.format.DateTimeParseException;
 
 public class TelaCadastroPalestraController {
 
-    // --- Seus Campos Atualizados ---
     @FXML private TextField txtNome;
     @FXML private ChoiceBox<Evento> cbEvento;
     @FXML private ChoiceBox<Sala> cbSala;
@@ -29,7 +28,7 @@ public class TelaCadastroPalestraController {
     @FXML private DatePicker dpDataInicio;
     @FXML private TextField txtDuracaoHoras;
     @FXML private TextArea txtDescricao;
-    @FXML private TextField txtHora; // Campo auxiliar para digitar a hora (ex: 14:00)
+    @FXML private TextField txtHora;
 
     private Palestra palestraEmEdicao;
 
@@ -39,7 +38,6 @@ public class TelaCadastroPalestraController {
     }
 
     private void carregarListas() {
-        // Preenche os ChoiceBox com dados do banco
         cbEvento.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorEvento().listar()));
         cbSala.setItems(FXCollections.observableArrayList(
@@ -48,7 +46,6 @@ public class TelaCadastroPalestraController {
                 SistemaSGA.getInstance().getControladorPalestrante().listar()));
     }
 
-    // Método chamado pelo ScreenManager para EDIÇÃO
     public void setPalestra(Palestra palestra) {
         this.palestraEmEdicao = palestra;
         if (palestra != null) {
@@ -65,7 +62,6 @@ public class TelaCadastroPalestraController {
             cbSala.setValue(palestra.getSala());
             cbPalestrante.setValue(palestra.getPalestrante());
 
-            // Se o título for a chave de identificação, desabilitamos na edição
             txtNome.setDisable(true);
         }
     }
@@ -73,7 +69,6 @@ public class TelaCadastroPalestraController {
     @FXML
     private void salvar() {
         try {
-            // 1. Pegar dados dos campos
             String nome = txtNome.getText();
             String descricao = txtDescricao.getText();
             String duracaoStr = txtDuracaoHoras.getText();
@@ -84,42 +79,34 @@ public class TelaCadastroPalestraController {
             Sala sala = cbSala.getValue();
             Palestrante palestrante = cbPalestrante.getValue();
 
-            // 2. Validações Básicas
             if (nome == null || nome.trim().isEmpty()) throw new IllegalArgumentException("O nome da palestra é obrigatório.");
             if (data == null) throw new IllegalArgumentException("Selecione a data de início.");
             if (horaStr == null || horaStr.trim().isEmpty()) throw new IllegalArgumentException("Digite o horário (Ex: 14:00).");
             if (duracaoStr == null || duracaoStr.trim().isEmpty()) throw new IllegalArgumentException("Digite a duração em horas.");
             if (evento == null || sala == null || palestrante == null) throw new IllegalArgumentException("Preencha todos os campos de seleção (Evento, Sala, Palestrante).");
 
-            // 3. Conversões
             float duracao = Float.parseFloat(duracaoStr);
-            LocalTime hora = LocalTime.parse(horaStr); // Pode gerar erro se o formato estiver errado
+            LocalTime hora = LocalTime.parse(horaStr);
             LocalDateTime dataHoraInicio = LocalDateTime.of(data, hora);
 
             if (palestraEmEdicao != null) {
-                // --- MODO EDIÇÃO ---
-                // Atualiza os dados do objeto existente
                 palestraEmEdicao.setDescricao(descricao);
                 palestraEmEdicao.setDuracaoHoras(duracao);
                 palestraEmEdicao.setDataHoraInicio(dataHoraInicio);
                 palestraEmEdicao.setEvento(evento);
                 palestraEmEdicao.setSala(sala);
                 palestraEmEdicao.setPalestrante(palestrante);
-                // palestraEmEdicao.setTitulo(nome); // Se permitir mudar o nome, descomente aqui
 
                 SistemaSGA.getInstance().getControladorPalestra().atualizar(palestraEmEdicao);
                 mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Palestra atualizada com sucesso!");
 
             } else {
-                // --- MODO CADASTRO ---
-                // Chama o controlador para criar nova palestra
                 SistemaSGA.getInstance().getControladorPalestra().cadastrar(
                         nome, descricao, evento, dataHoraInicio, duracao, sala, palestrante
                 );
                 mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Palestra cadastrada com sucesso!");
             }
-
-            cancelar(); // Volta para a lista
+            cancelar();
 
         } catch (NumberFormatException e) {
             mostrarAlerta(AlertType.ERROR, "Erro de Formato", "A duração deve ser um número (ex: 1.5 ou 2).");

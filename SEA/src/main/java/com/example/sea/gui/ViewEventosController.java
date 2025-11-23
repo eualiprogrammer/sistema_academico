@@ -41,21 +41,21 @@ public class ViewEventosController {
     }
 
     private VBox criarCardEvento(Evento evento) {
-        // --- 1. Configuração Visual (Estilo Dark/Neon) ---
+        //Configuração Visual
         VBox card = new VBox(10);
         card.getStyleClass().add("card");
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5); -fx-border-color: rgba(255,255,255,0.05); -fx-border-width: 1; -fx-border-radius: 15;");
 
-        // --- 2. Título ---
+        //Título ---
         Label lblTitulo = new Label(evento.getNome());
         lblTitulo.setStyle("-fx-text-fill: #D946EF; -fx-font-size: 22px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(217, 70, 239, 0.2), 10, 0, 0, 0);"); // Rosa Neon
 
-        // --- 3. Informações (Datas e Descrição) ---
+        // Informações
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String inicio = evento.getDataInicio() != null ? evento.getDataInicio().format(fmt) : "-";
         String fim = evento.getDataFim() != null ? evento.getDataFim().format(fmt) : "-";
 
-        // Texto formatado com ícones
+        // Texto formatado
         String infoTexto = "🗓️ Período: " + inicio + " até " + fim + "\n\n" +
                 "📝 " + evento.getDescricao();
 
@@ -63,25 +63,24 @@ public class ViewEventosController {
         lblInfo.setStyle("-fx-text-fill: #cbd5e1; -fx-font-size: 14px;");
         lblInfo.setWrapText(true);
 
-        // --- 4. Botão ---
+        //Botão
         Button btnVerPalestras = new Button("Ver Palestras Disponíveis");
         btnVerPalestras.getStyleClass().add("btn-acao"); // Estilo Roxo/Rosa do CSS
         btnVerPalestras.setOnAction(e -> verPalestras(evento));
 
-        // --- 5. Layout ---
+        //Layout
         VBox conteudo = new VBox(5, lblTitulo, lblInfo);
         HBox.setHgrow(conteudo, Priority.ALWAYS);
 
         HBox linhaBotoes = new HBox(btnVerPalestras);
         linhaBotoes.setAlignment(Pos.BOTTOM_RIGHT);
 
-        // Junta tudo no card
+        //card
         card.getChildren().addAll(conteudo, linhaBotoes);
         return card;
     }
 
     private void verPalestras(Evento evento) {
-        // Navega para a tela de palestras passando o nome do evento no título
         ScreenManager.getInstance().carregarTela("view_palestras.fxml", "Palestras - " + evento.getNome());
     }
 
@@ -99,5 +98,11 @@ public class ViewEventosController {
     private void sair() {
         SessaoUsuario.getInstance().logout();
         ScreenManager.getInstance().carregarTela("TelaLogin.fxml", "Login");
+    }
+
+    @FXML
+    private void verWorkshops() {
+        // Carrega a tela de lista de workshops
+        ScreenManager.getInstance().carregarTela("view_workshops.fxml", "Workshops Disponíveis");
     }
 }

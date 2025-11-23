@@ -60,4 +60,9 @@ public class Sala implements Serializable{
     public boolean isDisponivel() {
         return this.status.equalsIgnoreCase("Livre");
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

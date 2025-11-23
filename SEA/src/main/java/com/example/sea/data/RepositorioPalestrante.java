@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioPalestrante implements IRepositorioPalestrante {
-
     private List<Palestrante> palestrantes;
     private static final String NOME_ARQUIVO = "RepoPalestrantes.dat";
-
     public RepositorioPalestrante() {
         this.palestrantes = new ArrayList<>();
         this.carregarDados();
@@ -26,7 +24,6 @@ public class RepositorioPalestrante implements IRepositorioPalestrante {
         try (FileInputStream fis = new FileInputStream(NOME_ARQUIVO);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             this.palestrantes = (ArrayList<Palestrante>) ois.readObject();
-        } catch (EOFException e) {
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Erro ao carregar dados dos palestrantes: " + e.getMessage());
             this.palestrantes = new ArrayList<>();

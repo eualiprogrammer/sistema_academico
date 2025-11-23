@@ -70,13 +70,6 @@ public class TelaListarEventosController {
         }
     }
 
-    @FXML
-    private void verDetalhes() {
-        Evento eventoSelecionado = tabelaEventos.getSelectionModel().getSelectedItem();
-        if (eventoSelecionado != null) {
-            System.out.println("Ver detalhes de: " + eventoSelecionado.getNome());
-        }
-    }
 
     @FXML
     private void voltar() {

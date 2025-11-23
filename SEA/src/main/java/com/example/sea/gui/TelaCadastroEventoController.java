@@ -58,7 +58,6 @@ public class TelaCadastroEventoController {
                 SistemaSGA.getInstance().getControladorEvento().cadastrar(novoEvento);
                 mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Evento cadastrado!");
             }
-
             cancelar();
 
         } catch (Exception e) {

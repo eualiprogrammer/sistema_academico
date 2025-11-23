@@ -71,4 +71,8 @@ public class Participante implements Serializable {
             this.inscricoes.add(inscricao);
         }
     }
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

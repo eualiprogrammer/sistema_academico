@@ -6,17 +6,62 @@
   <component name="ChangeListManager">
     <list default="true" id="527f0dfd-8f82-475c-8319-6bd401cf7685" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepoCertificados.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepoEventos.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepoInscricoes.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepoPalestrantes.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepoPalestras.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepoParticipantes.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RepoSalas.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorInscricao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorInscricao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorPalestra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorPalestra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorParticipante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorParticipante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorWorkshop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorWorkshop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorCertificado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorCertificado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorEvento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorEvento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorInscricao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorInscricao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorPalestra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorPalestra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorPalestrante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorPalestrante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorParticipante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorParticipante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorSala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorSala.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorWorkshop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/IControladorWorkshop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/SistemaSGA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/SistemaSGA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/IRepositorioInscricao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/IRepositorioInscricao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioCertificado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioCertificado.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioEvento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioEvento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioInscricao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioInscricao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioPalestra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioPalestra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioPalestrante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioPalestrante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioParticipante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioParticipante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioSala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioSala.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioWorkshop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/data/RepositorioWorkshop.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ScreenManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ScreenManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroEventoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroEventoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroInscricaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroInscricaoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroPalestraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroPalestraController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroPalestranteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroPalestranteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroParticipanteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroParticipanteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroSalaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaCadastroSalaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarEventosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarEventosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarInscricoesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarInscricoesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarPalestrantesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarPalestrantesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarPresencasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarPresencasController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarSalasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaListarSalasController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaPresencasParticipantesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaPresencasParticipantesController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaPrincipalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/TelaPrincipalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewCertificadosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewCertificadosController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewEventosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewEventosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewInscricoesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewInscricoesController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewPalestrasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewPalestrasController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Atividade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Atividade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Evento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Inscricao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Inscricao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Palestra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Palestra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Palestrante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Palestrante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Participante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Participante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Sala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Sala.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/CSS/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaCadastroEvento.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaCadastroEvento.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaCadastroInscricao.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaCadastroInscricao.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaCadastroPalestra.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaCadastroPalestra.fxml" afterDir="false" />
@@ -30,10 +75,14 @@
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaListarSalas.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaListarSalas.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaLogin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaLogin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaPrincipal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaPrincipal.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/admin_presencas_list.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/admin_presencas_list.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/admin_presencas_participantes.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/admin_presencas_participantes.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_certificados.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_certificados.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_eventos.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_eventos.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_inscricoes.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_inscricoes.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_palestras.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/view_palestras.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/HelloApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/Launcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/Launcher.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/Launcher.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/admin_evento_criar.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/admin_evento_detail.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/admin_eventos_home.fxml" beforeDir="false" />
@@ -52,17 +101,22 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorPalestra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorPalestra.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorParticipante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorParticipante.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorSala.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorSala.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorWorkshop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/ControladorWorkshop.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorInscricao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorInscricao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorPalestra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorPalestra.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorParticipante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorParticipante.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorWorkshop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/IControladorWorkshop.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/business/SistemaSGA.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/business/SistemaSGA.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/cadastro.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/IRepositorioInscricao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/IRepositorioInscricao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioCertificado.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioCertificado.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioEvento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioEvento.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioInscricao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioInscricao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioPalestra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioPalestra.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioPalestrante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioPalestrante.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioParticipante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioParticipante.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioSala.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioSala.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioWorkshop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/data/RepositorioWorkshop.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/CampoVazioException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/CampoVazioException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/CertificadoNaoEncontradoException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/CertificadoNaoEncontradoException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/CertificadoSemPresencaException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/CertificadoSemPresencaException.class" afterDir="false" />
@@ -78,27 +132,27 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/ParticipanteNaoEncontradoException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/ParticipanteNaoEncontradoException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/SalaJaExisteException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/SalaJaExisteException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/SalaNaoEncontradaException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/exceptions/SalaNaoEncontradaException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/gui/ScreenManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/gui/ScreenManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/gui/TelaCadastroPalestranteController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/gui/TelaCadastroPalestranteController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/gui/TelaPrincipalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/gui/TelaPrincipalController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/gui/ScreenManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/gui/TelaCadastroPalestranteController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/gui/TelaPrincipalController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/hello-view.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/home.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/main_base.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Atividade.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Atividade.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Certificado.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Certificado.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Evento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Evento.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Inscricao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Inscricao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Palestra.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Palestra.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Palestrante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Palestrante.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Participante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Participante.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Sala.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Sala.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Workshop.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/model/Workshop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Atividade.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Certificado.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Evento.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Inscricao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Palestra.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Palestrante.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Participante.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Sala.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/model/Workshop.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/view_certificados.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/view_certificados.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/view_eventos.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/view_eventos.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/view_inscricoes.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/view_inscricoes.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/view_palestras.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/view_palestras.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,35 +190,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Application.executor": "Run",
-    "Application.HelloApplication.executor": "Run",
-    "Application.Launcher.executor": "Run",
-    "Application.MainTeste.executor": "Run",
-    "Maven.SEA [clean].executor": "Run",
-    "Maven.SEA [install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/sistema_academico/SEA/src/main/resources/com/example/sea",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Application.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainTeste.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SEA [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.SEA [install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/sistema_academico/SEA/src/main/resources/com/example/sea&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\sistema_academico\SEA\src\main\resources\com\example\sea" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\sistema_academico\SEA\src\main\resources\com\example\sea" />
       <recent name="E:\sistema_academico\SEA\src\main\resources\com\example\sea\CSS" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Launcher">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.sea.Application" />
       <module name="SEA" />
@@ -206,9 +261,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.Application" />
         <item itemvalue="Application.MainTeste" />
+        <item itemvalue="Application.Launcher" />
       </list>
     </recent_temporary>
   </component>

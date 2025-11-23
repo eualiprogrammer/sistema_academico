@@ -10,53 +10,87 @@ import java.util.List;
 public class ControladorInscricao implements IControladorInscricao {
 
     private IRepositorioInscricao repositorioInscricao;
-
-    // --- CORREÇÃO 1: Declarar a variável aqui ---
     private IRepositorioCertificado repositorioCertificado;
 
     public ControladorInscricao() {
         this.repositorioInscricao = new RepositorioInscricao();
-
-        // --- CORREÇÃO 2: Inicializar a variável aqui ---
         this.repositorioCertificado = new RepositorioCertificado();
     }
 
     private void validarConflitoHorario(Participante participante, Palestra novaPalestra) throws ConflitoHorarioException {
         LocalDateTime inicioNova = novaPalestra.getDataHoraInicio();
-        LocalDateTime fimNova = inicioNova.plusHours((long) novaPalestra.getDuracaoHoras());
+        long minutosDuracao = (long) (novaPalestra.getDuracaoHoras() * 60);
+        LocalDateTime fimNova = inicioNova.plusMinutes(minutosDuracao);
 
         List<Inscricao> inscricoesExistentes = this.repositorioInscricao.listarPorParticipante(participante);
 
-        for (Inscricao inscricaoExistente : inscricoesExistentes) {
-            Palestra palestraExistente = inscricaoExistente.getPalestra();
-            LocalDateTime inicioExistente = palestraExistente.getDataHoraInicio();
-            LocalDateTime fimExistente = inicioExistente.plusHours((long) palestraExistente.getDuracaoHoras());
+        for (Inscricao inscricao : inscricoesExistentes) {
+            if (inscricao.getAtividade() instanceof Palestra) {
+                Palestra palestraExistente = (Palestra) inscricao.getAtividade();
 
-            if (inicioNova.isBefore(fimExistente) && fimNova.isAfter(inicioExistente)) {
-                throw new ConflitoHorarioException(palestraExistente.getTitulo(), novaPalestra.getTitulo());
+                LocalDateTime inicioExistente = palestraExistente.getDataHoraInicio();
+                long minutosExistente = (long) (palestraExistente.getDuracaoHoras() * 60);
+                LocalDateTime fimExistente = inicioExistente.plusMinutes(minutosExistente);
+
+                if (inicioNova.isBefore(fimExistente) && fimNova.isAfter(inicioExistente)) {
+                    throw new ConflitoHorarioException(palestraExistente.getTitulo(), novaPalestra.getTitulo());
+                }
             }
         }
     }
 
     @Override
-    public void inscrever(Participante participante, Palestra palestra)
-            throws InscricaoJaExisteException, LotacaoExcedidaException, ConflitoHorarioException,
-            PalestraNaoEncontradaException, ParticipanteNaoEncontradoException {
+    public void inscrever(Participante participante, Atividade atividade) throws Exception {
+        // 1. Validações Básicas
+        if (participante == null) throw new ParticipanteNaoEncontradoException("Participante nulo");
+        if (atividade == null) throw new IllegalArgumentException("Atividade nula");
 
-        if (participante == null) throw new ParticipanteNaoEncontradoException("null");
-        if (palestra == null) throw new PalestraNaoEncontradaException("null");
+        // --- LÓGICA PARA PALESTRA (Individual) ---
+        if (atividade instanceof Palestra) {
+            Palestra palestra = (Palestra) atividade;
 
-        int numeroInscritos = this.repositorioInscricao.listarPorPalestra(palestra).size();
-        int capacidadeSala = palestra.getSala().getCapacidade();
+            // A. Validação de Lotação
+            int numeroInscritos = this.repositorioInscricao.listarPorPalestra(palestra).size();
+            int capacidadeSala = palestra.getSala().getCapacidade();
 
-        if (numeroInscritos >= capacidadeSala) {
-            throw new LotacaoExcedidaException(palestra.getTitulo());
+            if (numeroInscritos >= capacidadeSala) {
+                throw new LotacaoExcedidaException(palestra.getTitulo());
+            }
+
+            // B. Validação de Conflito de Horário
+            this.validarConflitoHorario(participante, palestra);
         }
 
-        this.validarConflitoHorario(participante, palestra);
+        // --- LÓGICA PARA WORKSHOP (Pacote) ---
+        // Se for um Workshop, inscrevemos automaticamente em todas as palestras dele!
+        if (atividade instanceof Workshop) {
+            Workshop workshop = (Workshop) atividade;
 
-        Inscricao novaInscricao = new Inscricao(participante, palestra);
+            if (workshop.getPalestrasDoWorkshop().isEmpty()) {
+                // Opcional: Avisar que está vazio? Por enquanto deixamos passar.
+            }
+
+            for (Palestra palestraDoPacote : workshop.getPalestrasDoWorkshop()) {
+                try {
+                    // Chamada Recursiva: Inscreve na palestra individualmente
+                    // Isso garante que conflitos e lotação sejam checados para cada uma!
+                    this.inscrever(participante, palestraDoPacote);
+                } catch (InscricaoJaExisteException e) {
+                    // Se já está inscrito numa das palestras, ignoramos e continuamos para as outras
+                    System.out.println("Já inscrito na palestra: " + palestraDoPacote.getTitulo());
+                }
+            }
+        }
+
+        // 4. Salvar a Inscrição Principal (seja no Workshop ou na Palestra)
+        // Isso garante que o item apareça em "Minhas Inscrições"
+        Inscricao novaInscricao = new Inscricao(participante, atividade);
         this.repositorioInscricao.salvar(novaInscricao);
+    }
+
+    @Override
+    public void inscrever(Participante participante, Palestra palestra) throws Exception {
+        this.inscrever(participante, (Atividade) palestra);
     }
 
     @Override
@@ -69,24 +103,47 @@ public class ControladorInscricao implements IControladorInscricao {
     public void marcarPresenca(Inscricao inscricao) throws InscricaoNaoEncontradaException {
         if (inscricao == null) throw new InscricaoNaoEncontradaException();
 
-        // 1. Marca presença no objeto
         inscricao.confirmarPresenca();
 
-        // 2. Atualiza a inscrição no banco de dados
         this.repositorioInscricao.atualizar(inscricao);
 
-        // 3. GERA O CERTIFICADO AUTOMATICAMENTE E SALVA
         try {
             Certificado novoCertificado = new Certificado(inscricao);
 
-            // --- AQUI ESTAVA O ERRO ANTES (Agora vai funcionar) ---
             this.repositorioCertificado.salvar(novoCertificado);
+
+            inscricao.setCertificado(novoCertificado);
+            this.repositorioInscricao.atualizar(inscricao);
 
             System.out.println("Presença confirmada e Certificado gerado: " + novoCertificado.getCodigoValidacao());
 
         } catch (Exception e) {
             System.err.println("Erro ao gerar certificado automático: " + e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public Certificado gerarCertificado(Inscricao inscricao)
+            throws InscricaoNaoEncontradaException, CertificadoSemPresencaException {
+
+        if (inscricao == null) throw new InscricaoNaoEncontradaException();
+
+        if (!inscricao.isPresenca()) {
+            throw new CertificadoSemPresencaException(
+                    inscricao.getParticipante().getNome(),
+                    inscricao.getAtividade().getTitulo()
+            );
+        }
+
+        Certificado novoCertificado = new Certificado(inscricao);
+        try {
+            this.repositorioCertificado.salvar(novoCertificado);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return novoCertificado;
     }
 
     @Override
@@ -99,30 +156,6 @@ public class ControladorInscricao implements IControladorInscricao {
     public List<Inscricao> listarPorPalestra(Palestra palestra) {
         if (palestra == null) return new ArrayList<>();
         return this.repositorioInscricao.listarPorPalestra(palestra);
-    }
-
-    @Override
-    public Certificado gerarCertificado(Inscricao inscricao)
-            throws InscricaoNaoEncontradaException, CertificadoSemPresencaException {
-
-        if (inscricao == null) throw new InscricaoNaoEncontradaException();
-
-        if (!inscricao.isPresenca()) {
-            throw new CertificadoSemPresencaException(
-                inscricao.getParticipante().getNome(),
-                inscricao.getPalestra().getTitulo()
-            );
-        }
-
-        Certificado novoCertificado = new Certificado(inscricao);
-
-        try {
-            this.repositorioCertificado.salvar(novoCertificado);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return novoCertificado;
     }
 
     @Override
@@ -139,5 +172,10 @@ public class ControladorInscricao implements IControladorInscricao {
     @Override
     public void cadastrar(Inscricao inscricao) throws Exception {
         this.repositorioInscricao.salvar(inscricao);
+    }
+
+    @Override
+    public List<Inscricao> listarPorAtividade(Atividade atividade) {
+        return this.repositorioInscricao.listarPorAtividade(atividade);
     }
 }

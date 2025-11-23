@@ -1,6 +1,8 @@
 package com.example.sea.business;
 
+import com.example.sea.data.IRepositorioEvento;
 import com.example.sea.data.IRepositorioWorkshop;
+import com.example.sea.data.RepositorioEvento;
 import com.example.sea.data.RepositorioWorkshop;
 import com.example.sea.model.Workshop;
 import com.example.sea.model.Evento;
@@ -11,19 +13,31 @@ import java.util.List;
 public class ControladorWorkshop implements IControladorWorkshop {
 
     private IRepositorioWorkshop repositorioWorkshop;
+    private IRepositorioEvento repositorioEvento;
 
     public ControladorWorkshop() {
         this.repositorioWorkshop = new RepositorioWorkshop();
+        this.repositorioEvento = new RepositorioEvento();
     }
 
+    // --- MÉTODO CADASTRAR SIMPLIFICADO (3 Argumentos) ---
+    // Este método agora corresponde ao que a Interface e a Tela pedem
     @Override
-    public void cadastrar(String titulo, String descricao, Evento evento) 
+    public void cadastrar(String titulo, String descricao, Evento evento)
             throws WorkshopJaExisteException, CampoVazioException {
 
         if (titulo == null || titulo.trim().isEmpty()) throw new CampoVazioException("Título");
         if (evento == null) throw new IllegalArgumentException("O evento não pode ser nulo.");
 
+        // Cria o Workshop usando o construtor simples
         Workshop novoWorkshop = new Workshop(titulo, descricao, evento);
+        evento.adicionarAtividade(novoWorkshop);
+        try {
+            this.repositorioEvento.atualizar(evento);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         this.repositorioWorkshop.salvar(novoWorkshop);
     }
 
@@ -41,8 +55,6 @@ public class ControladorWorkshop implements IControladorWorkshop {
     @Override
     public void atualizar(Workshop workshop) throws WorkshopNaoEncontradoException, CampoVazioException {
         if (workshop == null) throw new IllegalArgumentException("Workshop nulo");
-        if (workshop.getTitulo() == null || workshop.getTitulo().trim().isEmpty()) throw new CampoVazioException("Título");
-
         this.repositorioWorkshop.atualizar(workshop);
     }
 
@@ -53,17 +65,26 @@ public class ControladorWorkshop implements IControladorWorkshop {
     }
 
     @Override
-    public void adicionarPalestraAoWorkshop(String tituloWorkshop, Palestra palestra) 
+    public void adicionarPalestraAoWorkshop(String tituloWorkshop, Palestra palestra)
             throws WorkshopNaoEncontradoException, CampoVazioException {
-
-        
         Workshop workshop = this.buscar(tituloWorkshop);
-
-        
         if (palestra != null) {
-            workshop.adicionarPalestra(palestra);
+            // Verifica se a palestra é do mesmo evento (Regra de Negócio)
+            if (!palestra.getEvento().getNome().equals(workshop.getEvento().getNome())) {
+                throw new IllegalArgumentException("A palestra deve pertencer ao mesmo evento do workshop.");
+            }
 
-            
+            workshop.adicionarPalestra(palestra);
+            this.repositorioWorkshop.atualizar(workshop);
+        }
+    }
+
+    @Override
+    public void removerPalestraDoWorkshop(String tituloWorkshop, Palestra palestra)
+            throws WorkshopNaoEncontradoException, CampoVazioException {
+        Workshop workshop = this.buscar(tituloWorkshop);
+        if (palestra != null) {
+            workshop.removerPalestra(palestra);
             this.repositorioWorkshop.atualizar(workshop);
         }
     }

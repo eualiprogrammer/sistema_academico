@@ -2,6 +2,7 @@ package com.example.sea.gui;
 
 import com.example.sea.business.SistemaSGA;
 import com.example.sea.model.Palestrante;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,11 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class TelaListarPalestrantesController {
 
     @FXML private TableView<Palestrante> tabelaPalestrantes;
-
     @FXML private TableColumn<Palestrante, String> colNome;
     @FXML private TableColumn<Palestrante, String> colEmail;
-    @FXML private TableColumn<Palestrante, String> colEspecializacao;
     @FXML private TableColumn<Palestrante, String> colTelefone;
+    @FXML private TableColumn<Palestrante, String> colEspecializacao;
 
     @FXML
     public void initialize() {
@@ -39,21 +39,24 @@ public class TelaListarPalestrantesController {
     }
 
     @FXML
-    private void novoPalestrante() {
-        ScreenManager.getInstance().carregarTela("TelaCadastroPalestrante.fxml", "Novo Palestrante");
-    }
-
-    @FXML
     private void editar() {
-        Palestrante selecionado = tabelaPalestrantes.getSelectionModel().getSelectedItem();
+        Palestrante palestranteSelecionado = tabelaPalestrantes.getSelectionModel().getSelectedItem();
 
-        if (selecionado == null) {
-            mostrarAlerta(AlertType.WARNING, "Atenção", "Selecione um palestrante na tabela para editar.");
+        if (palestranteSelecionado == null) {
+            mostrarAlerta(AlertType.WARNING, "Atenção", "Selecione um palestrante para editar.");
             return;
         }
 
-        System.out.println("Editar palestrante: " + selecionado.getNome());
-        mostrarAlerta(AlertType.INFORMATION, "Em Breve", "A funcionalidade de edição será implementada.");
+        ScreenManager.getInstance().carregarTelaEdicao(
+                "TelaCadastroPalestrante.fxml",
+                "Editar Palestrante",
+                palestranteSelecionado
+        );
+    }
+
+    @FXML
+    private void novoPalestrante() {
+        ScreenManager.getInstance().carregarTela("TelaCadastroPalestrante.fxml", "Novo Palestrante");
     }
 
     @FXML
@@ -67,7 +70,8 @@ public class TelaListarPalestrantesController {
 
         try {
             SistemaSGA.getInstance().getControladorPalestrante().remover(selecionado.getEmail());
-            mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Palestrante removido com sucesso!");
+
+            mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Palestrante removido.");
             atualizarTabela();
 
         } catch (Exception e) {

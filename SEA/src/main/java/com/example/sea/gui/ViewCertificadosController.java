@@ -14,7 +14,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-// Imports do iText para gerar PDF
+
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -61,12 +68,12 @@ public class ViewCertificadosController {
     }
 
     private VBox criarCardCertificado(Certificado cert) {
-        // --- 1. Configuração Visual (Estilo Dark) ---
+        //Configuração Visual
         VBox card = new VBox(10);
         card.getStyleClass().add("card");
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5); -fx-border-color: rgba(255,255,255,0.05); -fx-border-width: 1;");
 
-        // --- 2. Dados ---
+        // Dados
         String nomeAtividade = cert.getInscricao().getPalestra().getTitulo();
         String codigo = cert.getCodigoValidacao();
         String dataEvento = "Data: " + cert.getInscricao().getPalestra().getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -81,7 +88,7 @@ public class ViewCertificadosController {
         lblDetalhes.setStyle("-fx-text-fill: #cbd5e1; -fx-font-size: 13px; -fx-font-family: 'Consolas', monospace;");
         lblDetalhes.setWrapText(true);
 
-        // --- 3. Botão Gerar PDF ---
+        //Botão Gerar PDF
         Button btnPdf = new Button("📥 Baixar PDF");
         btnPdf.getStyleClass().add("btn-acao");
         // Estilo específico para o botão de baixar (Azul Ciano)
@@ -89,7 +96,7 @@ public class ViewCertificadosController {
 
         btnPdf.setOnAction(e -> salvarPdf(cert));
 
-        // --- 4. Layout ---
+        //Layout
         VBox infoBox = new VBox(5, lblTitulo, lblDetalhes);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
 
@@ -124,26 +131,104 @@ public class ViewCertificadosController {
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            document.add(new Paragraph("CERTIFICADO DE PARTICIPAÇÃO")
-                    .setTextAlignment(TextAlignment.CENTER)
-                    .setFontSize(24)
-                    .setBold());
+            // --- DEFINIÇÃO DE CORES ---
+            Color corFundo = new DeviceRgb(15, 17, 26);
+            Color corDourado = new DeviceRgb(250, 204, 21);
+            Color corRoxo = new DeviceRgb(139, 92, 246);
+            Color corTexto = new DeviceRgb(226, 232, 240);
+
+            // --- FONTE (Times New Roman) ---
+            PdfFont fontTimes = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
+
+            // --- 1. FUNDO E BORDA ---
+            PdfPage page = pdf.addNewPage();
+            PdfCanvas canvas = new PdfCanvas(page);
+
+            canvas.saveState();
+            canvas.setFillColor(corFundo);
+            canvas.rectangle(0, 0, pdf.getDefaultPageSize().getWidth(), pdf.getDefaultPageSize().getHeight());
+            canvas.fill();
+            canvas.restoreState();
+
+            canvas.saveState();
+            canvas.setStrokeColor(corDourado);
+            canvas.setLineWidth(3);
+            canvas.rectangle(20, 20, pdf.getDefaultPageSize().getWidth() - 40, pdf.getDefaultPageSize().getHeight() - 40);
+            canvas.stroke();
+            canvas.restoreState();
+
+            // --- 2. CONTEÚDO ---
 
             document.add(new Paragraph("\n\n"));
 
-            String texto = "Certificamos que " + cert.getInscricao().getParticipante().getNome().toUpperCase() +
-                    " participou da atividade " + cert.getInscricao().getPalestra().getTitulo().toUpperCase() +
-                    " realizada em " + cert.getInscricao().getPalestra().getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".";
+            // Título
+            document.add(new Paragraph("CERTIFICADO")
+                    .setFont(fontTimes)
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(40)
+                    .setBold()
+                    .setFontColor(corDourado));
 
-            document.add(new Paragraph(texto).setFontSize(14).setTextAlignment(TextAlignment.JUSTIFIED));
+            document.add(new Paragraph("DE PARTICIPAÇÃO")
+                    .setFont(fontTimes)
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(18)
+                    .setBold()
+                    .setCharacterSpacing(5)
+                    .setFontColor(corRoxo));
 
-            document.add(new Paragraph("\n\n\nCódigo de Validação: " + cert.getCodigoValidacao())
+            document.add(new Paragraph("\n\n\n"));
+
+            // --- LÓGICA INTELIGENTE PARA DATA E TÍTULO ---
+            String nomeAtividade = cert.getInscricao().getAtividade().getTitulo().toUpperCase();
+            String complementoTexto = "";
+
+            // Verifica se é Palestra (tem data) ou Workshop (genérico)
+            if (cert.getInscricao().getAtividade() instanceof com.example.sea.model.Palestra) {
+                com.example.sea.model.Palestra p = (com.example.sea.model.Palestra) cert.getInscricao().getAtividade();
+                if (p.getDataHoraInicio() != null) {
+                    complementoTexto = " realizada em " + p.getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                } else {
+                    complementoTexto = " realizada em data a definir";
+                }
+            } else {
+                // Para Workshop ou outros
+                complementoTexto = " concluída com êxito";
+            }
+
+            String nomeParticipante = cert.getInscricao().getParticipante().getNome().toUpperCase();
+
+            String texto = "Certificamos que " + nomeParticipante +
+                    " participou da atividade " + nomeAtividade +
+                    complementoTexto + ".";
+
+            document.add(new Paragraph(texto)
+                    .setFont(fontTimes)
+                    .setFontSize(16)
+                    .setTextAlignment(TextAlignment.JUSTIFIED)
+                    .setFontColor(corTexto)
+                    .setMarginLeft(60)
+                    .setMarginRight(60));
+
+            document.add(new Paragraph("\n\n\n\n"));
+
+            // Rodapé
+            document.add(new Paragraph("Autenticidade do Documento")
+                    .setFont(fontTimes)
                     .setFontSize(10)
-                    .setTextAlignment(TextAlignment.CENTER));
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontColor(corDourado));
+
+            document.add(new Paragraph(cert.getCodigoValidacao())
+                    .setFont(fontTimes)
+                    .setFontSize(12)
+                    .setBold()
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontColor(corTexto));
 
             document.close();
 
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "PDF salvo com sucesso!");
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "PDF gerado com sucesso!");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,11 +1,8 @@
 package com.example.sea.business;
 
-
 public class SistemaSGA {
-
     
     private static SistemaSGA instance;
-
     
     private IControladorPalestrante controladorPalestrante;
     private IControladorSala controladorSala;
@@ -15,7 +12,6 @@ public class SistemaSGA {
     private IControladorWorkshop controladorWorkshop;
     private IControladorInscricao controladorInscricao;
     private IControladorCertificado controladorCertificado;
-
    
     private SistemaSGA() {
         System.out.println("Inicializando o Sistema SGA...");
@@ -30,15 +26,12 @@ public class SistemaSGA {
         this.controladorCertificado = new ControladorCertificado();
     }
 
-  
     public static SistemaSGA getInstance() {
         if (instance == null) {
             instance = new SistemaSGA();
         }
         return instance;
     }
-
-    
 
     public IControladorPalestrante getControladorPalestrante() {
         return controladorPalestrante;

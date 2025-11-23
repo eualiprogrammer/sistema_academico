@@ -8,10 +8,8 @@ import com.example.sea.exceptions.WorkshopJaExisteException;
 import com.example.sea.exceptions.WorkshopNaoEncontradoException;
 
 public class RepositorioWorkshop implements IRepositorioWorkshop {
-
     private List<Workshop> workshops;
     private static final String NOME_ARQUIVO = "RepoWorkshops.dat";
-
     public RepositorioWorkshop() {
         this.workshops = new ArrayList<>();
         this.carregarDados();
@@ -70,11 +68,7 @@ public class RepositorioWorkshop implements IRepositorioWorkshop {
     public void atualizar(Workshop workshop) throws WorkshopNaoEncontradoException {
         if (workshop == null) throw new WorkshopNaoEncontradoException("null");
         Workshop existente = buscarPorTitulo(workshop.getTitulo());
-
-        
         existente.setDescricao(workshop.getDescricao());
-        
-
         this.salvarDados();
         System.out.println("Workshop atualizado: " + workshop.getTitulo());
     }

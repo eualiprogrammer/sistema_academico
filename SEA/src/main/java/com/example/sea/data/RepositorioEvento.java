@@ -36,9 +36,7 @@ public class RepositorioEvento implements IRepositorioEvento {
 
         try (FileInputStream fis = new FileInputStream(NOME_ARQUIVO);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
-            
             this.eventos = (ArrayList<Evento>) ois.readObject();
-
         } catch (EOFException e) {
 
         } catch (IOException | ClassNotFoundException e) {
@@ -51,7 +49,6 @@ public class RepositorioEvento implements IRepositorioEvento {
         try (FileOutputStream fos = new FileOutputStream(NOME_ARQUIVO);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(this.eventos);
-
         } catch (IOException e) {
             System.err.println("Erro ao salvar dados dos eventos: " + e.getMessage());
         }
@@ -60,11 +57,9 @@ public class RepositorioEvento implements IRepositorioEvento {
     @Override
     public void salvar(Evento evento) throws EventoJaExisteException {
         if (evento == null) return;
-        
         try {
             buscarPorNome(evento.getNome());
             throw new EventoJaExisteException(evento.getNome());
-            
         } catch (EventoNaoEncontradoException e) {
             this.eventos.add(evento);
             this.salvarDados();
@@ -95,9 +90,7 @@ public class RepositorioEvento implements IRepositorioEvento {
         if (evento == null) {
             throw new EventoNaoEncontradoException("Evento nulo");
         }
-        
         Evento existente = this.buscarPorNome(evento.getNome());
-
         existente.setDescricao(evento.getDescricao());
         existente.setDataInicio(evento.getDataInicio());
         existente.setDataFim(evento.getDataFim());

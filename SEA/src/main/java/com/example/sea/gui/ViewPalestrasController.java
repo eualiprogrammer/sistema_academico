@@ -29,7 +29,6 @@ public class ViewPalestrasController {
     private void carregarPalestras() {
         containerPalestras.getChildren().clear();
 
-        // Busca todas as palestras do sistema
         List<Palestra> palestras = SistemaSGA.getInstance().getControladorPalestra().listarTodos();
 
         if (palestras.isEmpty()) {
@@ -38,22 +37,21 @@ public class ViewPalestrasController {
         }
 
         for (Palestra palestra : palestras) {
-            // CORREÇÃO: Chamamos passando apenas a palestra
             containerPalestras.getChildren().add(criarCardPalestra(palestra));
         }
     }
 
     private VBox criarCardPalestra(Palestra palestra) {
-        // --- 1. Configuração Visual do Card ---
+        //Configuração Visual do Card
         VBox card = new VBox(10);
         card.getStyleClass().add("card");
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 15; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0); -fx-border-color: rgba(255,255,255,0.1); -fx-border-width: 1; -fx-border-radius: 10;");
 
-        // --- 2. Título da Palestra ---
+        //Título da Palestra
         Label lblTitulo = new Label(palestra.getTitulo());
         lblTitulo.setStyle("-fx-text-fill: #8B5CF6; -fx-font-size: 20px; -fx-font-weight: bold;"); // Roxo Neon
 
-        // --- 3. Montagem das Informações Detalhadas ---
+        //Montagem das Informações Detalhadas
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
         String dataStr = palestra.getDataHoraInicio() != null ? palestra.getDataHoraInicio().format(fmt) : "A definir";
 
@@ -74,12 +72,12 @@ public class ViewPalestrasController {
         lblInfo.setStyle("-fx-text-fill: #cbd5e1; -fx-font-size: 13px;");
         lblInfo.setWrapText(true);
 
-        // --- 4. Botão de Ação ---
+        //Botão de Ação
         Button btnInscrever = new Button("Inscrever-se");
         btnInscrever.getStyleClass().add("btn-acao");
         btnInscrever.setOnAction(e -> realizarInscricao(palestra, btnInscrever));
 
-        // --- 5. Layout (Organização) ---
+        //Layout
         VBox conteudoTexto = new VBox(5, lblTitulo, lblInfo);
         HBox.setHgrow(conteudoTexto, Priority.ALWAYS);
 

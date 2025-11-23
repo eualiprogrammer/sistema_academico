@@ -3,7 +3,9 @@ package com.example.sea.gui;
 import com.example.sea.business.SessaoUsuario;
 import com.example.sea.business.SistemaSGA;
 import com.example.sea.model.Inscricao;
+import com.example.sea.model.Palestra;
 import com.example.sea.model.Participante;
+import com.example.sea.model.Workshop;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -58,25 +60,40 @@ public class ViewInscricoesController {
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 15; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0); -fx-border-color: rgba(255,255,255,0.05); -fx-border-width: 1;");
 
         // --- 2. Dados ---
-        String nomePalestra = inscricao.getPalestra().getTitulo();
-        String nomeEvento = inscricao.getPalestra().getEvento() != null ? inscricao.getPalestra().getEvento().getNome() : "Evento";
-        String sala = inscricao.getPalestra().getSala() != null ? inscricao.getPalestra().getSala().getNome() : "TBA";
+        String nomeAtividade = inscricao.getAtividade().getTitulo();
 
+        String nomeEvento = "-";
+        if (inscricao.getAtividade().getEvento() != null) {
+            nomeEvento = inscricao.getAtividade().getEvento().getNome();
+        }
+
+        // Tratamento de Data e Local
+        String dataHora = "Data a definir";
+        String local = "Local a definir";
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
-        String dataHora = inscricao.getPalestra().getDataHoraInicio() != null ?
-                inscricao.getPalestra().getDataHoraInicio().format(fmt) : "Data a definir";
 
-        // Título da Palestra
-        Label lblTitulo = new Label(nomePalestra);
+        if (inscricao.getAtividade() instanceof Palestra) {
+            Palestra p = (Palestra) inscricao.getAtividade();
+            if (p.getDataHoraInicio() != null) dataHora = p.getDataHoraInicio().format(fmt);
+            if (p.getSala() != null) local = p.getSala().getNome();
+        }
+        else if (inscricao.getAtividade() instanceof Workshop) {
+            // CORREÇÃO: Workshop simplificado não tem data/sala próprias
+            dataHora = "Ver detalhes do evento";
+            local = "Múltiplos locais";
+        }
+
+        // Título
+        Label lblTitulo = new Label(nomeAtividade);
         lblTitulo.setStyle("-fx-text-fill: #8B5CF6; -fx-font-size: 18px; -fx-font-weight: bold;");
 
         // Detalhes
-        String detalhes = String.format("📅 %s\n📍 %s\n🎉 %s", dataHora, sala, nomeEvento);
+        String detalhes = String.format("📅 %s\n📍 %s\n🎉 %s", dataHora, local, nomeEvento);
         Label lblDetalhes = new Label(detalhes);
         lblDetalhes.setStyle("-fx-text-fill: #cbd5e1; -fx-font-size: 13px;");
         lblDetalhes.setWrapText(true);
 
-        // Status de Presença (Visual extra)
+        // Status
         Label lblStatus = new Label(inscricao.isPresenca() ? "✅ Presença Confirmada" : "⏳ Aguardando Realização");
         lblStatus.setStyle(inscricao.isPresenca() ?
                 "-fx-text-fill: #2ecc71; -fx-font-weight: bold;" :
@@ -86,7 +103,6 @@ public class ViewInscricoesController {
         Button btnCancelar = new Button("Cancelar Inscrição");
         btnCancelar.getStyleClass().add("btn-perigo");
 
-        // Se já tiver presença confirmada, não faz sentido cancelar (Regra de Negócio Visual)
         if (inscricao.isPresenca()) {
             btnCancelar.setDisable(true);
             btnCancelar.setText("Concluído");
@@ -111,7 +127,7 @@ public class ViewInscricoesController {
         try {
             SistemaSGA.getInstance().getControladorInscricao().cancelarInscricao(inscricao);
             mostrarAlerta(Alert.AlertType.INFORMATION, "Cancelado", "Sua inscrição foi cancelada.");
-            carregarMinhasInscricoes(); // Atualiza a lista
+            carregarMinhasInscricoes();
 
         } catch (Exception e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível cancelar: " + e.getMessage());

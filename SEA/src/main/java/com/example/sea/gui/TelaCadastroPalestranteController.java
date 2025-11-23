@@ -14,10 +14,8 @@ public class TelaCadastroPalestranteController {
     @FXML private TextField txtEmail;
     @FXML private TextField txtEspecializacao;
 
-    // Variável para controlar se é edição ou novo
     private Palestrante palestranteEmEdicao;
 
-    // --- MÉTODO QUE FALTAVA (Para o ScreenManager usar) ---
     public void setPalestrante(Palestrante palestrante) {
         this.palestranteEmEdicao = palestrante;
         if (palestrante != null) {
@@ -26,7 +24,6 @@ public class TelaCadastroPalestranteController {
             txtEmail.setText(palestrante.getEmail());
             txtEspecializacao.setText(palestrante.getAreaEspecializacao());
 
-            // Desabilita e-mail na edição se for a chave única
             txtEmail.setDisable(true);
         }
     }
@@ -39,30 +36,26 @@ public class TelaCadastroPalestranteController {
             String email = txtEmail.getText();
             String especializacao = txtEspecializacao.getText();
 
-            // Validação básica
             if (nome.isEmpty() || email.isEmpty()) {
                 mostrarAlerta(AlertType.WARNING, "Atenção", "Preencha nome e e-mail.");
                 return;
             }
 
             if (palestranteEmEdicao != null) {
-                // --- MODO EDIÇÃO ---
                 palestranteEmEdicao.setNome(nome);
                 palestranteEmEdicao.setTelefone(telefone);
                 palestranteEmEdicao.setAreaEspecializacao(especializacao);
-                // Email geralmente não muda pois é ID
 
                 SistemaSGA.getInstance().getControladorPalestrante().atualizar(palestranteEmEdicao);
                 mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Palestrante atualizado com sucesso!");
 
             } else {
-                // --- MODO NOVO CADASTRO ---
                 Palestrante novoPalestrante = new Palestrante(nome, especializacao, telefone, email);
                 SistemaSGA.getInstance().getControladorPalestrante().cadastrar(novoPalestrante);
                 mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Palestrante cadastrado com sucesso!");
             }
 
-            cancelar(); // Volta para a lista
+            cancelar();
 
         } catch (Exception e) {
             mostrarAlerta(AlertType.ERROR, "Erro ao Salvar", e.getMessage());

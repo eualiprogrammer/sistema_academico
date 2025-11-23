@@ -19,7 +19,7 @@ import java.util.List;
 public class RepositorioPalestra implements IRepositorioPalestra {
 
     private List<Palestra> palestras;
-    
+
     private static final String NOME_ARQUIVO = "RepoPalestras.dat";
 
     public RepositorioPalestra() {
@@ -37,7 +37,6 @@ public class RepositorioPalestra implements IRepositorioPalestra {
 
         try (FileInputStream fis = new FileInputStream(NOME_ARQUIVO);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
-            
             this.palestras = (ArrayList<Palestra>) ois.readObject();
 
         } catch (EOFException e) {
@@ -50,9 +49,7 @@ public class RepositorioPalestra implements IRepositorioPalestra {
     private void salvarDados() {
         try (FileOutputStream fos = new FileOutputStream(NOME_ARQUIVO);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            
             oos.writeObject(this.palestras);
-
         } catch (IOException e) {
             System.err.println("Erro ao salvar dados das palestras: " + e.getMessage());
         }
@@ -61,11 +58,9 @@ public class RepositorioPalestra implements IRepositorioPalestra {
     @Override
     public void salvar(Palestra palestra) throws PalestraJaExisteException {
         if (palestra == null) return;
-        
         try {
             buscarPorTitulo(palestra.getTitulo());
             throw new PalestraJaExisteException(palestra.getTitulo());
-            
         } catch (PalestraNaoEncontradaException e) {
             this.palestras.add(palestra);
             this.salvarDados();
@@ -109,9 +104,7 @@ public class RepositorioPalestra implements IRepositorioPalestra {
         if (palestra == null) {
             throw new PalestraNaoEncontradaException("Palestra nula");
         }
-        
-        Palestra existente = this.buscarPorTitulo(palestra.getTitulo()); 
-        
+        Palestra existente = this.buscarPorTitulo(palestra.getTitulo());
         existente.setDescricao(palestra.getDescricao());
         existente.setDataHoraInicio(palestra.getDataHoraInicio());
         existente.setDuracaoHoras(palestra.getDuracaoHoras());
@@ -124,8 +117,7 @@ public class RepositorioPalestra implements IRepositorioPalestra {
 
     @Override
     public void deletar(String titulo) throws PalestraNaoEncontradaException {
-        Palestra paraRemover = this.buscarPorTitulo(titulo); 
-        
+        Palestra paraRemover = this.buscarPorTitulo(titulo);
         this.palestras.remove(paraRemover);
         this.salvarDados();
         System.out.println("Palestra removida: " + titulo);

@@ -1,16 +1,15 @@
 package com.example.sea.gui;
 
 import com.example.sea.business.SistemaSGA;
+import com.example.sea.model.Atividade; // <--- USAR ATIVIDADE
 import com.example.sea.model.Inscricao;
-import com.example.sea.model.Palestra;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Label;
 
 public class TelaPresencasParticipantesController {
 
@@ -19,24 +18,20 @@ public class TelaPresencasParticipantesController {
     @FXML private TableColumn<Inscricao, String> colParticipante;
     @FXML private TableColumn<Inscricao, String> colStatus;
 
-    private Palestra palestraAtual;
+    private Atividade atividadeAtual; // Mudou de Palestra para Atividade
 
-    // Método especial para receber a palestra da tela anterior
-    // O ScreenManager vai chamar este método.
-    // IMPORTANTE: Precisamos adicionar um "case" no ScreenManager para esta classe (veja Passo 3)
-    public void setPalestra(Palestra palestra) {
-        this.palestraAtual = palestra;
-        if (palestra != null) {
-            if (lblTituloPalestra != null) lblTituloPalestra.setText(palestra.getTitulo());
+    // Método Genérico
+    public void setAtividade(Atividade atividade) {
+        this.atividadeAtual = atividade;
+        if (atividade != null) {
+            lblTituloPalestra.setText(atividade.getTitulo());
             carregarInscritos();
         }
     }
 
-    // Método alternativo caso o ScreenManager use nomes diferentes (gambiarra segura)
-    public void setEvento(Object obj) {
-        if (obj instanceof Palestra) {
-            setPalestra((Palestra) obj);
-        }
+    // Método de compatibilidade para o ScreenManager antigo (opcional)
+    public void setPalestra(Atividade atividade) {
+        setAtividade(atividade);
     }
 
     @FXML
@@ -55,9 +50,10 @@ public class TelaPresencasParticipantesController {
     }
 
     private void carregarInscritos() {
-        if (palestraAtual != null) {
+        if (atividadeAtual != null) {
             tabelaInscritos.setItems(FXCollections.observableArrayList(
-                    SistemaSGA.getInstance().getControladorInscricao().listarPorPalestra(palestraAtual)
+                    // Chama o novo método genérico
+                    SistemaSGA.getInstance().getControladorInscricao().listarPorAtividade(atividadeAtual)
             ));
         }
     }
@@ -67,23 +63,21 @@ public class TelaPresencasParticipantesController {
         Inscricao inscricaoSelecionada = tabelaInscritos.getSelectionModel().getSelectedItem();
 
         if (inscricaoSelecionada == null) {
-            mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um aluno na lista.");
+            mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um aluno.");
             return;
         }
 
         try {
-            // Marca presença no sistema
             SistemaSGA.getInstance().getControladorInscricao().marcarPresenca(inscricaoSelecionada);
-
-            // Atualiza a tabela para mostrar o "✅"
             tabelaInscritos.refresh();
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Presença confirmada para: " + inscricaoSelecionada.getParticipante().getNome());
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Presença confirmada!");
 
         } catch (Exception e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", e.getMessage());
         }
     }
 
+    // ... (métodos voltar e mostrarAlerta iguais) ...
     @FXML
     private void voltar() {
         ScreenManager.getInstance().carregarTela("admin_presencas_list.fxml", "Gerenciar Presenças");

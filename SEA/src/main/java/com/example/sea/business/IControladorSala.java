@@ -8,14 +8,11 @@ import java.util.List;
 
 public interface IControladorSala {
 
-
     void cadastrar(Sala sala) throws SalaJaExisteException, CampoVazioException, Exception;
 
-  
     Sala buscar(String nome) throws SalaNaoEncontradaException, CampoVazioException;
 
     List<Sala> listar();
-
 
     void atualizar(Sala sala) throws SalaNaoEncontradaException, CampoVazioException, Exception;
 

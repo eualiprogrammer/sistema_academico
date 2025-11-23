@@ -13,20 +13,16 @@ public interface IControladorPalestra {
                    Sala sala, Palestrante palestrante) 
                    throws PalestraJaExisteException, CampoVazioException, DataInvalidaException, ConflitoHorarioException;
 
-  
     Palestra buscar(String titulo) throws PalestraNaoEncontradaException, CampoVazioException;
 
     List<Palestra> listar();
     
     List<Palestra> listarPorEvento(Evento evento);
-
-
    
     void atualizar(Palestra palestra) 
         throws PalestraNaoEncontradaException, CampoVazioException, DataInvalidaException, ConflitoHorarioException;
 
-  
-    List<Palestra> remover(String titulo) throws PalestraNaoEncontradaException, CampoVazioException, PalestraComInscritosException;
+    void remover(String titulo) throws PalestraNaoEncontradaException, CampoVazioException, PalestraComInscritosException;
 
     List<Palestra> listarTodos();
 }

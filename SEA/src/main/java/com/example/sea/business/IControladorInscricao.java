@@ -1,32 +1,33 @@
 package com.example.sea.business;
 
-import com.example.sea.model.Certificado;
 import com.example.sea.model.Inscricao;
-import com.example.sea.model.Palestra;
 import com.example.sea.model.Participante;
-import com.example.sea.exceptions.*;
+import com.example.sea.model.Palestra;
+import com.example.sea.model.Atividade; // Importante
+import com.example.sea.model.Certificado;
 import java.util.List;
 
 public interface IControladorInscricao {
 
-    void inscrever(Participante participante, Palestra palestra) 
-        throws InscricaoJaExisteException, LotacaoExcedidaException, ConflitoHorarioException, 
-               PalestraNaoEncontradaException, ParticipanteNaoEncontradoException;
+    void inscrever(Participante participante, Atividade atividade) throws Exception;
 
-    void cancelarInscricao(Inscricao inscricao) throws InscricaoNaoEncontradaException;
+    void inscrever(Participante participante, Palestra palestra) throws Exception;
 
-    void marcarPresenca(Inscricao inscricao) throws InscricaoNaoEncontradaException;
+    void cancelarInscricao(Inscricao inscricao) throws Exception;
+
+    void marcarPresenca(Inscricao inscricao) throws Exception;
 
     List<Inscricao> listarPorParticipante(Participante participante);
-    
+
     List<Inscricao> listarPorPalestra(Palestra palestra);
 
-    Certificado gerarCertificado(Inscricao inscricao) 
-        throws InscricaoNaoEncontradaException, CertificadoSemPresencaException;
-
     List<Inscricao> listarTodos();
+
+    Certificado gerarCertificado(Inscricao inscricao) throws Exception;
 
     void atualizar(Inscricao inscricao) throws Exception;
 
     void cadastrar(Inscricao inscricao) throws Exception;
+
+    List<Inscricao> listarPorAtividade(Atividade atividade);
 }

@@ -1,49 +1,36 @@
 package com.example.sea.data;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.EOFException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.sea.model.Inscricao;
+import com.example.sea.model.Atividade; // Importante
 import com.example.sea.model.Palestra;
 import com.example.sea.model.Participante;
 import com.example.sea.exceptions.InscricaoJaExisteException;
 import com.example.sea.exceptions.InscricaoNaoEncontradaException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RepositorioInscricao implements IRepositorioInscricao {
 
     private List<Inscricao> inscricoes;
-    
     private static final String NOME_ARQUIVO = "RepoInscricoes.dat";
 
     public RepositorioInscricao() {
         this.inscricoes = new ArrayList<>();
-        this.carregarDados(); 
+        this.carregarDados();
     }
 
     @SuppressWarnings("unchecked")
     private void carregarDados() {
         File arquivo = new File(NOME_ARQUIVO);
-        if (!arquivo.exists()) {
-            System.out.println("Ficheiro 'RepoInscricoes.dat' não encontrado. A começar com lista vazia.");
-            return; 
-        }
+        if (!arquivo.exists()) return;
 
         try (FileInputStream fis = new FileInputStream(NOME_ARQUIVO);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
-            
             this.inscricoes = (ArrayList<Inscricao>) ois.readObject();
-
-        } catch (EOFException e) {
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Erro ao carregar dados das inscrições: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar inscrições: " + e.getMessage());
             this.inscricoes = new ArrayList<>();
         }
     }
@@ -51,42 +38,39 @@ public class RepositorioInscricao implements IRepositorioInscricao {
     private void salvarDados() {
         try (FileOutputStream fos = new FileOutputStream(NOME_ARQUIVO);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            
             oos.writeObject(this.inscricoes);
-
         } catch (IOException e) {
-            System.err.println("Erro ao salvar dados das inscrições: " + e.getMessage());
+            System.err.println("Erro ao salvar inscrições: " + e.getMessage());
         }
     }
 
     @Override
     public void salvar(Inscricao inscricao) throws InscricaoJaExisteException {
         if (inscricao == null) return;
-        
+
         try {
-            buscar(inscricao.getParticipante(), inscricao.getPalestra());
+            buscar(inscricao.getParticipante(), inscricao.getAtividade());
             throw new InscricaoJaExisteException(
-                inscricao.getParticipante().getNome(), 
-                inscricao.getPalestra().getTitulo()
+                    inscricao.getParticipante().getNome(),
+                    inscricao.getAtividade().getTitulo()
             );
-            
         } catch (InscricaoNaoEncontradaException e) {
             this.inscricoes.add(inscricao);
             this.salvarDados();
-            System.out.println("Inscrição salva com sucesso.");
         }
     }
 
     @Override
-    public Inscricao buscar(Participante participante, Palestra palestra) throws InscricaoNaoEncontradaException {
-        if (participante == null || palestra == null) {
+    public Inscricao buscar(Participante participante, Atividade atividade) throws InscricaoNaoEncontradaException {
+        if (participante == null || atividade == null) {
             throw new InscricaoNaoEncontradaException();
         }
         for (Inscricao i : this.inscricoes) {
             boolean mesmoParticipante = i.getParticipante().getCpf().equals(participante.getCpf());
-            boolean mesmaPalestra = i.getPalestra().getTitulo().equals(palestra.getTitulo());
-            
-            if (mesmoParticipante && mesmaPalestra) {
+
+            boolean mesmaAtividade = i.getAtividade().getTitulo().equals(atividade.getTitulo());
+
+            if (mesmoParticipante && mesmaAtividade) {
                 return i;
             }
         }
@@ -104,7 +88,9 @@ public class RepositorioInscricao implements IRepositorioInscricao {
         if (palestra == null) return listaFiltrada;
 
         for (Inscricao i : this.inscricoes) {
-            if (i.getPalestra().getTitulo().equals(palestra.getTitulo())) {
+            // Verifica se é palestra E se tem o mesmo título
+            if (i.getAtividade() instanceof Palestra &&
+                    i.getAtividade().getTitulo().equals(palestra.getTitulo())) {
                 listaFiltrada.add(i);
             }
         }
@@ -125,43 +111,41 @@ public class RepositorioInscricao implements IRepositorioInscricao {
     }
 
     @Override
-    public void atualizar(Inscricao inscricaoAtualizada) throws InscricaoNaoEncontradaException {
-        boolean encontrou = false;
+    public void atualizar(Inscricao inscricao) throws InscricaoNaoEncontradaException {
+        if (inscricao == null) throw new InscricaoNaoEncontradaException();
 
-        // Procura a inscrição na lista e substitui
-        for (int i = 0; i < inscricoes.size(); i++) {
-            // Compara se é a mesma inscrição (pode usar ID ou a combinação Participante+Palestra)
-            Inscricao inscricaoExistente = inscricoes.get(i);
+        Inscricao existente = this.buscar(inscricao.getParticipante(), inscricao.getAtividade());
 
-            // Se a sua classe Inscrição não tem ID, compare pelos objetos
-            if (inscricaoExistente.equals(inscricaoAtualizada) ||
-                    (inscricaoExistente.getParticipante().getCpf().equals(inscricaoAtualizada.getParticipante().getCpf()) &&
-                            inscricaoExistente.getPalestra().getTitulo().equals(inscricaoAtualizada.getPalestra().getTitulo()))) {
+        existente.setPresenca(inscricao.isPresenca());
+        existente.setStatusConfirmacao(inscricao.getStatusConfirmacao());
 
-                inscricoes.set(i, inscricaoAtualizada); // Substitui a velha pela nova (com presença)
-                encontrou = true;
-                break;
-            }
+        if (inscricao.getCertificado() != null) {
+            existente.setCertificado(inscricao.getCertificado());
         }
 
-        if (!encontrou) {
-            throw new InscricaoNaoEncontradaException();
-        }
-
-        // Fundamental: Salvar no arquivo!
-        salvarDados();
+        this.salvarDados();
     }
 
     @Override
     public void deletar(Inscricao inscricao) throws InscricaoNaoEncontradaException {
-        if (inscricao == null) {
-            throw new InscricaoNaoEncontradaException();
-        }
-        
-        Inscricao paraRemover = this.buscar(inscricao.getParticipante(), inscricao.getPalestra()); 
-        
+        if (inscricao == null) throw new InscricaoNaoEncontradaException();
+
+        Inscricao paraRemover = this.buscar(inscricao.getParticipante(), inscricao.getAtividade());
+
         this.inscricoes.remove(paraRemover);
         this.salvarDados();
         System.out.println("Inscrição removida.");
+    }
+
+    public List<Inscricao> listarPorAtividade(Atividade atividade) {
+        List<Inscricao> listaFiltrada = new ArrayList<>();
+        if (atividade == null) return listaFiltrada;
+
+        for (Inscricao i : this.inscricoes) {
+            if (i.getAtividade().getTitulo().equals(atividade.getTitulo())) {
+                listaFiltrada.add(i);
+            }
+        }
+        return listaFiltrada;
     }
 }

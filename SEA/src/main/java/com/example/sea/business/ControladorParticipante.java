@@ -9,9 +9,6 @@ import com.example.sea.exceptions.ParticipanteNaoEncontradoException;
 
 import java.util.List;
 
-
- 
-
 public class ControladorParticipante implements IControladorParticipante {
 
     private IRepositorioParticipante repositorioParticipante;
