@@ -5,17 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="527f0dfd-8f82-475c-8319-6bd401cf7685" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/MainTeste.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/MainTeste.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorPalestra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorPalestra.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorWorkshop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/ControladorWorkshop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/business/SessaoUsuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/business/SessaoUsuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewEventosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewEventosController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewPalestrasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewPalestrasController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewWorkshopsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/gui/ViewWorkshopsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Certificado.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Certificado.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Workshop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sea/model/Workshop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaLogin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/sea/TelaLogin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/HelloApplication.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/Launcher.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/sea/Launcher.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/sea/admin_evento_criar.fxml" beforeDir="false" />
