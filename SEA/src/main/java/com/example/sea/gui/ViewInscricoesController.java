@@ -54,12 +54,12 @@ public class ViewInscricoesController {
     }
 
     private VBox criarCardInscricao(Inscricao inscricao) {
-        // --- 1. Configuração Visual ---
+        //Configuração Visual
         VBox card = new VBox(10);
         card.getStyleClass().add("card");
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 15; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 0); -fx-border-color: rgba(255,255,255,0.05); -fx-border-width: 1;");
 
-        // --- 2. Dados ---
+        //Dados
         String nomeAtividade = inscricao.getAtividade().getTitulo();
 
         String nomeEvento = "-";
@@ -67,7 +67,7 @@ public class ViewInscricoesController {
             nomeEvento = inscricao.getAtividade().getEvento().getNome();
         }
 
-        // Tratamento de Data e Local
+        //Data e Local
         String dataHora = "Data a definir";
         String local = "Local a definir";
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy 'às' HH:mm");
@@ -78,7 +78,6 @@ public class ViewInscricoesController {
             if (p.getSala() != null) local = p.getSala().getNome();
         }
         else if (inscricao.getAtividade() instanceof Workshop) {
-            // CORREÇÃO: Workshop simplificado não tem data/sala próprias
             dataHora = "Ver detalhes do evento";
             local = "Múltiplos locais";
         }
@@ -99,7 +98,7 @@ public class ViewInscricoesController {
                 "-fx-text-fill: #2ecc71; -fx-font-weight: bold;" :
                 "-fx-text-fill: #f1c40f; -fx-font-style: italic;");
 
-        // --- 3. Botão Cancelar ---
+        //Botão Cancelar
         Button btnCancelar = new Button("Cancelar Inscrição");
         btnCancelar.getStyleClass().add("btn-perigo");
 
@@ -111,7 +110,7 @@ public class ViewInscricoesController {
             btnCancelar.setOnAction(e -> cancelarInscricao(inscricao));
         }
 
-        // --- 4. Layout ---
+        //Layout
         VBox infoBox = new VBox(5, lblTitulo, lblDetalhes, lblStatus);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
 

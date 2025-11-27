@@ -8,7 +8,7 @@ public class Inscricao implements Serializable {
     private static final long serialVersionUID = 5L;
 
     private Participante participante;
-    private Atividade atividade; // <--- MUDANÇA: Agora é genérico
+    private Atividade atividade;
 
     private LocalDateTime dataHoraInscricao;
     private boolean presenca;

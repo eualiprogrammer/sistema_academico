@@ -14,4 +14,6 @@ public interface IControladorCertificado {
     List<Certificado> listarPorParticipante(Participante participante);
 
     void remover(String codigoValidacao) throws CertificadoNaoEncontradoException, CampoVazioException;
+
+    void cadastrar(Certificado certificado) throws Exception;
 }

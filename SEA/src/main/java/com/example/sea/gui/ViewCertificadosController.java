@@ -14,19 +14,18 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
-
-import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.colors.Color;
-import com.itextpdf.kernel.colors.DeviceRgb;
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.io.font.constants.StandardFonts;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 
 import java.io.File;
 import java.time.format.DateTimeFormatter;
@@ -73,14 +72,26 @@ public class ViewCertificadosController {
         card.getStyleClass().add("card");
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5); -fx-border-color: rgba(255,255,255,0.05); -fx-border-width: 1;");
 
-        // Dados
-        String nomeAtividade = cert.getInscricao().getPalestra().getTitulo();
+        //Dados
+        String nomeAtividade = cert.getInscricao().getAtividade().getTitulo();
         String codigo = cert.getCodigoValidacao();
-        String dataEvento = "Data: " + cert.getInscricao().getPalestra().getDataHoraInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        // Título (Dourado para dar ideia de "Premium"/Certificado)
+        //Data
+        String dataEvento = "Data: A definir";
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        if (cert.getInscricao().getAtividade() instanceof com.example.sea.model.Palestra) {
+            com.example.sea.model.Palestra p = (com.example.sea.model.Palestra) cert.getInscricao().getAtividade();
+            if (p.getDataHoraInicio() != null) {
+                dataEvento = "Data: " + p.getDataHoraInicio().format(fmt);
+            }
+        } else {
+            dataEvento = "Workshop/Atividade Prática";
+        }
+
+        //Título
         Label lblTitulo = new Label("🎓 " + nomeAtividade);
-        lblTitulo.setStyle("-fx-text-fill: #FACC15; -fx-font-size: 20px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(250, 204, 21, 0.2), 10, 0, 0, 0);");
+        lblTitulo.setStyle("-fx-text-fill: #D946EF; -fx-font-size: 20px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(217, 70, 239, 0.3), 10, 0, 0, 0);");
 
         // Detalhes
         String detalhesTexto = dataEvento + "\n🔑 Código de Validação: " + codigo;
@@ -91,19 +102,16 @@ public class ViewCertificadosController {
         //Botão Gerar PDF
         Button btnPdf = new Button("📥 Baixar PDF");
         btnPdf.getStyleClass().add("btn-acao");
-        // Estilo específico para o botão de baixar (Azul Ciano)
-        btnPdf.setStyle("-fx-background-color: linear-gradient(to right, #06B6D4, #3B82F6); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 30;");
+        btnPdf.setStyle("-fx-background-color: linear-gradient(to right, #8B5CF6, #D946EF); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 30;");
 
         btnPdf.setOnAction(e -> salvarPdf(cert));
 
-        //Layout
         VBox infoBox = new VBox(5, lblTitulo, lblDetalhes);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
 
         HBox linhaBtn = new HBox(btnPdf);
         linhaBtn.setAlignment(Pos.CENTER_RIGHT);
 
-        // Organiza horizontalmente: Texto na esquerda, Botão na direita
         HBox linhaPrincipal = new HBox(10);
         linhaPrincipal.setAlignment(Pos.CENTER_LEFT);
         linhaPrincipal.getChildren().addAll(infoBox, linhaBtn);
@@ -117,7 +125,6 @@ public class ViewCertificadosController {
         fileChooser.setTitle("Salvar Certificado");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
         fileChooser.setInitialFileName("Certificado_" + cert.getCodigoValidacao() + ".pdf");
-
         File file = fileChooser.showSaveDialog(containerCertificados.getScene().getWindow());
 
         if (file != null) {
@@ -131,16 +138,16 @@ public class ViewCertificadosController {
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            // --- DEFINIÇÃO DE CORES ---
+            //DEFINIÇÃO DE CORES
             Color corFundo = new DeviceRgb(15, 17, 26);
             Color corDourado = new DeviceRgb(250, 204, 21);
             Color corRoxo = new DeviceRgb(139, 92, 246);
             Color corTexto = new DeviceRgb(226, 232, 240);
 
-            // --- FONTE (Times New Roman) ---
+            //FONTE
             PdfFont fontTimes = PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN);
 
-            // --- 1. FUNDO E BORDA ---
+            //FUNDO E BORDA
             PdfPage page = pdf.addNewPage();
             PdfCanvas canvas = new PdfCanvas(page);
 
@@ -157,7 +164,7 @@ public class ViewCertificadosController {
             canvas.stroke();
             canvas.restoreState();
 
-            // --- 2. CONTEÚDO ---
+            //CONTEÚDO
 
             document.add(new Paragraph("\n\n"));
 
@@ -179,11 +186,10 @@ public class ViewCertificadosController {
 
             document.add(new Paragraph("\n\n\n"));
 
-            // --- LÓGICA INTELIGENTE PARA DATA E TÍTULO ---
+            // Texto
             String nomeAtividade = cert.getInscricao().getAtividade().getTitulo().toUpperCase();
             String complementoTexto = "";
 
-            // Verifica se é Palestra (tem data) ou Workshop (genérico)
             if (cert.getInscricao().getAtividade() instanceof com.example.sea.model.Palestra) {
                 com.example.sea.model.Palestra p = (com.example.sea.model.Palestra) cert.getInscricao().getAtividade();
                 if (p.getDataHoraInicio() != null) {
@@ -192,7 +198,6 @@ public class ViewCertificadosController {
                     complementoTexto = " realizada em data a definir";
                 }
             } else {
-                // Para Workshop ou outros
                 complementoTexto = " concluída com êxito";
             }
 

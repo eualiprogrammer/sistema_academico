@@ -49,19 +49,16 @@ public class TelaGerenciarPalestrasWorkshopController {
     private void atualizarTudo() {
         if (workshopAtual == null) return;
 
-        // 1. Atualiza a Tabela
         tabelaPalestrasIncluidas.setItems(FXCollections.observableArrayList(
                 workshopAtual.getPalestrasDoWorkshop()
         ));
 
-        // 2. Atualiza o ChoiceBox (FILTRADO)
         List<Palestra> todas = SistemaSGA.getInstance().getControladorPalestra().listarTodos();
         List<Palestra> disponiveis = new ArrayList<>();
 
         for (Palestra p : todas) {
             boolean jaTem = workshopAtual.getPalestrasDoWorkshop().contains(p);
 
-            // --- FILTRO: Só mostra se for do MESMO EVENTO ---
             boolean mesmoEvento = p.getEvento().getNome().equals(workshopAtual.getEvento().getNome());
 
             if (!jaTem && mesmoEvento) {

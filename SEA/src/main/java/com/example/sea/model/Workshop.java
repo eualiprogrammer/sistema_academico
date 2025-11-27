@@ -17,7 +17,17 @@ public class Workshop extends Atividade{
     }
 
     public void adicionarPalestra(Palestra palestra) {
-        if (palestra != null && !this.palestrasDoWorkshop.contains(palestra)) {
+        if (palestra == null) return;
+        boolean jaExiste = false;
+
+        for (Palestra p : this.palestrasDoWorkshop) {
+            if (p.getTitulo().equalsIgnoreCase(palestra.getTitulo())) {
+                jaExiste = true;
+                break;
+            }
+        }
+
+        if (!jaExiste) {
             this.palestrasDoWorkshop.add(palestra);
         }
     }
@@ -27,10 +37,12 @@ public class Workshop extends Atividade{
     }
 
     public float getDuracaoHoras() {
-        float totalHoras = 0;
-        for (Palestra p : this.palestrasDoWorkshop) {
-            totalHoras += p.getDuracaoHoras();
+        float total = 0;
+        if (palestrasDoWorkshop != null) {
+            for (Palestra p : palestrasDoWorkshop) {
+                total += p.getDuracaoHoras();
+            }
         }
-        return totalHoras;
+        return total;
     }
 }

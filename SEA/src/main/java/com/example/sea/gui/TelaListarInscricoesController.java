@@ -34,9 +34,6 @@ public class TelaListarInscricoesController {
                 new SimpleStringProperty(cellData.getValue().getParticipante().getNome())
         );
 
-        // --- CORREÇÃO AQUI ---
-        // Antes: getPalestra().getTitulo() -> Dava erro se fosse Workshop (null)
-        // Agora: getAtividade().getTitulo() -> Funciona para Palestra e Workshop
         colPalestra.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getAtividade().getTitulo())
         );

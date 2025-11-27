@@ -45,4 +45,10 @@ public class ControladorCertificado implements IControladorCertificado {
         }
         this.repositorioCertificado.deletar(codigoValidacao);
     }
+
+    @Override
+    public void cadastrar(Certificado certificado) throws Exception {
+        if (certificado == null) throw new IllegalArgumentException("Certificado nulo");
+        this.repositorioCertificado.salvar(certificado);
+    }
 }

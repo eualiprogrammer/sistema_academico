@@ -18,9 +18,9 @@ import java.util.List;
 
 public class TelaListarPresencasController {
 
-    @FXML private TableView<Atividade> tabelaPalestras; // Pode manter o nome da variável ou mudar para tabelaAtividades
+    @FXML private TableView<Atividade> tabelaPalestras;
     @FXML private TableColumn<Atividade, String> colNome;
-    @FXML private TableColumn<Atividade, String> colPalestrante; // Ou Instrutor
+    @FXML private TableColumn<Atividade, String> colPalestrante;
     @FXML private TableColumn<Atividade, String> colSala;
     @FXML private TableColumn<Atividade, String> colData;
 
@@ -33,13 +33,9 @@ public class TelaListarPresencasController {
     private void configurarColunas() {
         colNome.setCellValueFactory(new PropertyValueFactory<>("titulo"));
 
-        // Coluna Tipo (Opcional, ajuda a diferenciar)
-        // colTipo.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue() instanceof Workshop ? "Workshop" : "Palestra"));
-
         colPalestrante.setCellValueFactory(cellData -> {
             Atividade a = cellData.getValue();
             if (a instanceof Palestra) return new SimpleStringProperty(((Palestra) a).getPalestrante().getNome());
-            // Workshop simplificado não tem instrutor direto no modelo, retornamos "-"
             return new SimpleStringProperty("-");
         });
 
@@ -78,7 +74,6 @@ public class TelaListarPresencasController {
             return;
         }
 
-        // Envia como ATIVIDADE para a próxima tela
         ScreenManager.getInstance().carregarTelaEdicao(
                 "admin_presencas_participantes.fxml",
                 "Lista de Presença - " + selecionada.getTitulo(),

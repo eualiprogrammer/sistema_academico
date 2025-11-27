@@ -24,13 +24,10 @@ public class TelaListarWorkshopsController {
     }
 
     private void configurarColunas() {
-        // Liga a coluna ao atributo 'titulo'
         colTitulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
 
-        // Liga a coluna ao atributo 'descricao'
         colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 
-        // Para o evento, precisamos pegar o objeto Evento e extrair o nome dele
         colEvento.setCellValueFactory(cellData -> {
             if (cellData.getValue().getEvento() != null) {
                 return new SimpleStringProperty(cellData.getValue().getEvento().getNome());
@@ -57,7 +54,6 @@ public class TelaListarWorkshopsController {
             mostrarAlerta(Alert.AlertType.WARNING, "Selecione um workshop para editar.");
             return;
         }
-        // Passa o objeto selecionado para a tela de cadastro
         ScreenManager.getInstance().carregarTelaEdicao(
                 "TelaCadastroWorkshop.fxml", "Editar Workshop", selecionado
         );

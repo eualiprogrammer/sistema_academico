@@ -21,7 +21,6 @@ public class TelaCadastroWorkshopController {
 
     @FXML
     public void initialize() {
-        // Carrega apenas a lista de Eventos
         cbEvento.setItems(FXCollections.observableArrayList(
                 SistemaSGA.getInstance().getControladorEvento().listar()
         ));
@@ -34,19 +33,17 @@ public class TelaCadastroWorkshopController {
             txtDescricao.setText(workshop.getDescricao());
             cbEvento.setValue(workshop.getEvento());
 
-            txtNome.setDisable(true); // Se o título for ID, bloqueia na edição
+            txtNome.setDisable(true);
         }
     }
 
     @FXML
     private void salvar() {
         try {
-            // 1. Pegar dados simples
             String titulo = txtNome.getText();
             String descricao = txtDescricao.getText();
             Evento evento = cbEvento.getValue();
 
-            // 2. Validação
             if (titulo == null || titulo.trim().isEmpty()) {
                 mostrarAlerta(AlertType.WARNING, "Atenção", "O título é obrigatório.");
                 return;
@@ -57,18 +54,13 @@ public class TelaCadastroWorkshopController {
             }
 
             if (workshopEmEdicao != null) {
-                // --- MODO EDIÇÃO ---
                 workshopEmEdicao.setDescricao(descricao);
                 workshopEmEdicao.setEvento(evento);
-                // Titulo geralmente não muda se for chave
 
                 SistemaSGA.getInstance().getControladorWorkshop().atualizar(workshopEmEdicao);
                 mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Workshop atualizado!");
 
             } else {
-                // --- MODO CADASTRO ---
-                // Chama o cadastrar simples (que aceita 3 argumentos)
-                // Nota: Verifique se o seu ControladorWorkshop.cadastrar aceita (String, String, Evento)
                 SistemaSGA.getInstance().getControladorWorkshop().cadastrar(titulo, descricao, evento);
 
                 mostrarAlerta(AlertType.INFORMATION, "Sucesso", "Workshop criado!");

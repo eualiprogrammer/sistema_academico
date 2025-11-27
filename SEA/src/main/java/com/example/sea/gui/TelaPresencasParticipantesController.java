@@ -18,9 +18,8 @@ public class TelaPresencasParticipantesController {
     @FXML private TableColumn<Inscricao, String> colParticipante;
     @FXML private TableColumn<Inscricao, String> colStatus;
 
-    private Atividade atividadeAtual; // Mudou de Palestra para Atividade
+    private Atividade atividadeAtual;
 
-    // Método Genérico
     public void setAtividade(Atividade atividade) {
         this.atividadeAtual = atividade;
         if (atividade != null) {
@@ -29,7 +28,6 @@ public class TelaPresencasParticipantesController {
         }
     }
 
-    // Método de compatibilidade para o ScreenManager antigo (opcional)
     public void setPalestra(Atividade atividade) {
         setAtividade(atividade);
     }
@@ -52,7 +50,6 @@ public class TelaPresencasParticipantesController {
     private void carregarInscritos() {
         if (atividadeAtual != null) {
             tabelaInscritos.setItems(FXCollections.observableArrayList(
-                    // Chama o novo método genérico
                     SistemaSGA.getInstance().getControladorInscricao().listarPorAtividade(atividadeAtual)
             ));
         }
@@ -77,7 +74,6 @@ public class TelaPresencasParticipantesController {
         }
     }
 
-    // ... (métodos voltar e mostrarAlerta iguais) ...
     @FXML
     private void voltar() {
         ScreenManager.getInstance().carregarTela("admin_presencas_list.fxml", "Gerenciar Presenças");

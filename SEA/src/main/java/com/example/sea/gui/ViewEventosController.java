@@ -46,7 +46,7 @@ public class ViewEventosController {
         card.getStyleClass().add("card");
         card.setStyle("-fx-background-color: #1E2130; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 0, 5); -fx-border-color: rgba(255,255,255,0.05); -fx-border-width: 1; -fx-border-radius: 15;");
 
-        //Título ---
+        //Título
         Label lblTitulo = new Label(evento.getNome());
         lblTitulo.setStyle("-fx-text-fill: #D946EF; -fx-font-size: 22px; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(217, 70, 239, 0.2), 10, 0, 0, 0);"); // Rosa Neon
 
